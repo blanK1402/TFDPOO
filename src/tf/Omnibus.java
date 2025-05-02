@@ -1,53 +1,96 @@
 package tf;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Omnibus {
-	
-	private String matricula;
-	private int asientos;
-	private ArrayList<String> comodidades;
-	private String disponibilidad;
-	private ArrayList<Conductor> conductores;
-	
-	public Omnibus(String matricula, int asientos, String disponibilidad){
-		setMatricula(matricula);
-		setAsientos(asientos);
-		setDisponibilidad(disponibilidad);
-	}
-	
-	public String getMatricula() {
-		return matricula;
-	}
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
-	public int getAsientos() {
-		return asientos;
-	}
-	public void setAsientos(int asientos) {
-		this.asientos = asientos;
-	}
-	public ArrayList<String> getComodidades() {
-		return comodidades;
-	}
-	public void setComodidades(ArrayList<String> comodidades) {
-		this.comodidades = comodidades;
-	}
-	public String getDisponibilidad() {
-		return disponibilidad;
-	}
-	public void setDisponibilidad(String disponibilidad) {
-		this.disponibilidad = disponibilidad;
-	}
-	public ArrayList<Conductor> getConductores() {
-		return conductores;
-	}
-	public void addConductor(Conductor conductor) {
-		conductores.add(conductor);
-	}
-	@Override
-	public String toString(){
-		return matricula;
-	}
+    private String matricula;
+    private int asientos;
+    private ArrayList<String> comodidades;
+    private String disponibilidad;
+    private ArrayList<Conductor> conductores;
+    
+    public Omnibus(String matricula, String asientos, String disponibilidad, ArrayList<String> comodidades) {
+        setMatricula(matricula);
+        setAsientos(asientos);
+        setDisponibilidad(disponibilidad);
+        setComodidades(comodidades);
+    }
+    
+    public String getMatricula() {
+        return matricula;
+    }
+    
+    public int getAsientos() {
+        return asientos;
+    }
+    
+    public ArrayList<String> getComodidades() {
+        return comodidades;
+    }
+    
+    public String getDisponibilidad() {
+        return disponibilidad;
+    }
+    
+    public ArrayList<Conductor> getConductores() {
+        return conductores;
+    }
+    
+    public void setMatricula(String matricula) throws IllegalArgumentException{
+        String mat = matricula.trim();
+        if (mat.isEmpty()) {
+            throw new IllegalArgumentException("La matrícula no puede estar vacía");
+        }
+        if (!mat.matches("^[A-Z]\\d{6}$")) {
+            throw new IllegalArgumentException("La matrícula tiene formato LetraMayuscula-######");
+        }
+        this.matricula = mat;
+    }
+    
+    public void setAsientos(String asientos) throws IllegalArgumentException{
+        if(asientos.trim().isEmpty()){
+        	throw new IllegalArgumentException("Escriba el número de asientos");
+        }
+        try {
+            int num = Integer.parseInt(asientos.trim());
+            if (num <= 0 || num > 100) {
+                throw new IllegalArgumentException("Los asientos deben ser un número entre 1 y 100");
+            }
+            this.asientos = num;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Los asientos deben ser un número", e);
+        }
+    }
+    
+    public void setComodidades(ArrayList<String> comodidades) throws IllegalArgumentException{
+        if (comodidades.isEmpty()){
+        	throw new IllegalArgumentException("Debe seleccionar al menos una comodidad");
+        }
+        this.comodidades = comodidades;
+    }
+    
+    public void setDisponibilidad(String disponibilidad) throws IllegalArgumentException{
+        if(disponibilidad.isEmpty()){
+        	throw new IllegalArgumentException("Seleccione la disponibilidad");
+        }
+        this.disponibilidad = disponibilidad;
+    }
+    
+    public void addConductor(Conductor conductor) throws IllegalArgumentException{
+        int i = 0;
+		while(i < conductores.size() && conductores.get(i).getId() != conductor.getId()){
+			i++;
+		}
+		if(i != conductores.size()){
+			 throw new IllegalArgumentException("No se pueden repetir conductores");
+		}
+        conductores.add(conductor);
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s [%d asientos, %s]", matricula, asientos, disponibilidad);
+    }
 }

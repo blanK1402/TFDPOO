@@ -17,13 +17,13 @@ public abstract class Conductor {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        if(nombre == null || nombre.trim().isEmpty()) {
+    public void setNombre(String nombre) throws IllegalArgumentException{
+        if(nombre.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre no puede estar vacío");
         }
         
         String nombreLimpio = nombre.trim();
-        if(!nombreLimpio.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")) {
+        if(!nombreLimpio.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
             throw new IllegalArgumentException("El nombre solo puede contener letras y espacios");
         }
         
@@ -34,7 +34,7 @@ public abstract class Conductor {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(String id) throws IllegalArgumentException{
         try {
             int idValue = Integer.parseInt(id.trim());
             if(idValue <= 0) {
@@ -50,7 +50,7 @@ public abstract class Conductor {
         return experiencia;
     }
 
-    public void setExperiencia(String experiencia) {
+    public void setExperiencia(String experiencia) throws IllegalArgumentException{
         try {
             int expValue = Integer.parseInt(experiencia.trim());
             if(expValue < 0) {
@@ -66,7 +66,7 @@ public abstract class Conductor {
         return licencia;
     }
 
-    public void setLicencia(String licencia) {
+    public void setLicencia(String licencia) throws IllegalArgumentException{
         try {
             int licenciaValue = Integer.parseInt(licencia.trim());
             if(licenciaValue <= 0) {

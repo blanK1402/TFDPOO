@@ -57,7 +57,7 @@ public class Terminal {
 	public void addReserva(Reserva reserva){
 		int newId = reserva.getNumReserva();
 		int i = 0;
-		while(reservas.get(i).getNumReserva() != newId){
+		while(i < reservas.size() && reservas.get(i).getNumReserva() != newId){
 			i++;
 		}
 		if(i != reservas.size()){
@@ -78,7 +78,7 @@ public class Terminal {
 	public void addOmnibus(Omnibus omnibus){
 		String newMatricula = omnibus.getMatricula();
 		int i = 0;
-		while(omnibuses.get(i).getMatricula() != newMatricula){
+		while(i < omnibuses.size() && omnibuses.get(i).getMatricula() != newMatricula){
 			i++;
 		}
 		if(i != omnibuses.size()){
@@ -90,7 +90,7 @@ public class Terminal {
 	public void addViaje(Viaje viaje){
 		int newId = viaje.getId();
 		int i = 0;
-		while(viajes.get(i).getId() != newId){
+		while(i < viajes.size() && viajes.get(i).getId() != newId){
 			i++;
 		}
 		if(i != viajes.size()){
