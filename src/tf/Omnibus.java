@@ -46,4 +46,8 @@ public class Omnibus {
 	public void addConductor(Conductor conductor) {
 		conductores.add(conductor);
 	}
+	@Override
+	public String toString(){
+		return matricula;
+	}
 }

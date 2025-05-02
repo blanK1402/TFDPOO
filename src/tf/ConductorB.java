@@ -2,7 +2,7 @@ package tf;
 
 public class ConductorB extends Conductor{
 	private int viajesMes;
-	public ConductorB(String nombre, int id, int experiencia, int licencia) {
+	public ConductorB(String nombre, String id, String experiencia, String licencia) {
 		super(nombre, id, experiencia, licencia);
 		viajesMes = 0;
 	}

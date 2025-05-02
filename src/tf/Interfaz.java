@@ -39,17 +39,17 @@ public class Interfaz extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Interfaz(Terminal terminal) {
+	public Interfaz(final Terminal terminal) {
 		final Terminal miTerminal = terminal;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 450);
+		setBounds(100, 100, 642, 368);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 11, 684, 432);
+		tabbedPane.setBounds(0, 11, 628, 432);
 		contentPane.add(tabbedPane);
 		
 		JPanel panel = new JPanel();
@@ -121,38 +121,21 @@ public class Interfaz extends JFrame {
 		categoriaA.setBounds(6, 7, 40, 23);
 		panel_1.add(categoriaA);
 		
-		JRadioButton categoriaB = new JRadioButton("B");
+		final JRadioButton categoriaB = new JRadioButton("B");
 		categoriaB.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		categoriaB.setBounds(72, 7, 40, 23);
 		panel_1.add(categoriaB);
 		
-		JRadioButton categoriaC = new JRadioButton("C");
+		final JRadioButton categoriaC = new JRadioButton("C");
 		categoriaC.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		categoriaC.setBounds(139, 7, 40, 23);
 		panel_1.add(categoriaC);
 		
-		JButton button = new JButton("Crear");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			    String nombre = nombreConductor.getText();
-			    String idText = idConductor.getText();
-			    String experienciaText = experienciaConductor.getText();
-			    String licenciaText = licenciaConductor.getText();
-			    
-			    
-			}
-		});
+		JButton button = new JButton("Crear Conductor");
+		
 		button.setForeground(Color.BLACK);
 		button.setBounds(215, 200, 185, 36);
 		panel.add(button);
-		
-		JLabel labelConductor = new JLabel("\r\n");
-		labelConductor.setBorder(new LineBorder(new Color(0, 0, 0)));
-		labelConductor.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		labelConductor.setHorizontalAlignment(SwingConstants.LEFT);
-		labelConductor.setVerticalAlignment(SwingConstants.TOP);
-		labelConductor.setBounds(425, 44, 219, 192);
-		panel.add(labelConductor);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setForeground(Color.BLACK);
@@ -227,19 +210,19 @@ public class Interfaz extends JFrame {
 		panel_2.add(panel_4);
 		panel_4.setLayout(null);
 		
-		final JComboBox cond1 = new JComboBox<Conductor>();
+		final JComboBox<Conductor> cond1 = new JComboBox<Conductor>();
 		cond1.setBounds(10, 30, 158, 20);
 		panel_4.add(cond1);
 		
-		final JComboBox cond2 = new JComboBox<Conductor>();
+		final JComboBox<Conductor> cond2 = new JComboBox<Conductor>();
 		cond2.setBounds(10, 81, 158, 20);
 		panel_4.add(cond2);
 		
-		final JComboBox cond3 = new JComboBox<Conductor>();
+		final JComboBox<Conductor> cond3 = new JComboBox<Conductor>();
 		cond3.setBounds(10, 131, 158, 20);
 		panel_4.add(cond3);
 		
-		JButton button_1 = new JButton("Crear");
+		JButton button_1 = new JButton("Crear �mnibus");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String matricula = matriculaOmni.getText();
@@ -258,16 +241,8 @@ public class Interfaz extends JFrame {
 			}
 		});
 		button_1.setForeground(Color.BLACK);
-		button_1.setBounds(425, 247, 219, 36);
+		button_1.setBounds(215, 300, 185, 36);
 		panel_2.add(button_1);
-		
-		JLabel lblNewLabel_1 = new JLabel("\r\n");
-		lblNewLabel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_1.setBounds(425, 44, 219, 192);
-		panel_2.add(lblNewLabel_1);
 		
 		JLabel lblConductor = new JLabel("Conductor1");
 		lblConductor.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -347,18 +322,10 @@ public class Interfaz extends JFrame {
 		comboBox_3.setBounds(10, 205, 185, 20);
 		panel_5.add(comboBox_3);
 		
-		JButton button_2 = new JButton("Crear");
+		JButton button_2 = new JButton("Crear Viaje");
 		button_2.setForeground(Color.BLACK);
-		button_2.setBounds(425, 247, 219, 36);
+		button_2.setBounds(215, 197, 185, 36);
 		panel_5.add(button_2);
-		
-		JLabel lblNewLabel_2 = new JLabel("\r\n");
-		lblNewLabel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_2.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_2.setBounds(425, 44, 219, 192);
-		panel_5.add(lblNewLabel_2);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setForeground(Color.BLACK);
@@ -381,9 +348,9 @@ public class Interfaz extends JFrame {
 		panel_6.add(textField_12);
 		textField_12.setColumns(10);
 		
-		JLabel lblCi_2 = new JLabel("CI:");
+		JLabel lblCi_2 = new JLabel("N\u00FAmero Reserva");
 		lblCi_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCi_2.setBounds(215, 44, 75, 22);
+		lblCi_2.setBounds(215, 44, 185, 22);
 		panel_6.add(lblCi_2);
 		
 		JTextField textField_13 = new JTextField();
@@ -423,18 +390,10 @@ public class Interfaz extends JFrame {
 		textField_15.setBounds(10, 205, 185, 20);
 		panel_6.add(textField_15);
 		
-		JButton button_3 = new JButton("Crear");
+		JButton button_3 = new JButton("Crear Reserva");
 		button_3.setForeground(Color.BLACK);
-		button_3.setBounds(425, 247, 219, 36);
+		button_3.setBounds(10, 236, 185, 36);
 		panel_6.add(button_3);
-		
-		JLabel lblNewLabel_3 = new JLabel("\r\n");
-		lblNewLabel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_3.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_3.setBounds(425, 44, 219, 192);
-		panel_6.add(lblNewLabel_3);
 		
 		JLabel lblEstado = new JLabel("Estado:");
 		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -442,19 +401,19 @@ public class Interfaz extends JFrame {
 		panel_6.add(lblEstado);
 		
 		JPanel panel_7 = new JPanel();
-		panel_7.setBounds(215, 200, 185, 36);
+		panel_7.setBounds(215, 200, 185, 72);
 		panel_6.add(panel_7);
 		panel_7.setLayout(null);
 		
-		JRadioButton rdbtnConfirmado = new JRadioButton("Confirmado");
-		rdbtnConfirmado.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		rdbtnConfirmado.setBounds(6, 7, 110, 23);
-		panel_7.add(rdbtnConfirmado);
-		
-		JRadioButton rdbtnPendiente = new JRadioButton("Pendiente");
+		JRadioButton rdbtnPendiente = new JRadioButton("En espera");
 		rdbtnPendiente.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		rdbtnPendiente.setBounds(6, 7, 110, 23);
 		panel_7.add(rdbtnPendiente);
+		
+		JRadioButton rdbtnConfirmado = new JRadioButton("Confirmado");
+		rdbtnConfirmado.setBounds(6, 42, 110, 23);
+		panel_7.add(rdbtnConfirmado);
+		rdbtnConfirmado.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setForeground(Color.BLACK);
@@ -488,17 +447,79 @@ public class Interfaz extends JFrame {
 		textField_17.setBounds(215, 77, 185, 20);
 		panel_8.add(textField_17);
 		
-		JButton button_4 = new JButton("Crear");
+		JButton button_4 = new JButton("Crear Pasajero");
 		button_4.setForeground(Color.BLACK);
-		button_4.setBounds(215, 122, 185, 36);
+		button_4.setBounds(215, 124, 185, 36);
 		panel_8.add(button_4);
 		
-		JLabel lblNewLabel_4 = new JLabel("\r\n");
-		lblNewLabel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_4.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_4.setBounds(425, 44, 219, 192);
-		panel_8.add(lblNewLabel_4);
+		JPanel panelTerminal = new JPanel();
+		panelTerminal.setForeground(Color.BLACK);
+		tabbedPane.addTab("Terminal", null, panelTerminal, null);
+		panelTerminal.setLayout(null);
+
+		JLabel lblReportesTerminal = new JLabel("Reportes de Terminal");
+		lblReportesTerminal.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblReportesTerminal.setBounds(10, 11, 250, 22);
+		panelTerminal.add(lblReportesTerminal);
+
+		JButton btnSalariosConductores = new JButton("Ver Salarios Conductores");
+		btnSalariosConductores.setBounds(10, 50, 250, 30);
+		panelTerminal.add(btnSalariosConductores);
+
+		JButton btnConductorMes = new JButton("Conductor del Mes");
+		btnConductorMes.setBounds(10, 90, 250, 30);
+		panelTerminal.add(btnConductorMes);
+
+		JButton btnRecaudacionMensual = new JButton("Recaudaci�n �ltimo Mes");
+		btnRecaudacionMensual.setBounds(10, 130, 250, 30);
+		panelTerminal.add(btnRecaudacionMensual);
+
+		JButton btnListarOmnibus = new JButton("Listado de �mnibus");
+		btnListarOmnibus.setBounds(10, 170, 250, 30);
+		panelTerminal.add(btnListarOmnibus);
+
+		JButton btnListarConductores = new JButton("Listado de Conductores");
+		btnListarConductores.setBounds(10, 210, 250, 30);
+		panelTerminal.add(btnListarConductores);
+
+		JTextPane textAreaReportes = new JTextPane();
+		textAreaReportes.setBorder(new LineBorder(new Color(0, 0, 0)));
+		textAreaReportes.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textAreaReportes.setBounds(280, 50, 335, 190);
+		panelTerminal.add(textAreaReportes);
+		
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			    try {
+			        String nombreText = nombreConductor.getText();
+			        String idText = idConductor.getText();
+			        String experienciaText = experienciaConductor.getText();
+			        String licenciaText = licenciaConductor.getText();
+
+			        Conductor conductor;
+			        if (categoriaA.isSelected()) {
+			            conductor = new ConductorA(nombreText, idText, experienciaText, licenciaText);
+			        } else if (categoriaB.isSelected()) {
+			            conductor = new ConductorB(nombreText, idText, experienciaText, licenciaText);
+			        } else if (categoriaC.isSelected()) {
+			            conductor = new ConductorC(nombreText, idText, experienciaText, licenciaText);
+			        } else {
+			            throw new IllegalArgumentException("Debe seleccionar una categoría válida (A, B o C)");
+			        }
+
+			        terminal.addConductor(conductor);
+			        cond1.addItem(conductor);
+			        cond2.addItem(conductor);
+			        cond3.addItem(conductor);
+			        
+			        JOptionPane.showMessageDialog(null, "Conductor registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+			    } catch (IllegalArgumentException e) {
+			        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			    } catch (Exception e) {
+			        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			    }
+			}
+		});
 	}
 }

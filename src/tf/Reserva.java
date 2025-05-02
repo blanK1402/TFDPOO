@@ -52,4 +52,8 @@ public class Reserva {
 	public void setFechaDeseada(LocalDateTime fechaDeseada) {
 		this.fechaDeseada = fechaDeseada;
 	}
+	@Override
+	public String toString(){
+		return String.valueOf(numReserva);
+	}
 }

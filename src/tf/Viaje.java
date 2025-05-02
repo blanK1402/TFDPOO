@@ -65,5 +65,7 @@ public class Viaje {
 	public void setReservas(ArrayList<Reserva> reservas) {
 		this.reservas = reservas;
 	}
-
+	public String toString(){
+		return String.valueOf(id);
+	}
 }

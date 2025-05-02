@@ -38,10 +38,7 @@ public class Terminal {
 		return nombre;
 	}
 	public void setNombre(String nombre) {
-		if(nombre.matches("^[a-zA-Z]+$")){
-			this.nombre = nombre;
-		}
-		throw new IllegalArgumentException("Formato de nombre Invalido");
+		this.nombre = nombre;
 	}
 	public ArrayList<Reserva> getReservas() {
 		return reservas;
@@ -105,7 +102,7 @@ public class Terminal {
 	public void addConductor(Conductor conductor){
 		int newId = conductor.getId();
 		int i = 0;
-		while(conductores.get(i).getId() != newId && conductores.get(i).getLicencia() != conductor.getLicencia()){
+		while(i < conductores.size() && conductores.get(i).getId() != newId && conductores.get(i).getLicencia() != conductor.getLicencia()){
 			i++;
 		}
 		if(i != conductores.size()){
