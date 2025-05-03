@@ -207,14 +207,17 @@ public class Interfaz extends JFrame {
 
 		final JComboBox<Conductor> cond1 = new JComboBox<Conductor>();
 		cond1.setBounds(10, 30, 158, 20);
+		cond1.addItem(null);
 		panel_4.add(cond1);
 
 		final JComboBox<Conductor> cond2 = new JComboBox<Conductor>();
 		cond2.setBounds(10, 81, 158, 20);
+		cond2.addItem(null);
 		panel_4.add(cond2);
 
 		final JComboBox<Conductor> cond3 = new JComboBox<Conductor>();
 		cond3.setBounds(10, 131, 158, 20);
+		cond3.addItem(null);
 		panel_4.add(cond3);
 
 		JButton button_1 = new JButton("Crear Ómnibus");
@@ -304,11 +307,15 @@ public class Interfaz extends JFrame {
 		lblOmnibus.setBounds(10, 172, 75, 22);
 		panel_5.add(lblOmnibus);
 
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(10, 205, 185, 20);
-		panel_5.add(comboBox_3);
+		final JComboBox<Omnibus> comboBoxOmni = new JComboBox<Omnibus>();
+		comboBoxOmni.setBounds(10, 205, 185, 20);
+		panel_5.add(comboBoxOmni);
 
 		JButton button_2 = new JButton("Crear Viaje");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		button_2.setForeground(Color.BLACK);
 		button_2.setBounds(215, 197, 185, 36);
 		panel_5.add(button_2);
@@ -449,6 +456,10 @@ public class Interfaz extends JFrame {
 		panelTerminal.add(lblReportesTerminal);
 
 		JButton btnSalariosConductores = new JButton("Ver Salarios Conductores");
+		btnSalariosConductores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnSalariosConductores.setBounds(10, 50, 250, 30);
 		panelTerminal.add(btnSalariosConductores);
 
@@ -473,6 +484,20 @@ public class Interfaz extends JFrame {
 		textAreaReportes.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textAreaReportes.setBounds(280, 50, 335, 190);
 		panelTerminal.add(textAreaReportes);
+		
+		JButton button_5 = new JButton("Importar Conductores");
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<Conductor> conductores = terminal.getConductores();
+				for(Conductor conductor : conductores){
+					cond1.addItem(conductor);
+					cond2.addItem(conductor);
+					cond3.addItem(conductor);
+				}
+			}
+		});
+		button_5.setBounds(10, 251, 250, 30);
+		panelTerminal.add(button_5);
 
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -494,10 +519,6 @@ public class Interfaz extends JFrame {
 					}
 
 					terminal.addConductor(conductor);
-					cond1.addItem(conductor);
-					cond2.addItem(conductor);
-					cond3.addItem(conductor);
-
 
 					JOptionPane.showMessageDialog(null, "Conductor registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE); 
 				}catch(IllegalArgumentException e){
@@ -509,32 +530,46 @@ public class Interfaz extends JFrame {
 		
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ArrayList<String> comodidades = new ArrayList<String>();
-		        
-		        if (aire.isSelected()) {
-		            comodidades.add("Aire acondicionado");
-		        }
-		        if (banyo.isSelected()) {
-		            comodidades.add("Baño");
-		        }
-		        if (tv.isSelected()) {
-		            comodidades.add("TV");
-		        }
-				cond1.setSelectedItem(-1);
-				cond2.setSelectedItem(-1);
-				cond3.setSelectedItem(-1);
-		        	Omnibus omnibus = new Omnibus(matriculaOmni.getText(), asientosOmni.getText(), (String) estado.getSelectedItem(), comodidades);
-					if (cond1.getSelectedItem() != "null") {
-						omnibus.addConductor((Conductor)cond1.getSelectedItem());
-					}
-					if (cond2.getSelectedItem() != "null") {
-						omnibus.addConductor((Conductor)cond2.getSelectedItem());
-					}
-					if (cond3.getSelectedItem() != "null") {
-						omnibus.addConductor((Conductor)cond3.getSelectedItem());
-					}
-					JOptionPane.showMessageDialog(null, "Ómnibus registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-				}
+			    ArrayList<String> comodidades = new ArrayList<String>();
+
+			    if (aire.isSelected()) {
+			        comodidades.add("Aire acondicionado");
+			    }
+			    if (banyo.isSelected()) {
+			        comodidades.add("Baño");
+			    }
+			    if (tv.isSelected()) {
+			        comodidades.add("TV");
+			    }
+
+			    if (comodidades.isEmpty()) {
+			       throw new IllegalArgumentException("Se debe seleccionar al menos una comodidad");
+			    }
+
+			    try {
+			        Omnibus omnibus = new Omnibus(matriculaOmni.getText(), asientosOmni.getText(), (String) estado.getSelectedItem(), comodidades);
+
+			        Conductor conductor1 = (Conductor)cond1.getSelectedItem();
+			        Conductor conductor2 = (Conductor)cond2.getSelectedItem();
+			        Conductor conductor3 = (Conductor)cond3.getSelectedItem();
+			        
+			        if (conductor1 == null && conductor2 == null && conductor3 == null) {
+			            throw new IllegalArgumentException("Debe seleccionar al menos un conductor");
+			        }
+
+			        omnibus.addConductor(conductor1);
+			        omnibus.addConductor(conductor2);
+			        omnibus.addConductor(conductor3);
+			        
+			        terminal.addOmnibus(omnibus);
+			        comboBoxOmni.addItem(omnibus);
+			        JOptionPane.showMessageDialog(null, "Ómnibus registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+			    } catch (IllegalArgumentException e) {
+			        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			    }
+			}
+
 		});
 	}
 }

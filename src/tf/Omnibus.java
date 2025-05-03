@@ -16,6 +16,7 @@ public class Omnibus {
         setAsientos(asientos);
         setDisponibilidad(disponibilidad);
         setComodidades(comodidades);
+        conductores = new ArrayList<Conductor>();
     }
     
     public String getMatricula() {
@@ -79,14 +80,15 @@ public class Omnibus {
     }
     
     public void addConductor(Conductor conductor) throws IllegalArgumentException{
-        int i = 0;
-		while(i < conductores.size() && conductores.get(i).getId() != conductor.getId()){
-			i++;
-		}
-		if(i != conductores.size()){
-			 throw new IllegalArgumentException("No se pueden repetir conductores");
-		}
-        conductores.add(conductor);
+        if(conductor != null){
+        	for (Conductor c : conductores) {
+        	    if (c.getId() == conductor.getId()) {
+        	        throw new IllegalArgumentException("No se pueden repetir conductores");
+        	    }
+        	}
+        	conductores.add(conductor);
+
+        }
     }
     
     @Override

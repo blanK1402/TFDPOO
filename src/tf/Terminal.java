@@ -1,6 +1,9 @@
 package tf;
 
+import java.awt.TextArea;
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
 
 public class Terminal {
 	
@@ -76,15 +79,17 @@ public class Terminal {
 	}
 	
 	public void addOmnibus(Omnibus omnibus){
-		String newMatricula = omnibus.getMatricula();
 		int i = 0;
-		while(i < omnibuses.size() && omnibuses.get(i).getMatricula() != newMatricula){
+		while(i < omnibuses.size() && !omnibuses.get(i).getMatricula().equals(omnibus.getMatricula())){
 			i++;
 		}
 		if(i != omnibuses.size()){
 			throw new IllegalArgumentException("Ya existe un omnibus con esa matricula");
 		}
 		omnibuses.add(omnibus);
+	}
+	
+	public void calcular(TextArea texto){
 	}
 	
 	public void addViaje(Viaje viaje){
