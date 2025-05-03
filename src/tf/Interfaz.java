@@ -35,6 +35,7 @@ public class Interfaz extends JFrame {
 	private JTextField idConductor;
 	private JTextField experienciaConductor;
 	private JTextField licenciaConductor;
+	private JTextField textField;
 
 
 	/**
@@ -60,12 +61,12 @@ public class Interfaz extends JFrame {
 
 		nombreConductor = new JTextField();
 		nombreConductor.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		nombreConductor.setBounds(10, 77, 185, 20);
+		nombreConductor.setBounds(164, 45, 136, 20);
 		panel.add(nombreConductor);
 		nombreConductor.setColumns(10);
 
-		JLabel lblConducctor = new JLabel("Datos del conductor");
-		lblConducctor.setBounds(10, 11, 194, 22);
+		JLabel lblConducctor = new JLabel("Crear conductor");
+		lblConducctor.setBounds(71, 12, 146, 22);
 		lblConducctor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panel.add(lblConducctor);
 
@@ -77,12 +78,12 @@ public class Interfaz extends JFrame {
 		idConductor = new JTextField();
 		idConductor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		idConductor.setColumns(10);
-		idConductor.setBounds(215, 77, 185, 20);
+		idConductor.setBounds(164, 77, 136, 20);
 		panel.add(idConductor);
 
 		JLabel lblCi = new JLabel("CI:");
 		lblCi.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCi.setBounds(215, 49, 75, 12);
+		lblCi.setBounds(10, 81, 75, 12);
 		panel.add(lblCi);
 
 		JLabel lblAnyosDeExperiencia = new JLabel("Anyos de experiencia:");
@@ -93,7 +94,7 @@ public class Interfaz extends JFrame {
 		experienciaConductor = new JTextField();
 		experienciaConductor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		experienciaConductor.setColumns(10);
-		experienciaConductor.setBounds(10, 141, 185, 20);
+		experienciaConductor.setBounds(164, 108, 136, 20);
 		panel.add(experienciaConductor);
 
 		JLabel lblCategoria = new JLabel("Categor\u00EDa");
@@ -104,54 +105,56 @@ public class Interfaz extends JFrame {
 		licenciaConductor = new JTextField();
 		licenciaConductor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		licenciaConductor.setColumns(10);
-		licenciaConductor.setBounds(215, 141, 185, 20);
+		licenciaConductor.setBounds(164, 141, 136, 20);
 		panel.add(licenciaConductor);
 
 		JLabel lblLicencia = new JLabel("Licencia");
 		lblLicencia.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblLicencia.setBounds(215, 113, 75, 12);
+		lblLicencia.setBounds(10, 145, 75, 12);
 		panel.add(lblLicencia);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 200, 185, 36);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
+		JButton btnCrear_1 = new JButton("Crear");
 
-		final JRadioButton categoriaA = new JRadioButton("A");
-		categoriaA.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		categoriaA.setBounds(6, 7, 40, 23);
-		panel_1.add(categoriaA);
+		btnCrear_1.setForeground(Color.BLACK);
+		btnCrear_1.setBounds(10, 200, 290, 36);
+		panel.add(btnCrear_1);
 
-		final JRadioButton categoriaB = new JRadioButton("B");
-		categoriaB.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		categoriaB.setBounds(72, 7, 40, 23);
-		panel_1.add(categoriaB);
+		final JComboBox<String> categoria = new JComboBox<String>();
+		categoria.addItem("A");
+		categoria.addItem("B");
+		categoria.addItem("C");
+		categoria.setBounds(164, 172, 136, 20);
+		panel.add(categoria);
 
-		final JRadioButton categoriaC = new JRadioButton("C");
-		categoriaC.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		categoriaC.setBounds(139, 7, 40, 23);
-		panel_1.add(categoriaC);
+		JLabel lblEliminarConductor = new JLabel("Eliminar conductor");
+		lblEliminarConductor.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblEliminarConductor.setBounds(386, 12, 171, 22);
+		panel.add(lblEliminarConductor);
 
-		JButton button = new JButton("Crear Conductor");
+		JLabel label = new JLabel("CI:");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label.setBounds(386, 50, 39, 12);
+		panel.add(label);
 
-		button.setForeground(Color.BLACK);
-		button.setBounds(215, 200, 185, 36);
-		panel.add(button);
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField.setColumns(10);
+		textField.setBounds(417, 45, 136, 20);
+		panel.add(textField);
+
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.setForeground(Color.BLACK);
+		btnEliminar.setBounds(386, 71, 171, 36);
+		panel.add(btnEliminar);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setForeground(Color.BLACK);
 		tabbedPane.addTab("Omnibus", null, panel_2, null);
 		panel_2.setLayout(null);
 
-		final JTextField matriculaOmni = new JTextField();
-		matriculaOmni.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		matriculaOmni.setBounds(10, 77, 185, 20);
-		panel_2.add(matriculaOmni);
-		matriculaOmni.setColumns(10);
-
-		JLabel lblDatosDelConductor = new JLabel("Datos del omnibus");
-		lblDatosDelConductor.setBounds(10, 11, 194, 22);
+		JLabel lblDatosDelConductor = new JLabel("Crear omnibus");
 		lblDatosDelConductor.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDatosDelConductor.setBounds(10, 11, 194, 22);
 		panel_2.add(lblDatosDelConductor);
 
 		JLabel lblNombre_1 = new JLabel("Matricula:");
@@ -159,94 +162,114 @@ public class Interfaz extends JFrame {
 		lblNombre_1.setBounds(10, 44, 75, 22);
 		panel_2.add(lblNombre_1);
 
-		final JTextField asientosOmni = new JTextField();
-		asientosOmni.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		asientosOmni.setColumns(10);
-		asientosOmni.setBounds(215, 77, 185, 20);
-		panel_2.add(asientosOmni);
+		final JTextField matriculaOmni = new JTextField();
+		matriculaOmni.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		matriculaOmni.setBounds(95, 44, 185, 20);
+		panel_2.add(matriculaOmni);
 
 		JLabel lblCi_1 = new JLabel("Asientos:");
 		lblCi_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCi_1.setBounds(215, 49, 75, 12);
+		lblCi_1.setBounds(10, 81, 75, 12);
 		panel_2.add(lblCi_1);
+
+		final JTextField asientosOmni = new JTextField();
+		asientosOmni.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		asientosOmni.setBounds(95, 77, 185, 20);
+		panel_2.add(asientosOmni);
 
 		JLabel lblAnyosDeExperiencia_1 = new JLabel("Estado");
 		lblAnyosDeExperiencia_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblAnyosDeExperiencia_1.setBounds(10, 108, 185, 22);
+		lblAnyosDeExperiencia_1.setBounds(10, 107, 75, 22);
 		panel_2.add(lblAnyosDeExperiencia_1);
+
+		final JComboBox<String> estado = new JComboBox<String>();
+		estado.addItem("En carretera");
+		estado.addItem("Disponible");
+		estado.addItem("En reparación");
+		estado.setBounds(95, 110, 185, 20);
+		panel_2.add(estado);
 
 		JLabel lblCategoria_1 = new JLabel("Comodidades");
 		lblCategoria_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCategoria_1.setBounds(10, 172, 93, 17);
+		lblCategoria_1.setBounds(306, 47, 93, 17);
 		panel_2.add(lblCategoria_1);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(10, 200, 185, 84);
+		panel_3.setBounds(306, 81, 93, 84);
 		panel_2.add(panel_3);
 		panel_3.setLayout(null);
 
 		final JRadioButton aire = new JRadioButton("aire");
 		aire.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		aire.setBounds(6, 7, 173, 23);
+		aire.setBounds(6, 7, 81, 23);
 		panel_3.add(aire);
 
-		final JRadioButton banyo = new JRadioButton("ba\u00F1o");
+		final JRadioButton banyo = new JRadioButton("baño");
 		banyo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		banyo.setBounds(6, 33, 173, 23);
+		banyo.setBounds(6, 33, 81, 23);
 		panel_3.add(banyo);
 
 		final JRadioButton tv = new JRadioButton("TV");
 		tv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		tv.setBounds(6, 55, 173, 23);
+		tv.setBounds(6, 55, 81, 23);
 		panel_3.add(tv);
 
-		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(215, 122, 178, 162);
-		panel_2.add(panel_4);
-		panel_4.setLayout(null);
+		JButton btnCrear = new JButton("Crear");
+		btnCrear.setForeground(Color.BLACK);
+		btnCrear.setBounds(306, 176, 93, 42);
+		panel_2.add(btnCrear);
 
 		final JComboBox<Conductor> cond1 = new JComboBox<Conductor>();
-		cond1.setBounds(10, 30, 158, 20);
 		cond1.addItem(null);
-		panel_4.add(cond1);
-
-		final JComboBox<Conductor> cond2 = new JComboBox<Conductor>();
-		cond2.setBounds(10, 81, 158, 20);
-		cond2.addItem(null);
-		panel_4.add(cond2);
-
-		final JComboBox<Conductor> cond3 = new JComboBox<Conductor>();
-		cond3.setBounds(10, 131, 158, 20);
-		cond3.addItem(null);
-		panel_4.add(cond3);
-
-		JButton button_1 = new JButton("Crear Ómnibus");
-		
-		button_1.setForeground(Color.BLACK);
-		button_1.setBounds(120, 294, 185, 36);
-		panel_2.add(button_1);
+		cond1.setBounds(95, 141, 185, 20);
+		panel_2.add(cond1);
 
 		JLabel lblConductor = new JLabel("Conductor1");
+		lblConductor.setBounds(10, 143, 75, 12);
+		panel_2.add(lblConductor);
 		lblConductor.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblConductor.setBounds(10, 11, 131, 12);
-		panel_4.add(lblConductor);
 
 		JLabel lblConductor_1 = new JLabel("Conductor2");
+		lblConductor_1.setBounds(10, 172, 75, 12);
+		panel_2.add(lblConductor_1);
 		lblConductor_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblConductor_1.setBounds(10, 58, 131, 12);
-		panel_4.add(lblConductor_1);
+
+		final JComboBox<Conductor> cond2 = new JComboBox<Conductor>();
+		cond2.setBounds(95, 170, 185, 20);
+		cond2.addItem(null);
+		panel_2.add(cond2);
 
 		JLabel lblConductor_2 = new JLabel("Conductor3");
+		lblConductor_2.setBounds(10, 200, 75, 12);
+		panel_2.add(lblConductor_2);
 		lblConductor_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblConductor_2.setBounds(10, 112, 131, 12);
-		panel_4.add(lblConductor_2);
+
+		final JComboBox<Conductor> cond3 = new JComboBox<Conductor>();
+		cond3.setBounds(95, 198, 185, 20);
+		cond3.addItem(null);
+		panel_2.add(cond3);
+
+		JLabel lblEliminarOmnibus = new JLabel("Eliminar omnibus");
+		lblEliminarOmnibus.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblEliminarOmnibus.setBounds(10, 232, 145, 22);
+		panel_2.add(lblEliminarOmnibus);
+
+		JLabel label_1 = new JLabel("Matricula:");
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_1.setBounds(10, 265, 75, 22);
+		panel_2.add(label_1);
+
+		JComboBox<Conductor> comboBox_2 = new JComboBox<Conductor>();
+		comboBox_2.setBounds(95, 268, 185, 20);
+		panel_2.add(comboBox_2);
+
+		JButton btnEliminar_1 = new JButton("Eliminar");
+		btnEliminar_1.setForeground(Color.BLACK);
+		btnEliminar_1.setBounds(10, 297, 270, 33);
+		panel_2.add(btnEliminar_1);
+
 		
-		final JComboBox<String> estado = new JComboBox<String>();
-		estado.addItem("En carretera");
-		estado.addItem("Disponible");
-		estado.addItem("En reparación");
-		estado.setBounds(10, 141, 185, 20);
-		panel_2.add(estado);
+
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setForeground(Color.BLACK);
@@ -258,98 +281,79 @@ public class Interfaz extends JFrame {
 		lblDatosDelViaje.setBounds(10, 11, 194, 22);
 		panel_5.add(lblDatosDelViaje);
 
-		JLabel lblOrigen = new JLabel("Origen:");
-		lblOrigen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblOrigen.setBounds(10, 44, 75, 22);
-		panel_5.add(lblOrigen);
-
-		JTextField textField_8 = new JTextField();
-		textField_8.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_8.setBounds(10, 77, 185, 20);
-		panel_5.add(textField_8);
-		textField_8.setColumns(10);
-
 		JLabel lblDestino = new JLabel("Destino:");
 		lblDestino.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblDestino.setBounds(215, 44, 75, 22);
+		lblDestino.setBounds(10, 50, 80, 20);
 		panel_5.add(lblDestino);
 
-		JTextField textField_9 = new JTextField();
-		textField_9.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_9.setColumns(10);
-		textField_9.setBounds(215, 77, 185, 20);
-		panel_5.add(textField_9);
+		JTextField txtDestino = new JTextField();
+		txtDestino.setBounds(255, 52, 150, 20);
+		panel_5.add(txtDestino);
 
-		JLabel lblFecha = new JLabel("Fecha:");
-		lblFecha.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblFecha.setBounds(10, 108, 75, 22);
-		panel_5.add(lblFecha);
+		JLabel lblFechaSalida = new JLabel("Fecha y hora de salida:");
+		lblFechaSalida.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblFechaSalida.setBounds(10, 80, 183, 20);
+		panel_5.add(lblFechaSalida);
 
-		JTextField textField_10 = new JTextField();
-		textField_10.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_10.setColumns(10);
-		textField_10.setBounds(10, 141, 185, 20);
-		panel_5.add(textField_10);
+		JTextField txtFechaSalida = new JTextField();
+		txtFechaSalida.setBounds(255, 82, 150, 20);
+		panel_5.add(txtFechaSalida);
 
-		JLabel lblHora = new JLabel("Hora:");
-		lblHora.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblHora.setBounds(215, 108, 75, 22);
-		panel_5.add(lblHora);
+		JLabel lblFechaLlegada = new JLabel("Fecha y hora estimada de llegada:");
+		lblFechaLlegada.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblFechaLlegada.setBounds(10, 110, 234, 20);
+		panel_5.add(lblFechaLlegada);
 
-		JTextField textField_11 = new JTextField();
-		textField_11.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_11.setColumns(10);
-		textField_11.setBounds(215, 141, 185, 20);
-		panel_5.add(textField_11);
+		JTextField txtFechaLlegada = new JTextField();
+		txtFechaLlegada.setBounds(255, 112, 150, 20);
+		panel_5.add(txtFechaLlegada);
 
-		JLabel lblOmnibus = new JLabel("Omnibus:");
+		JLabel lblOmnibus = new JLabel("Ómnibus:");
 		lblOmnibus.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblOmnibus.setBounds(10, 172, 75, 22);
+		lblOmnibus.setBounds(10, 140, 80, 20);
 		panel_5.add(lblOmnibus);
 
-		final JComboBox<Omnibus> comboBoxOmni = new JComboBox<Omnibus>();
-		comboBoxOmni.setBounds(10, 205, 185, 20);
-		panel_5.add(comboBoxOmni);
+		final JComboBox<Omnibus> comBoxOmni = new JComboBox<Omnibus>();
+		comBoxOmni.setBounds(255, 140, 150, 20);
+		panel_5.add(comBoxOmni);
 
-		JButton button_2 = new JButton("Crear Viaje");
-		button_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		button_2.setForeground(Color.BLACK);
-		button_2.setBounds(215, 197, 185, 36);
-		panel_5.add(button_2);
+		JButton btnCrearViaje = new JButton("Crear Viaje");
+		btnCrearViaje.setBounds(10, 200, 395, 30);
+		panel_5.add(btnCrearViaje);
+
+		JComboBox<Omnibus> comboBox = new JComboBox<Omnibus>();
+		comboBox.setBounds(255, 169, 150, 20);
+		panel_5.add(comboBox);
+
+		JLabel lblConductor_3 = new JLabel("Conductor");
+		lblConductor_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblConductor_3.setBounds(10, 169, 80, 20);
+		panel_5.add(lblConductor_3);
 
 		JPanel panel_6 = new JPanel();
 		panel_6.setForeground(Color.BLACK);
 		tabbedPane.addTab("Reserva", null, panel_6, null);
 		panel_6.setLayout(null);
 
-		JLabel lblDatosDeLa = new JLabel("Datos de la reserva");
+		JLabel lblDatosDeLa = new JLabel("Crear reserva");
 		lblDatosDeLa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDatosDeLa.setBounds(10, 11, 194, 22);
 		panel_6.add(lblDatosDeLa);
 
-		JLabel lblNombre_2 = new JLabel("Nombre:");
+		JLabel lblNombre_2 = new JLabel("Pasajero");
 		lblNombre_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNombre_2.setBounds(10, 44, 75, 22);
 		panel_6.add(lblNombre_2);
 
-		JTextField textField_12 = new JTextField();
-		textField_12.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_12.setBounds(10, 77, 185, 20);
-		panel_6.add(textField_12);
-		textField_12.setColumns(10);
-
-		JLabel lblCi_2 = new JLabel("N\u00FAmero Reserva");
+		JLabel lblCi_2 = new JLabel("Número Reserva:");
 		lblCi_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCi_2.setBounds(215, 44, 185, 22);
+		lblCi_2.setBounds(10, 76, 185, 22);
 		panel_6.add(lblCi_2);
 
 		JTextField textField_13 = new JTextField();
 		textField_13.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textField_13.setColumns(10);
-		textField_13.setBounds(215, 77, 185, 20);
+		textField_13.setBounds(138, 77, 145, 20);
 		panel_6.add(textField_13);
 
 		JLabel lblViaje = new JLabel("Viaje:");
@@ -358,55 +362,65 @@ public class Interfaz extends JFrame {
 		panel_6.add(lblViaje);
 
 		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setBounds(10, 141, 185, 20);
+		comboBox_4.setBounds(138, 109, 145, 20);
 		panel_6.add(comboBox_4);
 
 		JLabel lblAsiento = new JLabel("Asiento:");
 		lblAsiento.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblAsiento.setBounds(215, 108, 75, 22);
+		lblAsiento.setBounds(10, 138, 75, 22);
 		panel_6.add(lblAsiento);
-
-		JTextField textField_14 = new JTextField();
-		textField_14.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_14.setColumns(10);
-		textField_14.setBounds(215, 141, 185, 20);
-		panel_6.add(textField_14);
 
 		JLabel lblPrecio = new JLabel("Precio:");
 		lblPrecio.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPrecio.setBounds(10, 172, 75, 22);
 		panel_6.add(lblPrecio);
 
-		JTextField textField_15 = new JTextField();
-		textField_15.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_15.setColumns(10);
-		textField_15.setBounds(10, 205, 185, 20);
-		panel_6.add(textField_15);
+		JButton btnCrear_2 = new JButton("Crear");
+		btnCrear_2.setForeground(Color.BLACK);
+		btnCrear_2.setBounds(10, 205, 273, 36);
+		panel_6.add(btnCrear_2);
 
-		JButton button_3 = new JButton("Crear Reserva");
-		button_3.setForeground(Color.BLACK);
-		button_3.setBounds(10, 236, 185, 36);
-		panel_6.add(button_3);
+		JLabel lblNewLabel = new JLabel("0.00");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setBounds(138, 178, 145, 14);
+		panel_6.add(lblNewLabel);
 
-		JLabel lblEstado = new JLabel("Estado:");
-		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblEstado.setBounds(215, 172, 75, 22);
-		panel_6.add(lblEstado);
+		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3.setBounds(138, 141, 145, 20);
+		panel_6.add(comboBox_3);
 
-		JPanel panel_7 = new JPanel();
-		panel_7.setBounds(215, 200, 185, 72);
-		panel_6.add(panel_7);
-		panel_7.setLayout(null);
+		JComboBox comboBox_5 = new JComboBox();
+		comboBox_5.setBounds(138, 47, 145, 20);
+		panel_6.add(comboBox_5);
 
-		JRadioButton rdbtnPendiente = new JRadioButton("En espera");
-		rdbtnPendiente.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		rdbtnPendiente.setBounds(6, 7, 110, 23);
-		panel_7.add(rdbtnPendiente);
+		JLabel lblCancelarReserva = new JLabel("Cancelar reserva");
+		lblCancelarReserva.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCancelarReserva.setBounds(387, 11, 194, 22);
+		panel_6.add(lblCancelarReserva);
 
-		JRadioButton rdbtnConfirmado = new JRadioButton("Confirmado");
-		rdbtnConfirmado.setBounds(6, 42, 110, 23);
-		panel_7.add(rdbtnConfirmado);
-		rdbtnConfirmado.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JLabel lblNmeroReserva = new JLabel("Número Reserva:");
+		lblNmeroReserva.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNmeroReserva.setBounds(344, 44, 118, 22);
+		panel_6.add(lblNmeroReserva);
+
+		JComboBox comboBox_6 = new JComboBox();
+		comboBox_6.setBounds(468, 47, 145, 20);
+		panel_6.add(comboBox_6);
+
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setForeground(Color.BLACK);
+		btnCancelar.setBounds(340, 110, 273, 36);
+		panel_6.add(btnCancelar);
+
+		JLabel lblReenvolso = new JLabel("Reenvolso:");
+		lblReenvolso.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblReenvolso.setBounds(344, 76, 75, 22);
+		panel_6.add(lblReenvolso);
+
+		JLabel label_2 = new JLabel("0.00");
+		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_2.setBounds(468, 82, 145, 14);
+		panel_6.add(label_2);
 
 		JPanel panel_8 = new JPanel();
 		panel_8.setForeground(Color.BLACK);
@@ -420,30 +434,30 @@ public class Interfaz extends JFrame {
 
 		JLabel lblNombre_3 = new JLabel("Nombre:");
 		lblNombre_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNombre_3.setBounds(10, 44, 75, 22);
+		lblNombre_3.setBounds(10, 44, 60, 22);
 		panel_8.add(lblNombre_3);
 
 		JTextField textField_16 = new JTextField();
 		textField_16.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_16.setBounds(10, 77, 185, 20);
+		textField_16.setBounds(75, 45, 185, 20);
 		panel_8.add(textField_16);
 		textField_16.setColumns(10);
 
 		JLabel lblId = new JLabel("ID:");
 		lblId.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblId.setBounds(215, 44, 75, 22);
+		lblId.setBounds(10, 77, 60, 22);
 		panel_8.add(lblId);
 
 		JTextField textField_17 = new JTextField();
 		textField_17.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textField_17.setColumns(10);
-		textField_17.setBounds(215, 77, 185, 20);
+		textField_17.setBounds(75, 76, 185, 20);
 		panel_8.add(textField_17);
 
-		JButton button_4 = new JButton("Crear Pasajero");
-		button_4.setForeground(Color.BLACK);
-		button_4.setBounds(215, 124, 185, 36);
-		panel_8.add(button_4);
+		JButton btnCrear_3 = new JButton("Crear");
+		btnCrear_3.setForeground(Color.BLACK);
+		btnCrear_3.setBounds(270, 44, 60, 52);
+		panel_8.add(btnCrear_3);
 
 		JPanel panelTerminal = new JPanel();
 		panelTerminal.setForeground(Color.BLACK);
@@ -467,11 +481,11 @@ public class Interfaz extends JFrame {
 		btnConductorMes.setBounds(10, 90, 250, 30);
 		panelTerminal.add(btnConductorMes);
 
-		JButton btnRecaudacionMensual = new JButton("Recaudaci�n �ltimo Mes");
+		JButton btnRecaudacionMensual = new JButton("Recaudación Último Mes");
 		btnRecaudacionMensual.setBounds(10, 130, 250, 30);
 		panelTerminal.add(btnRecaudacionMensual);
 
-		JButton btnListarOmnibus = new JButton("Listado de �mnibus");
+		JButton btnListarOmnibus = new JButton("Listado de Ómnibus");
 		btnListarOmnibus.setBounds(10, 170, 250, 30);
 		panelTerminal.add(btnListarOmnibus);
 
@@ -482,9 +496,9 @@ public class Interfaz extends JFrame {
 		JTextPane textAreaReportes = new JTextPane();
 		textAreaReportes.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textAreaReportes.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textAreaReportes.setBounds(280, 50, 335, 190);
+		textAreaReportes.setBounds(280, 50, 335, 231);
 		panelTerminal.add(textAreaReportes);
-		
+
 		JButton btnImportarDatos = new JButton("Importar Datos");
 		btnImportarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -497,84 +511,88 @@ public class Interfaz extends JFrame {
 				}
 				for(Omnibus o : omnibuses){
 					System.out.println("asd");
-					comboBoxOmni.addItem(o);
+					comBoxOmni.addItem(o);
 				}
 			}
 		});
 		btnImportarDatos.setBounds(10, 251, 250, 30);
 		panelTerminal.add(btnImportarDatos);
 
-		button.addActionListener(new ActionListener() {
+		btnCrear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<String> comodidades = new ArrayList<String>();
+
+				if (!aire.isSelected() && !banyo.isSelected() && !tv.isSelected()) {
+				    JOptionPane.showMessageDialog(null, "Se debe seleccionar al menos una comodidad", "Error", JOptionPane.ERROR_MESSAGE);
+				    throw new IllegalArgumentException("Se debe seleccionar al menos una comodidad");
+				}
+
+				if (aire.isSelected()) {
+				    comodidades.add("Aire acondicionado");
+				}
+				if (banyo.isSelected()) {
+				    comodidades.add("Baño");
+				}
+				if (tv.isSelected()) {
+				    comodidades.add("TV");
+				}
+
+
+				try {
+					Omnibus omnibus = new Omnibus(matriculaOmni.getText(), asientosOmni.getText(), (String) estado.getSelectedItem(), comodidades);
+
+					Conductor conductor1 = (Conductor)cond1.getSelectedItem();
+					Conductor conductor2 = (Conductor)cond2.getSelectedItem();
+					Conductor conductor3 = (Conductor)cond3.getSelectedItem();
+
+					if (conductor1 == null && conductor2 == null && conductor3 == null) {
+						throw new IllegalArgumentException("Debe seleccionar al menos un conductor");
+					}
+
+					omnibus.addConductor(conductor1);
+					omnibus.addConductor(conductor2);
+					omnibus.addConductor(conductor3);
+
+					terminal.addOmnibus(omnibus);
+					comBoxOmni.addItem(omnibus);
+					JOptionPane.showMessageDialog(null, "Ómnibus registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+				} catch (IllegalArgumentException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+
+		});
+		
+		btnCrear_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombreText = nombreConductor.getText();
 				String idText = idConductor.getText();
 				String experienciaText = experienciaConductor.getText();
 				String licenciaText = licenciaConductor.getText();
+				String categoriaText = (String)categoria.getSelectedItem();
 
-				Conductor conductor;
 				try{
-					if (categoriaA.isSelected()) {
+					Conductor conductor = null;
+					if(categoria.equals("A")){
 						conductor = new ConductorA(nombreText, idText, experienciaText, licenciaText);
-					} else if (categoriaB.isSelected()) {
+					}else if(categoria.equals("B")){
 						conductor = new ConductorB(nombreText, idText, experienciaText, licenciaText);
-					} else if (categoriaC.isSelected()) {
+					}else{
 						conductor = new ConductorC(nombreText, idText, experienciaText, licenciaText);
-					} else {
-						throw new IllegalArgumentException("Debe seleccionar una categoría válida (A, B o C)");
 					}
-
+					
+					cond1.addItem(conductor);
+					cond2.addItem(conductor);
+					cond3.addItem(conductor);
 					terminal.addConductor(conductor);
 
 					JOptionPane.showMessageDialog(null, "Conductor registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE); 
 				}catch(IllegalArgumentException e){
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 			}
-		});
-		
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			    ArrayList<String> comodidades = new ArrayList<String>();
-
-			    if (aire.isSelected()) {
-			        comodidades.add("Aire acondicionado");
-			    }
-			    if (banyo.isSelected()) {
-			        comodidades.add("Banyo");
-			    }
-			    if (tv.isSelected()) {
-			        comodidades.add("TV");
-			    }
-
-			    if (comodidades.isEmpty()) {
-			       throw new IllegalArgumentException("Se debe seleccionar al menos una comodidad");
-			    }
-
-			    try {
-			        Omnibus omnibus = new Omnibus(matriculaOmni.getText(), asientosOmni.getText(), (String) estado.getSelectedItem(), comodidades);
-
-			        Conductor conductor1 = (Conductor)cond1.getSelectedItem();
-			        Conductor conductor2 = (Conductor)cond2.getSelectedItem();
-			        Conductor conductor3 = (Conductor)cond3.getSelectedItem();
-			        
-			        if (conductor1 == null && conductor2 == null && conductor3 == null) {
-			            throw new IllegalArgumentException("Debe seleccionar al menos un conductor");
-			        }
-
-			        omnibus.addConductor(conductor1);
-			        omnibus.addConductor(conductor2);
-			        omnibus.addConductor(conductor3);
-			        
-			        terminal.addOmnibus(omnibus);
-			        comboBoxOmni.addItem(omnibus);
-			        JOptionPane.showMessageDialog(null, "Ómnibus registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-			    } catch (IllegalArgumentException e) {
-			        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			    }
-			}
-
 		});
 	}
 }
