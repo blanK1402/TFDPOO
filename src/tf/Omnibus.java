@@ -93,6 +93,6 @@ public class Omnibus {
     
     @Override
     public String toString() {
-        return String.format("%s [%d asientos, %s]", matricula, asientos, disponibilidad);
+        return String.valueOf(matricula);
     }
 }

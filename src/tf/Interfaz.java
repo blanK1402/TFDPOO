@@ -485,19 +485,24 @@ public class Interfaz extends JFrame {
 		textAreaReportes.setBounds(280, 50, 335, 190);
 		panelTerminal.add(textAreaReportes);
 		
-		JButton button_5 = new JButton("Importar Conductores");
-		button_5.addActionListener(new ActionListener() {
+		JButton btnImportarDatos = new JButton("Importar Datos");
+		btnImportarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ArrayList<Conductor> conductores = terminal.getConductores();
+				ArrayList<Omnibus> omnibuses = terminal.getOmnibuses();
 				for(Conductor conductor : conductores){
 					cond1.addItem(conductor);
 					cond2.addItem(conductor);
 					cond3.addItem(conductor);
 				}
+				for(Omnibus o : omnibuses){
+					System.out.println("asd");
+					comboBoxOmni.addItem(o);
+				}
 			}
 		});
-		button_5.setBounds(10, 251, 250, 30);
-		panelTerminal.add(button_5);
+		btnImportarDatos.setBounds(10, 251, 250, 30);
+		panelTerminal.add(btnImportarDatos);
 
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -536,7 +541,7 @@ public class Interfaz extends JFrame {
 			        comodidades.add("Aire acondicionado");
 			    }
 			    if (banyo.isSelected()) {
-			        comodidades.add("Baño");
+			        comodidades.add("Banyo");
 			    }
 			    if (tv.isSelected()) {
 			        comodidades.add("TV");

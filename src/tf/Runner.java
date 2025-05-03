@@ -1,6 +1,5 @@
 package tf;
 
-import java.awt.Container;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,8 +21,12 @@ public class Runner {
 				try {
 					Terminal terminal = new Terminal("Mi Terminal");
 					ArrayList<Conductor> conductores = generarConductores(20);
+					ArrayList<Omnibus> omnibuses = generarOmnibus(20, conductores);
 					for(Conductor conductor : conductores){
 						terminal.addConductor(conductor);
+					}
+					for(Omnibus o : omnibuses){
+						terminal.addOmnibus(o);
 					}
 					Interfaz frame = new Interfaz(terminal);
 					frame.setVisible(true);
@@ -40,9 +43,9 @@ public class Runner {
         
 		for (int i = 0; i < n; i++) {
             String nombre = NOMBRES[random.nextInt(NOMBRES.length)];
-            String id = String.valueOf(i+1); // ID aleatorio positivo
-            String experiencia = String.valueOf(random.nextInt(20)); // Entre 0 y 20 años de experiencia
-            String licencia = String.valueOf(i + 1000); // Licencia de 4 dígitos
+            String id = String.valueOf(i+1); 
+            String experiencia = String.valueOf(random.nextInt(20));
+            String licencia = String.valueOf(i + 1000);
             
             Conductor conductor;
             
@@ -60,6 +63,41 @@ public class Runner {
         }
 
         return conductores;
+    }
+	
+	private static ArrayList<Omnibus> generarOmnibus(int n, ArrayList<Conductor> conductores) {
+        ArrayList<Omnibus> omnibusList = new ArrayList<Omnibus>();
+        ArrayList<String> comodidades = new ArrayList<String>();
+        
+        for (int i = 0; i < n; i++) {
+        	int index = random.nextInt(conductores.size()-4);
+            String matricula = "A" + (random.nextInt(900000) + 100000);
+            String asientos = String.valueOf(random.nextInt(100) + 1);
+            ArrayList<Conductor> misConductores = new ArrayList<Conductor>();
+            String disponibilidad = null;
+            
+            if(i % 2 == 0){
+            	comodidades.add("Aire acondicionado");
+                disponibilidad = "Disponible";
+                misConductores.add(conductores.get(index));
+            }
+            if(i % 3 == 0){
+                disponibilidad = "En carretera";
+                misConductores.add(conductores.get(index+1));
+            }
+            if(i % 5 == 0){
+            	comodidades.add("TV");
+                disponibilidad = "En reparación";
+                misConductores.add(conductores.get(index+2));
+            }
+            
+            comodidades.add("Banyo");
+            disponibilidad = disponibilidad == null ? "Disponible" : disponibilidad;
+            Omnibus omnibus = new Omnibus(matricula, asientos, disponibilidad, comodidades);
+            omnibusList.add(omnibus);
+        }
+        
+        return omnibusList;
     }
 	
 	public Terminal getTerminal(){
