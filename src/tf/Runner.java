@@ -2,11 +2,12 @@ package tf;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 public class Runner {
 	private Terminal terminal;
-	private static final String[] NOMBRES = {
+	private static final String[] nombresList = {
         "Carlos", "Luis", "Ana", "Maria", "Pedro", "Sofia", "Javier", "Elena",
         "Fernando", "Gabriela", "Raúl", "Valentina", "Diego", "Camila", "Miguel",
         "Isabella", "Alejandro", "Lucía", "Eduardo", "Andrea", "Ricardo", "Paula",
@@ -20,14 +21,6 @@ public class Runner {
 			public void run() {
 				try {
 					Terminal terminal = new Terminal("Mi Terminal");
-					ArrayList<Conductor> conductores = generarConductores(20);
-					ArrayList<Omnibus> omnibuses = generarOmnibus(20, conductores);
-					for(Conductor conductor : conductores){
-						terminal.addConductor(conductor);
-					}
-					for(Omnibus o : omnibuses){
-						terminal.addOmnibus(o);
-					}
 					Interfaz frame = new Interfaz(terminal);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -37,13 +30,25 @@ public class Runner {
 		});
 	}
 	
-	private static ArrayList<Conductor> generarConductores(int n) {
+	static ArrayList<Conductor> generarConductores(int n, ArrayList<Conductor> conductoresList) {
 
+		String id;
         ArrayList<Conductor> conductores = new ArrayList<Conductor>();
+        HashSet<Integer> idExistentes = new HashSet<Integer>();
+        
+        for(Conductor c : conductoresList){
+        	idExistentes.add(c.getId());
+        }
         
 		for (int i = 0; i < n; i++) {
-            String nombre = NOMBRES[random.nextInt(NOMBRES.length)];
-            String id = String.valueOf(i+1); 
+            String nombre = nombresList[random.nextInt(nombresList.length)];
+            
+            do{
+            	id = String.valueOf(random.nextInt(10000)); 
+            }while(idExistentes.contains(id));
+            
+            idExistentes.add(Integer.valueOf(id));
+            
             String experiencia = String.valueOf(random.nextInt(20));
             String licencia = String.valueOf(i + 1000);
             
@@ -59,45 +64,60 @@ public class Runner {
             	conductor = new ConductorC(nombre, id, experiencia, licencia);
             }
             
-            conductores .add(conductor);
+            conductores.add(conductor);
         }
 
         return conductores;
     }
 	
-	private static ArrayList<Omnibus> generarOmnibus(int n, ArrayList<Conductor> conductores) {
-        ArrayList<Omnibus> omnibusList = new ArrayList<Omnibus>();
-        ArrayList<String> comodidades = new ArrayList<String>();
-        
-        for (int i = 0; i < n; i++) {
-        	int index = random.nextInt(conductores.size()-4);
-            String matricula = "A" + (random.nextInt(900000) + 100000);
-            String asientos = String.valueOf(random.nextInt(100) + 1);
-            ArrayList<Conductor> misConductores = new ArrayList<Conductor>();
-            String disponibilidad = null;
-            
-            if(i % 2 == 0){
-            	comodidades.add("Aire acondicionado");
-                disponibilidad = "Disponible";
-                misConductores.add(conductores.get(index));
-            }
-            if(i % 3 == 0){
-                disponibilidad = "En carretera";
-                misConductores.add(conductores.get(index+1));
-            }
-            if(i % 5 == 0){
-            	comodidades.add("TV");
-                disponibilidad = "En reparación";
-                misConductores.add(conductores.get(index+2));
-            }
-            
-            comodidades.add("Banyo");
-            disponibilidad = disponibilidad == null ? "Disponible" : disponibilidad;
-            Omnibus omnibus = new Omnibus(matricula, asientos, disponibilidad, comodidades);
-            omnibusList.add(omnibus);
-        }
-        
-        return omnibusList;
+
+	static ArrayList<Omnibus> generarOmnibus(int n, ArrayList<Conductor> conductores, ArrayList<Omnibus> omnibuses) {
+	    ArrayList<Omnibus> omnibusList = new ArrayList<Omnibus>();
+	    ArrayList<String> comodidades = new ArrayList<String>();
+	    HashSet<String> matriculasExistentes = new HashSet<String>();
+
+	    for (Omnibus o : omnibuses) {
+	        matriculasExistentes.add(o.getMatricula());
+	    }
+
+	    Random random = new Random();
+
+	    for (int i = 0; i < n; i++) {
+	        int index = random.nextInt(conductores.size() - 4);
+	        String matricula;
+
+	        do {
+	            matricula = "A" + (random.nextInt(900000) + 100000);
+	        } while (matriculasExistentes.contains(matricula));
+
+	        matriculasExistentes.add(matricula);
+
+	        String asientos = String.valueOf(random.nextInt(100) + 1);
+	        ArrayList<Conductor> misConductores = new ArrayList<Conductor>();
+	        String disponibilidad = null;
+
+	        if (i % 2 == 0) {
+	            comodidades.add("Aire acondicionado");
+	            disponibilidad = "Disponible";
+	            misConductores.add(conductores.get(index));
+	        }
+	        if (i % 3 == 0) {
+	            disponibilidad = "En carretera";
+	            misConductores.add(conductores.get(index + 1));
+	        }
+	        if (i % 5 == 0) {
+	            comodidades.add("TV");
+	            disponibilidad = "En reparación";
+	            misConductores.add(conductores.get(index + 2));
+	        }
+
+	        comodidades.add("Baño");
+	        disponibilidad = (disponibilidad == null) ? "Disponible" : disponibilidad;
+	        Omnibus omnibus = new Omnibus(matricula, asientos, disponibilidad, comodidades);
+	        omnibusList.add(omnibus);
+	    }
+
+	    return omnibusList;
     }
 	
 	public Terminal getTerminal(){
