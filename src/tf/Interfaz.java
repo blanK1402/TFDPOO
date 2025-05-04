@@ -39,6 +39,7 @@ public class Interfaz extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTextField textField_4;
 
 
 	/**
@@ -507,39 +508,34 @@ public class Interfaz extends JFrame {
 		tabbedPane.addTab("Terminal", null, panelTerminal, null);
 		panelTerminal.setLayout(null);
 
-		JLabel lblReportesTerminal = new JLabel("Reportes de Terminal");
-		lblReportesTerminal.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblReportesTerminal.setBounds(10, 11, 250, 22);
-		panelTerminal.add(lblReportesTerminal);
-
 		JButton btnSalariosConductores = new JButton("Ver Salarios Conductores");
 		btnSalariosConductores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnSalariosConductores.setBounds(10, 50, 250, 30);
+		btnSalariosConductores.setBounds(214, 0, 160, 30);
 		panelTerminal.add(btnSalariosConductores);
 
 		JButton btnConductorMes = new JButton("Conductor del Mes");
-		btnConductorMes.setBounds(10, 90, 250, 30);
+		btnConductorMes.setBounds(422, 0, 160, 30);
 		panelTerminal.add(btnConductorMes);
 
 		JButton btnRecaudacionMensual = new JButton("Recaudación Último Mes");
-		btnRecaudacionMensual.setBounds(10, 130, 250, 30);
+		btnRecaudacionMensual.setBounds(214, 41, 160, 30);
 		panelTerminal.add(btnRecaudacionMensual);
 
 		JButton btnListarOmnibus = new JButton("Listado de Ómnibus");
-		btnListarOmnibus.setBounds(10, 170, 250, 30);
+		btnListarOmnibus.setBounds(422, 41, 160, 30);
 		panelTerminal.add(btnListarOmnibus);
 
 		JButton btnListarConductores = new JButton("Listado de Conductores");
-		btnListarConductores.setBounds(10, 210, 250, 30);
+		btnListarConductores.setBounds(10, 0, 160, 30);
 		panelTerminal.add(btnListarConductores);
 
 		JTextPane textAreaReportes = new JTextPane();
 		textAreaReportes.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textAreaReportes.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textAreaReportes.setBounds(280, 50, 335, 231);
+		textAreaReportes.setBounds(10, 87, 335, 238);
 		panelTerminal.add(textAreaReportes);
 
 		JButton btnImportarDatos = new JButton("Importar Datos");
@@ -559,9 +555,38 @@ public class Interfaz extends JFrame {
 				}
 			}
 		});
-		btnImportarDatos.setBounds(10, 251, 250, 30);
+		btnImportarDatos.setBounds(10, 41, 160, 30);
 		panelTerminal.add(btnImportarDatos);
-
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1.setBounds(422, 110, 160, 30);
+		panelTerminal.add(lblNewLabel_1);
+		
+		JLabel lblFechaYHora = new JLabel("Fecha y Hora");
+		lblFechaYHora.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblFechaYHora.setBounds(432, 82, 160, 22);
+		panelTerminal.add(lblFechaYHora);
+		
+		JButton btnNewButton = new JButton("Adelantar dia");
+		btnNewButton.setBounds(422, 151, 160, 23);
+		panelTerminal.add(btnNewButton);
+		
+		JButton btnAdelantarHora = new JButton("Adelantar hora");
+		btnAdelantarHora.setBounds(422, 185, 160, 23);
+		panelTerminal.add(btnAdelantarHora);
+		
+		JButton btnEstablecerNuevaFecha = new JButton("Establecer nueva fecha");
+		btnEstablecerNuevaFecha.setBounds(422, 219, 160, 23);
+		panelTerminal.add(btnEstablecerNuevaFecha);
+		
+		textField_4 = new JTextField();
+		textField_4.setText("11/11/1111");
+		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_4.setColumns(10);
+		textField_4.setBounds(422, 253, 160, 20);
+		panelTerminal.add(textField_4);
+		
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ArrayList<String> comodidades = new ArrayList<String>();
