@@ -1,19 +1,31 @@
 package tf;
 
+import java.util.ArrayList;
+
 public abstract class Conductor {
     protected String nombre;
     protected int id;
     protected int experiencia;
     protected int licencia;
+    protected ArrayList<Viaje> viajes;
     
     public Conductor(String nombre, String id, String experiencia, String licencia) {
+    	viajes = new ArrayList();
         setNombre(nombre);
         setId(id);
         setExperiencia(experiencia);
         setLicencia(licencia);
     }
     
-    public String getNombre() {
+    public ArrayList<Viaje> getViajes() {
+		return viajes;
+	}
+
+	public void addViaje(Viaje viaje) {
+		viajes.add(viaje);
+	}
+
+	public String getNombre() {
         return nombre;
     }
 
@@ -41,7 +53,7 @@ public abstract class Conductor {
                 throw new IllegalArgumentException("El ID debe ser un número positivo");
             }
             this.id = idValue;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("El ID debe ser un número entero válido");
         }
     }
@@ -57,7 +69,7 @@ public abstract class Conductor {
                 throw new IllegalArgumentException("La experiencia no puede ser negativa");
             }
             this.experiencia = expValue;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("La experiencia debe ser un número entero válido");
         }
     }
@@ -73,7 +85,7 @@ public abstract class Conductor {
                 throw new IllegalArgumentException("El número de licencia debe ser positivo");
             }
             this.licencia = licenciaValue;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("La licencia debe ser un número entero válido");
         }
     }

@@ -1,45 +1,99 @@
 package tf;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Viaje {
-	private int id;
-	private LocalDateTime fechaPartida;
+	private String id;
+	private int distancia;
+	private LocalDate fechaPartida;
+	private LocalTime HoraPartida;
+	private LocalDate fechaLlegada;
+	private LocalTime HoraLlegada;
 	private String destino;
-	private LocalDateTime fechaHoraLlegada;
 	private Omnibus omnibus;
 	private Conductor conductor;
 	private ArrayList<Reserva> reservas;
 	
-	public Viaje(int id, LocalDateTime fechaPartida, String destino, LocalDateTime horaLlegada, Omnibus omnibus, Conductor conductor){
+	public Viaje(String id, int distancia, String fechaPartida, String horaPartida, String destino, String fechaLlegada, String horaLlegada, Omnibus omnibus, Conductor conductor){
 		setId(id);
+		setDistancia(distancia);
 		setFechaPartida(fechaPartida);
-		setDestino(destino);
+		setHoraPartida(horaPartida);
+		setFechaLlegada(fechaLlegada);
 		setHoraLlegada(horaLlegada);
+		setDestino(destino);
 		setOmnibus(omnibus);
 		setConductor(conductor);
 		reservas = new ArrayList<Reserva>();
 	}
 	
-	private void setHoraLlegada(LocalDateTime horaLlegada) {
-		this.fechaHoraLlegada = horaLlegada;
+	public int getDistancia() {
+		return distancia;
 	}
-	private LocalDateTime getHoraLlegada() {
-		return fechaHoraLlegada;
+
+	public void setDistancia(int distancia) {
+		this.distancia = distancia;
 	}
-	public void setId(int id){
-		this.id = id; 
-	}
-	public int getId(){
-		return id;
-	}
-	public LocalDateTime getFechaPartida() {
+	
+	public LocalDate getFechaPartida() {
 		return fechaPartida;
 	}
-	public void setFechaPartida(LocalDateTime fechaPartida) {
-		this.fechaPartida = fechaPartida;
+
+	public void setFechaPartida(String fechaPartida) throws IllegalArgumentException{
+		try{
+			this.fechaPartida = LocalDate.parse(fechaPartida, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}catch(Exception e){
+			throw new IllegalArgumentException("Formato de fecha salida incorrecto, fotmato esperado hh:mm:ss");
+		}
+		
+	}
+
+	public LocalTime getHoraPartida() {
+		return HoraPartida;
+	}
+
+	public void setHoraPartida(String horaPartida) throws IllegalArgumentException{
+		try{
+			HoraPartida = LocalTime.parse(horaPartida, DateTimeFormatter.ofPattern("HH:mm:ss"));
+		}catch(Exception e){
+			throw new IllegalArgumentException("Formato de hora salida incorrecto, fotmato esperado hh:mm:ss");
+		}
+	}
+
+	public LocalDate getFechaLlegada() {
+		return fechaLlegada;
+	}
+
+	public void setFechaLlegada(String fechaLlegada) throws IllegalArgumentException{
+		try{
+			this.fechaLlegada = LocalDate.parse(fechaLlegada, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}catch(Exception e){
+			throw new IllegalArgumentException("Formato de fecha llegada incorrecto, fotmato esperado dd/mm/yyyy");
+		}
+		
+	}
+
+	public LocalTime getHoraLlegada() {
+		return HoraLlegada;
+	}
+
+	public void setHoraLlegada(String horaLlegada) throws IllegalArgumentException{
+		try{
+			HoraLlegada = HoraPartida = LocalTime.parse(horaLlegada, DateTimeFormatter.ofPattern("HH:mm:ss"));
+		}catch(Exception e){
+			throw new IllegalArgumentException("Formato de hora llegada incorrecto, fotmato esperado hh:mm:ss");
+		}
+	}
+	
+	public void setId(String id2){
+		this.id = id2; 
+	}
+	public String getId(){
+		return id;
 	}
 	public String getDestino() {
 		return destino;

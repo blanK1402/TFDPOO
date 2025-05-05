@@ -6,6 +6,6 @@ public class ConductorA extends Conductor{
 	}
 
 	public double calcularSalario(){
-		return 600 + 0.3*500*experiencia;
+		return 600 + 0.3 * 500 * experiencia;
 	}
 }

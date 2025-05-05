@@ -45,7 +45,7 @@ public class Omnibus {
             throw new IllegalArgumentException("La matrícula no puede estar vacía");
         }
         if (!mat.matches("^[A-Z]\\d{6}$")) {
-            throw new IllegalArgumentException("La matrícula tiene formato LetraMayuscula-######");
+            throw new IllegalArgumentException("La matrícula tiene formato LetraMayuscula######");
         }
         this.matricula = mat;
     }
@@ -60,7 +60,7 @@ public class Omnibus {
                 throw new IllegalArgumentException("Los asientos deben ser un número entre 1 y 100");
             }
             this.asientos = num;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("Los asientos deben ser un número", e);
         }
     }
