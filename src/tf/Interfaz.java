@@ -421,7 +421,7 @@ public class Interfaz extends JFrame {
 		lblCi_2.setBounds(10, 76, 123, 22);
 		panel_6.add(lblCi_2);
 
-		JTextField textField_13 = new JTextField();
+		final JTextField textField_13 = new JTextField();
 		textField_13.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textField_13.setColumns(10);
 		textField_13.setBounds(138, 77, 167, 20);
@@ -431,10 +431,6 @@ public class Interfaz extends JFrame {
 		lblViaje.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblViaje.setBounds(10, 108, 118, 22);
 		panel_6.add(lblViaje);
-
-		final JComboBox<Viaje> comboBoxViaje = new JComboBox<Viaje>();
-		comboBoxViaje.setBounds(138, 109, 167, 20);
-		panel_6.add(comboBoxViaje);
 
 		JLabel lblAsiento = new JLabel("Asiento:");
 		lblAsiento.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -446,19 +442,14 @@ public class Interfaz extends JFrame {
 		lblPrecio.setBounds(10, 172, 123, 22);
 		panel_6.add(lblPrecio);
 
-		JButton btnCrear_2 = new JButton("Crear");
-		btnCrear_2.setForeground(Color.BLACK);
-		btnCrear_2.setBounds(10, 205, 295, 36);
-		panel_6.add(btnCrear_2);
+		final JLabel labelPrecio = new JLabel("0.00");
+		labelPrecio.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		labelPrecio.setBounds(138, 178, 167, 14);
+		panel_6.add(labelPrecio);
 
-		JLabel lblNewLabel = new JLabel("0.00");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel.setBounds(138, 178, 167, 14);
-		panel_6.add(lblNewLabel);
-
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(138, 141, 167, 20);
-		panel_6.add(comboBox_3);
+		final JComboBox<Integer> comboBoxAsiento = new JComboBox();
+		comboBoxAsiento.setBounds(138, 141, 167, 20);
+		panel_6.add(comboBoxAsiento);
 
 		final JComboBox<Pasajero> comboBoxP = new JComboBox();
 		comboBoxP.setBounds(138, 47, 167, 20);
@@ -527,6 +518,18 @@ public class Interfaz extends JFrame {
 		txtReportes.setBounds(10, 87, 378, 238);
 		panelTerminal.add(txtReportes);
 
+		final JComboBox<Viaje> comboBoxViaje = new JComboBox<Viaje>();
+		comboBoxViaje.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Viaje viaje = (Viaje) comboBoxViaje.getSelectedItem();
+				for(int asiento : viaje.getAsientos(0)){
+					comboBoxAsiento.addItem(asiento);
+				}
+				labelPrecio.setText(String.valueOf(viaje.precio()));
+			}
+		});
+		comboBoxViaje.setBounds(138, 109, 167, 20);
+		panel_6.add(comboBoxViaje);
 
 		JButton btnCrearViaje = new JButton("Crear Viaje");
 		btnCrearViaje.addActionListener(new ActionListener() {
@@ -568,7 +571,10 @@ public class Interfaz extends JFrame {
 
 					}
 					for(Omnibus omnibus : omnibuses){
-						terminal.addOmnibus(omnibus);
+						if(omnibus.getDisponibilidad().equals("Disponible")){
+							terminal.addOmnibus(omnibus);
+						}
+						
 						comBoxOmni.addItem(omnibus);
 					}
 				}catch(Exception e){
@@ -600,6 +606,32 @@ public class Interfaz extends JFrame {
 			}
 		});
 
+		JButton btnCrear_2 = new JButton("Crear");
+		btnCrear_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					Viaje viaje = (Viaje) comboBoxViaje.getSelectedItem();
+					float labelPrecio = viaje.precio();
+					Pasajero p = (Pasajero) comboBoxP.getSelectedItem();
+					String numReserva = textField_13.getText();
+					int asiento = (Integer) comboBoxAsiento.getSelectedItem();
+					try{
+						Reserva r = new Reserva(p, numReserva, viaje.getDestino(), terminal.getFechaHora(), terminal.getFechaHora().plusHours(4), asiento);
+						terminal.addReserva(r);
+						comboBoxAsiento.removeItemAt(comboBoxAsiento.getSelectedIndex());
+						JOptionPane.showMessageDialog(null, "Reserva anadida correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+					}catch(Exception e){
+						JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnCrear_2.setForeground(Color.BLACK);
+		btnCrear_2.setBounds(10, 205, 295, 36);
+		panel_6.add(btnCrear_2);
+		
 		JButton btnNewButton = new JButton("Adelantar dia");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

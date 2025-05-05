@@ -98,7 +98,7 @@ public class Terminal {
 		return enEspera;
 	}
 
-	public void addReserva(Reserva reserva){
+	public void addReserva(Reserva reserva) throws IllegalArgumentException{
 		int newId = reserva.getNumReserva();
 		int i = 0;
 		while(i < reservas.size() && reservas.get(i).getNumReserva() != newId){

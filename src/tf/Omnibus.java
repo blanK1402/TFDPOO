@@ -1,8 +1,6 @@
 package tf;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class Omnibus {
     private String matricula;
@@ -87,7 +85,15 @@ public class Omnibus {
 
         }
     }
-    
+    public ArrayList<Integer> getAsientosList(){
+    	ArrayList<Integer> asientosList = new ArrayList<Integer>();
+    	int i = 1;
+    	while(i <= asientos){
+    		asientosList.add(i);
+    		i+=1;
+    	}
+    	return asientosList;
+    }
     @Override
     public String toString() {
         return String.valueOf(matricula);

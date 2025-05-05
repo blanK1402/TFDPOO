@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Viaje {
 	private String id;
@@ -82,6 +83,20 @@ public class Viaje {
 		}
 	}
 
+	public ArrayList<Integer> getAsientos(int n){
+		ArrayList<Integer> ocupados = new ArrayList<Integer>();
+		ArrayList<Integer> libres = new ArrayList<Integer>();
+		for(Reserva r : reservas){
+			ocupados.add(r.getAsiento());
+		}
+		for(int num : omnibus.getAsientosList()){
+			if(!(ocupados.contains(num))){
+				libres.add(num);
+			}
+		}
+		return n == 1 ? ocupados : libres;
+	}
+	
 	public LocalDate getFechaLlegada() {
 		return fechaLlegada;
 	}
