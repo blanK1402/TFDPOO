@@ -66,9 +66,6 @@ public class Omnibus {
     }
     
     public void setComodidades(ArrayList<String> comodidades) throws IllegalArgumentException{
-        if (comodidades.isEmpty()){
-        	throw new IllegalArgumentException("Debe seleccionar al menos una comodidad");
-        }
         this.comodidades = comodidades;
     }
     

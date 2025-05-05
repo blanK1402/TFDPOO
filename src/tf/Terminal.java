@@ -70,7 +70,7 @@ public class Terminal {
 	public void addPasajero(Pasajero nuevoPasajero){
 		int newId = nuevoPasajero.getId();
 		int i = 0;
-		while(pasajeros.get(i).getId() != newId){
+		while(i < pasajeros.size() && pasajeros.get(i).getId() != newId){
 			i++;
 		}
 		if(i != pasajeros.size()){
@@ -142,6 +142,9 @@ public class Terminal {
 		if(i != viajes.size()){
 			throw new IllegalArgumentException("Ya existe un viaje con ese ID");
 		}
+		if(viaje.getFechaPartida().isBefore(fechaHora.toLocalDate())){
+			throw new IllegalArgumentException("La fecha de partida debe ser mayor a la fecha actual");
+		}
 		viajes.add(viaje);
 	}
 
@@ -189,8 +192,10 @@ public class Terminal {
 
 	    return reporte.toString();
 	}
-
-
+	
+	public LocalDateTime calcularFechaEstimada(String destino, LocalDateTime fechaPartida){
+		return fechaPartida.plusHours(distancias.get(destino)/55);
+	}
 	
 	public void addConductor(Conductor conductor){
 		int newId = conductor.getId();

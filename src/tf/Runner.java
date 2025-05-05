@@ -99,16 +99,13 @@ public class Runner {
 	        misConductores.add(conductores.get(index));
 
 	        if (i % 2 == 0) {
-	            comodidades.add("Aire acondicionado");
+	        	comodidades.add("TV");
+	        	misConductores.add(conductores.get(index + 1));
 	        }
 	        if (i % 3 == 0 && index + 1 < conductores.size()) {
-	            misConductores.add(conductores.get(index + 1));
-	        }
-	        if (i % 5 == 0 && index + 2 < conductores.size()) {
-	            comodidades.add("TV");
+	        	comodidades.add("Aire acondicionado");
 	            misConductores.add(conductores.get(index + 2));
 	        }
-
 	        comodidades.add("Baño");
 
 	        Omnibus omnibus = new Omnibus(matricula, asientos, "Disponible", comodidades);

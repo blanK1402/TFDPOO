@@ -28,6 +28,9 @@ import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Interfaz extends JFrame {
@@ -40,7 +43,6 @@ public class Interfaz extends JFrame {
 	private JTextField textField;
 	private JTextField idViaje;
 	private JTextField txtHoraSalida;
-	private JTextField txtFechaLlegada;
 	private JTextField txtDdmmaaaa;
 	private JTextField txtHoraminsegundo;
 	private JTextPane txtReportes;
@@ -62,6 +64,38 @@ public class Interfaz extends JFrame {
 		tabbedPane.setBounds(0, 11, 628, 432);
 		contentPane.add(tabbedPane);
 
+		JPanel panel_8 = new JPanel();
+		panel_8.setForeground(Color.BLACK);
+		tabbedPane.addTab("Pasajero", null, panel_8, null);
+		panel_8.setLayout(null);
+
+		JLabel lblDatosDelPasajero = new JLabel("Datos del pasajero");
+		lblDatosDelPasajero.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDatosDelPasajero.setBounds(10, 11, 194, 22);
+		panel_8.add(lblDatosDelPasajero);
+
+		JLabel lblNombre_3 = new JLabel("Nombre:");
+		lblNombre_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNombre_3.setBounds(10, 44, 60, 22);
+		panel_8.add(lblNombre_3);
+
+		final JTextField nombrePasajero = new JTextField();
+		nombrePasajero.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		nombrePasajero.setBounds(75, 45, 185, 20);
+		panel_8.add(nombrePasajero);
+		nombrePasajero.setColumns(10);
+
+		JLabel lblId = new JLabel("ID:");
+		lblId.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblId.setBounds(10, 77, 60, 22);
+		panel_8.add(lblId);
+
+		final JTextField idPasajero = new JTextField();
+		idPasajero.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		idPasajero.setColumns(10);
+		idPasajero.setBounds(75, 76, 185, 20);
+		panel_8.add(idPasajero);
+		
 		JPanel panel = new JPanel();
 		panel.setForeground(Color.BLACK);
 		tabbedPane.addTab("Conductor", null, panel, null);
@@ -255,24 +289,21 @@ public class Interfaz extends JFrame {
 		btnEliminar_1.setForeground(Color.BLACK);
 		btnEliminar_1.setBounds(361, 73, 225, 33);
 		panel_2.add(btnEliminar_1);
-		
-				final JRadioButton aire = new JRadioButton("aire");
-				aire.setBounds(102, 228, 53, 23);
-				panel_2.add(aire);
-				aire.setFont(new Font("Tahoma", Font.PLAIN, 15));
-				
-						final JRadioButton banyo = new JRadioButton("baño");
-						banyo.setBounds(154, 228, 63, 23);
-						panel_2.add(banyo);
-						banyo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-						
-								final JRadioButton tv = new JRadioButton("TV");
-								tv.setBounds(216, 228, 45, 23);
-								panel_2.add(tv);
-								tv.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-		
+		final JRadioButton aire = new JRadioButton("aire");
+		aire.setBounds(102, 228, 53, 23);
+		panel_2.add(aire);
+		aire.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
+		final JRadioButton banyo = new JRadioButton("baño");
+		banyo.setBounds(154, 228, 63, 23);
+		panel_2.add(banyo);
+		banyo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		final JRadioButton tv = new JRadioButton("TV");
+		tv.setBounds(216, 228, 45, 23);
+		panel_2.add(tv);
+		tv.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setForeground(Color.BLACK);
@@ -298,78 +329,60 @@ public class Interfaz extends JFrame {
 		txtFechaSalida.setBounds(192, 112, 150, 20);
 		panel_5.add(txtFechaSalida);
 
-		JLabel lblFechaLlegada = new JLabel("Fecha estimada llegada:");
-		lblFechaLlegada.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblFechaLlegada.setBounds(10, 172, 173, 20);
-		panel_5.add(lblFechaLlegada);
-
-		final JTextField txtHoraLlegada = new JTextField();
-		txtHoraLlegada.setBounds(192, 207, 150, 20);
-		panel_5.add(txtHoraLlegada);
-
 		JLabel lblOmnibus = new JLabel("Ómnibus:");
 		lblOmnibus.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblOmnibus.setBounds(10, 236, 80, 20);
+		lblOmnibus.setBounds(10, 172, 80, 20);
 		panel_5.add(lblOmnibus);
 
 		final JComboBox<Omnibus> comBoxOmni = new JComboBox<Omnibus>();
-		comBoxOmni.setBounds(192, 238, 150, 20);
+		comBoxOmni.setBounds(192, 174, 150, 20);
 		panel_5.add(comBoxOmni);
 
 		final JComboBox<Conductor> comboBoxCond = new JComboBox<Conductor>();
-		comboBoxCond.setBounds(192, 273, 150, 20);
+		comboBoxCond.setBounds(192, 205, 150, 20);
 		panel_5.add(comboBoxCond);
 
 		JLabel lblConductor_3 = new JLabel("Conductor");
 		lblConductor_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblConductor_3.setBounds(10, 267, 80, 20);
+		lblConductor_3.setBounds(10, 203, 80, 20);
 		panel_5.add(lblConductor_3);
-		
+
 		JLabel lblId_1 = new JLabel("ID:");
 		lblId_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblId_1.setBounds(10, 49, 80, 20);
 		panel_5.add(lblId_1);
-		
+
 		idViaje = new JTextField();
 		idViaje.setBounds(192, 51, 150, 20);
 		panel_5.add(idViaje);
-		
+
 		JLabel lblHoraDeSalida = new JLabel("Hora de salida:");
 		lblHoraDeSalida.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblHoraDeSalida.setBounds(10, 141, 173, 20);
 		panel_5.add(lblHoraDeSalida);
-		
-		JLabel lblHoraEstimadaDe = new JLabel("Hora estimada llegada:");
-		lblHoraEstimadaDe.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblHoraEstimadaDe.setBounds(10, 203, 173, 20);
-		panel_5.add(lblHoraEstimadaDe);
-		
+
 		txtHoraSalida = new JTextField();
 		txtHoraSalida.setBounds(192, 141, 150, 20);
 		panel_5.add(txtHoraSalida);
-		
-		txtFechaLlegada = new JTextField();
-		txtFechaLlegada.setBounds(192, 174, 150, 20);
-		panel_5.add(txtFechaLlegada);
-		
+
 		JLabel lblEliminarViaje = new JLabel("Eliminar viaje");
 		lblEliminarViaje.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblEliminarViaje.setBounds(386, 11, 119, 22);
 		panel_5.add(lblEliminarViaje);
-		
+
 		JLabel label_4 = new JLabel("ID:");
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		label_4.setBounds(363, 49, 37, 20);
 		panel_5.add(label_4);
-		
+
 		JComboBox<Omnibus> comboBox_1 = new JComboBox<Omnibus>();
 		comboBox_1.setBounds(386, 51, 150, 20);
 		panel_5.add(comboBox_1);
-		
+
 		JButton btnEliminarViaje = new JButton("Eliminar viaje");
 		btnEliminarViaje.setBounds(363, 77, 173, 30);
 		panel_5.add(btnEliminarViaje);
-		
+
 		final JComboBox destinoViaje = new JComboBox();
 		destinoViaje.addItem("Pinar del Río");
 		destinoViaje.addItem("Artemisa");
@@ -400,56 +413,56 @@ public class Interfaz extends JFrame {
 
 		JLabel lblNombre_2 = new JLabel("Pasajero");
 		lblNombre_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNombre_2.setBounds(10, 44, 75, 22);
+		lblNombre_2.setBounds(10, 44, 123, 22);
 		panel_6.add(lblNombre_2);
 
 		JLabel lblCi_2 = new JLabel("Número Reserva:");
 		lblCi_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCi_2.setBounds(10, 76, 185, 22);
+		lblCi_2.setBounds(10, 76, 123, 22);
 		panel_6.add(lblCi_2);
 
 		JTextField textField_13 = new JTextField();
 		textField_13.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textField_13.setColumns(10);
-		textField_13.setBounds(138, 77, 145, 20);
+		textField_13.setBounds(138, 77, 167, 20);
 		panel_6.add(textField_13);
 
 		JLabel lblViaje = new JLabel("Viaje:");
 		lblViaje.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblViaje.setBounds(10, 108, 75, 22);
+		lblViaje.setBounds(10, 108, 118, 22);
 		panel_6.add(lblViaje);
 
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setBounds(138, 109, 145, 20);
-		panel_6.add(comboBox_4);
+		final JComboBox<Viaje> comboBoxViaje = new JComboBox<Viaje>();
+		comboBoxViaje.setBounds(138, 109, 167, 20);
+		panel_6.add(comboBoxViaje);
 
 		JLabel lblAsiento = new JLabel("Asiento:");
 		lblAsiento.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblAsiento.setBounds(10, 138, 75, 22);
+		lblAsiento.setBounds(10, 138, 123, 22);
 		panel_6.add(lblAsiento);
 
 		JLabel lblPrecio = new JLabel("Precio:");
 		lblPrecio.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblPrecio.setBounds(10, 172, 75, 22);
+		lblPrecio.setBounds(10, 172, 123, 22);
 		panel_6.add(lblPrecio);
 
 		JButton btnCrear_2 = new JButton("Crear");
 		btnCrear_2.setForeground(Color.BLACK);
-		btnCrear_2.setBounds(10, 205, 273, 36);
+		btnCrear_2.setBounds(10, 205, 295, 36);
 		panel_6.add(btnCrear_2);
 
 		JLabel lblNewLabel = new JLabel("0.00");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel.setBounds(138, 178, 145, 14);
+		lblNewLabel.setBounds(138, 178, 167, 14);
 		panel_6.add(lblNewLabel);
 
 		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(138, 141, 145, 20);
+		comboBox_3.setBounds(138, 141, 167, 20);
 		panel_6.add(comboBox_3);
 
-		JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setBounds(138, 47, 145, 20);
-		panel_6.add(comboBox_5);
+		final JComboBox<Pasajero> comboBoxP = new JComboBox();
+		comboBoxP.setBounds(138, 47, 167, 20);
+		panel_6.add(comboBoxP);
 
 		JLabel lblCancelarReserva = new JLabel("Cancelar reserva");
 		lblCancelarReserva.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -479,43 +492,6 @@ public class Interfaz extends JFrame {
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		label_2.setBounds(468, 82, 145, 14);
 		panel_6.add(label_2);
-
-		JPanel panel_8 = new JPanel();
-		panel_8.setForeground(Color.BLACK);
-		tabbedPane.addTab("Pasajero", null, panel_8, null);
-		panel_8.setLayout(null);
-
-		JLabel lblDatosDelPasajero = new JLabel("Datos del pasajero");
-		lblDatosDelPasajero.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDatosDelPasajero.setBounds(10, 11, 194, 22);
-		panel_8.add(lblDatosDelPasajero);
-
-		JLabel lblNombre_3 = new JLabel("Nombre:");
-		lblNombre_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNombre_3.setBounds(10, 44, 60, 22);
-		panel_8.add(lblNombre_3);
-
-		JTextField textField_16 = new JTextField();
-		textField_16.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_16.setBounds(75, 45, 185, 20);
-		panel_8.add(textField_16);
-		textField_16.setColumns(10);
-
-		JLabel lblId = new JLabel("ID:");
-		lblId.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblId.setBounds(10, 77, 60, 22);
-		panel_8.add(lblId);
-
-		JTextField textField_17 = new JTextField();
-		textField_17.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_17.setColumns(10);
-		textField_17.setBounds(75, 76, 185, 20);
-		panel_8.add(textField_17);
-
-		JButton btnCrear_3 = new JButton("Crear");
-		btnCrear_3.setForeground(Color.BLACK);
-		btnCrear_3.setBounds(270, 44, 87, 52);
-		panel_8.add(btnCrear_3);
 
 		JPanel panelTerminal = new JPanel();
 		panelTerminal.setForeground(Color.BLACK);
@@ -551,7 +527,7 @@ public class Interfaz extends JFrame {
 		txtReportes.setBounds(10, 87, 378, 238);
 		panelTerminal.add(txtReportes);
 
-		
+
 		JButton btnCrearViaje = new JButton("Crear Viaje");
 		btnCrearViaje.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -560,58 +536,60 @@ public class Interfaz extends JFrame {
 				Omnibus omnibus = (Omnibus) comBoxOmni.getSelectedItem();
 				String fechaSalida = txtFechaSalida.getText();
 				String horaSalida = txtHoraSalida.getText();
-				String fechaLlegada = txtFechaLlegada.getText();
-				String horaLlegada = txtHoraLlegada.getText();
+				LocalDate auxFecha = LocalDate.parse(fechaSalida, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				LocalTime auxHora = LocalTime.parse(horaSalida ,DateTimeFormatter.ofPattern("HH:mm:ss"));
+				LocalDateTime estimado = terminal.calcularFechaEstimada(destino, auxFecha.atTime(auxHora));
 				String id = idViaje.getText();
-				
+
 				try{
-					Viaje viaje = new Viaje(id, terminal.getDistancia(destino), fechaSalida, horaSalida, destino, fechaLlegada, horaLlegada, omnibus, conductor);
+					Viaje viaje = new Viaje(id, terminal.getDistancia(destino), fechaSalida, horaSalida, destino, estimado.toLocalDate(), estimado.toLocalTime(), omnibus, conductor);
 					terminal.addViaje(viaje);
 					conductor.addViaje(viaje);
+					comboBoxViaje.addItem(viaje);
 					JOptionPane.showMessageDialog(null, "Viaje registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 				}catch(IllegalArgumentException e){
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		btnCrearViaje.setBounds(10, 304, 334, 30);
+		btnCrearViaje.setBounds(10, 236, 334, 30);
 		panel_5.add(btnCrearViaje);
 		JButton btnImportarDatos = new JButton("Importar Datos");
 		btnImportarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			    try{
-			    	ArrayList<Conductor> conductores = Runner.generarConductores(20, terminal.getConductores(), terminal.getNombresList());
+				try{
+					ArrayList<Conductor> conductores = Runner.generarConductores(20, terminal.getConductores(), terminal.getNombresList());
 					ArrayList<Omnibus> omnibuses = Runner.generarOmnibus(20, conductores, terminal.getOmnibuses());
 					for(Conductor conductor : conductores){
 						terminal.addConductor(conductor);
 						cond1.addItem(conductor);
 						cond2.addItem(conductor);
 						cond3.addItem(conductor);
-						
+
 					}
 					for(Omnibus omnibus : omnibuses){
 						terminal.addOmnibus(omnibus);
 						comBoxOmni.addItem(omnibus);
 					}
-			    }catch(Exception e){
-			    	JOptionPane.showMessageDialog(null, "Ya se encuentran los datos en el sistema", "Error", JOptionPane.ERROR_MESSAGE);
-			    }
-				
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Ya se encuentran los datos en el sistema", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+
 			}
 		});
 		btnImportarDatos.setBounds(10, 41, 175, 30);
 		panelTerminal.add(btnImportarDatos);
-		
+
 		final JLabel lblNewLabel_1 = new JLabel("Dia: " + terminal.getFechaHora().toLocalDate().format(DateTimeFormatter.ofPattern(("dd/MM/yyyy"))));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_1.setBounds(422, 110, 160, 30);
 		panelTerminal.add(lblNewLabel_1);
-		
+
 		JLabel lblFechaYHora = new JLabel("Fecha y Hora");
 		lblFechaYHora.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblFechaYHora.setBounds(432, 82, 160, 22);
 		panelTerminal.add(lblFechaYHora);
-		
+
 		comBoxOmni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBoxCond.removeAllItems();
@@ -621,7 +599,7 @@ public class Interfaz extends JFrame {
 				}
 			}
 		});
-		
+
 		JButton btnNewButton = new JButton("Adelantar dia");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -631,28 +609,28 @@ public class Interfaz extends JFrame {
 		});
 		btnNewButton.setBounds(422, 178, 160, 23);
 		panelTerminal.add(btnNewButton);
-		
+
 		txtDdmmaaaa = new JTextField();
 		txtDdmmaaaa.setText("dd/mm/aaaa");
 		txtDdmmaaaa.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtDdmmaaaa.setColumns(10);
 		txtDdmmaaaa.setBounds(473, 280, 109, 20);
 		panelTerminal.add(txtDdmmaaaa);
-		
+
 		JButton btnEstablecerNuevaFecha = new JButton("Establecer fecha");
 		btnEstablecerNuevaFecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 			}
 		});
 		btnEstablecerNuevaFecha.setBounds(422, 246, 160, 23);
 		panelTerminal.add(btnEstablecerNuevaFecha);
-		
+
 		final JLabel label_3 = new JLabel("Hora: " + terminal.getFechaHora().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		label_3.setBounds(422, 137, 160, 30);
 		panelTerminal.add(label_3);
-		
+
 		JButton btnAdelantarHora = new JButton("Adelantar hora");
 		btnAdelantarHora.setBounds(422, 212, 160, 23);
 		panelTerminal.add(btnAdelantarHora);
@@ -662,43 +640,37 @@ public class Interfaz extends JFrame {
 				label_3.setText("Hora: " + terminal.getFechaHora().toLocalTime().format(DateTimeFormatter.ofPattern(("HH:mm:ss"))));
 			}
 		});
-		
+
 		JLabel lblFecha = new JLabel("Fecha:");
 		lblFecha.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblFecha.setBounds(422, 284, 46, 14);
 		panelTerminal.add(lblFecha);
-		
+
 		JLabel lblHora = new JLabel("Hora:");
 		lblHora.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblHora.setBounds(422, 311, 46, 14);
 		panelTerminal.add(lblHora);
-		
+
 		txtHoraminsegundo = new JTextField();
 		txtHoraminsegundo.setText("hh:mm:ss");
 		txtHoraminsegundo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtHoraminsegundo.setColumns(10);
 		txtHoraminsegundo.setBounds(473, 309, 109, 20);
 		panelTerminal.add(txtHoraminsegundo);
-		
+
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ArrayList<String> comodidades = new ArrayList<String>();
 
-				if (!aire.isSelected() && !banyo.isSelected() && !tv.isSelected()) {
-				    JOptionPane.showMessageDialog(null, "Se debe seleccionar al menos una comodidad", "Error", JOptionPane.ERROR_MESSAGE);
-				    throw new IllegalArgumentException("Se debe seleccionar al menos una comodidad");
-				}
-
 				if (aire.isSelected()) {
-				    comodidades.add("Aire acondicionado");
+					comodidades.add("Aire acondicionado");
 				}
 				if (banyo.isSelected()) {
-				    comodidades.add("Baño");
+					comodidades.add("Baño");
 				}
 				if (tv.isSelected()) {
-				    comodidades.add("TV");
+					comodidades.add("TV");
 				}
-
 
 				try {
 					Omnibus omnibus = new Omnibus(matriculaOmni.getText(), asientosOmni.getText(), (String) estado.getSelectedItem(), comodidades);
@@ -725,7 +697,7 @@ public class Interfaz extends JFrame {
 			}
 
 		});
-		
+
 		JButton btnSalariosConductores = new JButton("Ver Salarios Conductores");
 		btnSalariosConductores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -734,7 +706,7 @@ public class Interfaz extends JFrame {
 		});
 		btnSalariosConductores.setBounds(213, 0, 175, 30);
 		panelTerminal.add(btnSalariosConductores);
-		
+
 		btnCrear_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombreText = nombreConductor.getText();
@@ -752,13 +724,13 @@ public class Interfaz extends JFrame {
 					}else{
 						conductor = new ConductorC(nombreText, idText, experienciaText, licenciaText);
 					}
-					
+
 					terminal.addConductor(conductor);
 
 					cond1.addItem(conductor);
 					cond2.addItem(conductor);
 					cond3.addItem(conductor);
-					
+
 					JOptionPane.showMessageDialog(null, "Conductor registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE); 
 				}catch(IllegalArgumentException e){
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -767,6 +739,26 @@ public class Interfaz extends JFrame {
 			}
 		});
 		
+		JButton btnCrear_3 = new JButton("Crear");
+		btnCrear_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String nombre = nombrePasajero.getText();
+				String id = idPasajero.getText();
+				
+				try{
+					Pasajero p = new Pasajero(nombre, id);
+					terminal.addPasajero(p);
+					comboBoxP.addItem(p);
+					JOptionPane.showMessageDialog(null, "Pasajero registrado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnCrear_3.setForeground(Color.BLACK);
+		btnCrear_3.setBounds(270, 44, 87, 52);
+		panel_8.add(btnCrear_3);
+
 		JButton btnListarConductores = new JButton("Listado de Conductores");
 		btnListarConductores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -775,7 +767,7 @@ public class Interfaz extends JFrame {
 		});
 		btnListarConductores.setBounds(10, 0, 175, 30);
 		panelTerminal.add(btnListarConductores);
-		
+
 	}
 	public boolean getTxtReportesAutoscrolls() {
 		return txtReportes.getAutoscrolls();
@@ -783,4 +775,5 @@ public class Interfaz extends JFrame {
 	public void setTxtReportesAutoscrolls(boolean autoscrolls) {
 		txtReportes.setAutoscrolls(autoscrolls);
 	}
+	
 }
