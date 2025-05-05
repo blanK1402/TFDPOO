@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Viaje {
-	private String id;
+	private int id;
 	private int distancia;
 	private LocalDate fechaPartida;
 	private LocalTime horaPartida;
@@ -113,10 +113,10 @@ public class Viaje {
 		this.horaLlegada = hora;
 	}
 	
-	public void setId(String id2){
-		this.id = id2; 
+	public void setId(String id){
+		this.id = Integer.parseInt(id); 
 	}
-	public String getId(){
+	public int getId(){
 		return id;
 	}
 	public String getDestino() {

@@ -498,7 +498,12 @@ public class Interfaz extends JFrame {
 		btnConductorMes.setBounds(422, 0, 170, 30);
 		panelTerminal.add(btnConductorMes);
 
-		JButton btnRecaudacionMensual = new JButton("Recaudación Último Mes");
+		JButton btnRecaudacionMensual = new JButton("Listado de Pasajeros");
+		btnRecaudacionMensual.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtReportes.setText(terminal.getReportePasajeros());
+			}
+		});
 		btnRecaudacionMensual.setBounds(213, 41, 175, 30);
 		panelTerminal.add(btnRecaudacionMensual);
 

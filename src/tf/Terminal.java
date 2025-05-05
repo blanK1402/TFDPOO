@@ -134,9 +134,9 @@ public class Terminal {
 	}
 
 	public void addViaje(Viaje viaje){
-		String newId = viaje.getId();
+		String newId = String.valueOf(viaje.getId());
 		int i = 0;
-		while(i < viajes.size() && !(viajes.get(i).getId().equals(newId))){
+		while(i < viajes.size() && !(String.valueOf(viajes.get(i).getId()).equals(newId))){
 			i++;
 		}
 		if(i != viajes.size()){
@@ -232,6 +232,19 @@ public class Terminal {
 
 	    return reporte.toString();
 	}
+	
+	public ArrayList<String> getDestinos() {
+	    return new ArrayList<String>(distancias.keySet());
+	}
 
+	public String getReportePasajeros() {
+		StringBuilder reporte = new StringBuilder();
+
+	    for (Pasajero p : pasajeros) {
+	        reporte.append(p.getNombre() + "|" + p.getId() + "\n");
+	    }
+
+	    return reporte.toString();
+	}
 
 }
