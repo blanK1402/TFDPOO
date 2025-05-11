@@ -16,7 +16,7 @@ public class Terminal {
 	private HashSet<Integer> conductoresLicencias;
 	private ArrayList<Omnibus> omnibuses;
 	private HashSet<String> omnibusID;
-	private static HashMap<String, ArrayList<Viaje>> viajes;
+	private HashMap<String, ArrayList<Viaje>> viajes;
 	private HashSet<Integer> viajesID;
 	private ArrayList<Reserva> reservas;
 	private ArrayList<Reserva> reservasEspera;
@@ -30,7 +30,7 @@ public class Terminal {
 		fechaHora = LocalDateTime.now();
 		conductores = new ArrayList<Conductor>();
 		omnibuses = new ArrayList<Omnibus>();
-		viajes = new HashMap<String, ArrayList<Viaje>>();
+		setViajes(viajes);
 		reservas = new ArrayList<Reserva>();
 		pasajeros = new ArrayList<Pasajero>();
 		registro = new HashMap<>();
@@ -43,6 +43,20 @@ public class Terminal {
 		conductoresLicencias = new HashSet<Integer>();
 	}
 
+	public void setViajes(HashMap<String, ArrayList<Viaje>> viajes) {
+		this.viajes = new HashMap<String, ArrayList<Viaje>>();
+	    String[] destinos = {
+	        "Pinar del Río", "Artemisa", "Mayabeque", "Matanzas", "Villa Clara",
+	        "Cienfuegos", "Sancti Spíritus", "Ciego de Ávila", "Camagüey",
+	        "Las Tunas", "Holguín", "Granma", "Santiago de Cuba", "Guantánamo"
+	    };
+
+	    for (String destino : destinos) {
+	        this.viajes.put(destino, new ArrayList<Viaje>());
+	    }
+	}
+
+	
 	public static LocalDateTime getFechaHora() {
 		return fechaHora;
 	}
@@ -152,15 +166,18 @@ public class Terminal {
 		return fechaHora;
 	}
 
-	public static Viaje getViaje(String destinoSeleccionado, LocalDate fechaDeseada) {
+	public Viaje getViaje(String destinoSeleccionado, LocalDate fechaDeseada) {
 		ArrayList<Viaje> listaViajes = viajes.get(destinoSeleccionado);
 		Viaje elViaje = null;
 		int i = 0;
-		while(i < listaViajes.size() && elViaje == null){
-			if(listaViajes.get(i).getFechaHoraPartida().toLocalDate().equals(fechaDeseada) && listaViajes.get(i).getAsientos(0).size() > 0){
-				elViaje = listaViajes.get(i);
-			}
+		while (i < listaViajes.size() && elViaje == null) {
+		    if (listaViajes.get(i).getFechaHoraPartida().toLocalDate().equals(fechaDeseada)
+		        && listaViajes.get(i).getAsientos(0).size() > 0) {
+		        elViaje = listaViajes.get(i);
+		    }
+		    i++; 
 		}
+
 		return elViaje;
 	}
 	

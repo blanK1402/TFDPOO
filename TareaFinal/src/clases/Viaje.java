@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import utilidades.Utilidades;
+
 public class Viaje {
 	private int id;
 	private int distancia;
@@ -33,9 +35,9 @@ public class Viaje {
 
 	public void setFechaHoraPartida(String fecha, String hora) throws IllegalArgumentException {
 	    try {
-	        LocalDate fechaParseada = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-	        LocalTime horaParseada = LocalTime.parse(hora, DateTimeFormatter.ofPattern("HH:mm:ss"));
-	        this.fechaHoraPartida = LocalDateTime.of(fechaParseada, horaParseada);
+	        LocalDate fechaPartida = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	        LocalTime horaPartida = LocalTime.parse(hora, DateTimeFormatter.ofPattern("HH:mm:ss"));
+	        this.fechaHoraPartida = LocalDateTime.of(fechaPartida, horaPartida);
 	    } catch (Exception e) {
 	        throw new IllegalArgumentException("Formato incorrecto, se espera dd/MM/yyyy y HH:mm:ss");
 	    }
@@ -106,7 +108,8 @@ public class Viaje {
 		return n == 1 ? ocupados : libres;
 	}
 	
-	public void setId(String id){
+	public void setId(String id) throws IllegalArgumentException{
+		Utilidades.validarNumeroPositivo(id, "El id");
 		this.id = Integer.parseInt(id); 
 	}
 	public int getId(){
@@ -134,7 +137,9 @@ public class Viaje {
 		return reservas;
 	}
 	public void addReservas(Reserva reserva) {
-		reservas.add(reserva);
+		if(!(reservas.contains(reserva))){			
+			reservas.add(reserva);
+		}
 	}
 	
 	@Override

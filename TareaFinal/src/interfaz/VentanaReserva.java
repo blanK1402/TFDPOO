@@ -25,11 +25,14 @@ public class VentanaReserva extends JDialog {
     private JButton btnConfirmar, btnCancelar;
     private boolean confirmado = false;
     private Reserva reserva;
+    private Terminal terminal;
 
-    public VentanaReserva(JFrame parent, ArrayList<Viaje> listaViajes, ArrayList<Pasajero> listaPasajeros) {
+    public VentanaReserva(JFrame parent, ArrayList<Viaje> listaViajes, ArrayList<Pasajero> listaPasajeros, Terminal terminal2) {
         super(parent, "Crear Nueva Reserva", true);
         setSize(400, 250);
         setLayout(null);
+        
+        setTerminal(terminal);
         
         Font etiquetaFont = new Font("Arial", Font.BOLD, 14);
         Font campoFont = new Font("Arial", Font.PLAIN, 14);
@@ -98,7 +101,11 @@ public class VentanaReserva extends JDialog {
         });
     }
 
-    private void confirmarReserva() {
+    private void setTerminal(Terminal terminal2) {
+    	this.terminal = terminal2;
+	}
+
+	private void confirmarReserva() {
         try {
             String numeroReserva = txtNumeroReserva.getText().trim();
             Pasajero pasajeroSeleccionado = (Pasajero) comboPasajeros.getSelectedItem();
@@ -106,7 +113,7 @@ public class VentanaReserva extends JDialog {
             LocalDateTime fechaActual = Terminal.getFechaHora();
             LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-            Viaje viaje = Terminal.getViaje(destinoSeleccionado, fechaDeseada);
+            Viaje viaje = terminal.getViaje(destinoSeleccionado, fechaDeseada);
             
             if (viaje == null) {
                 int respuesta = JOptionPane.showConfirmDialog(null, "No hay disponibilidad en esa fecha, ¿desea ser agregado a una lista de espera?", "Confirmar", JOptionPane.YES_NO_OPTION);

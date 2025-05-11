@@ -440,7 +440,7 @@ public class Interfaz extends JFrame {
 	}
 
 	public void crearReserva(DefaultTableModel modelReserva) {
-	    VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getViajes(), terminal.getPasajeros());
+	    VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getViajes(), terminal.getPasajeros(), terminal);
 	    ventanaReserva.setVisible(true);
 
 	    if (ventanaReserva.isConfirmado()) {
