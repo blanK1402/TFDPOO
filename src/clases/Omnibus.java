@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import utilidades.Utilidades;
+
 public class Omnibus {
 	private String matricula;
 	private int asientos;
@@ -41,54 +43,21 @@ public class Omnibus {
 	public ArrayList<Conductor> getConductores() {
 		return conductores;
 	}
-	
-	public boolean verificarDisponibilidad(LocalDateTime fechaSalida, LocalDateTime fechaLlegada){
-		ArrayList<Viaje> viajesDia = viajes.get(fechaSalida.toLocalDate());
-		int i = 0;
-		boolean centinela = true;
-		while(i < viajesDia.size() && centinela){
-			Viaje viaje = viajesDia.get(i);
-			if(!(viaje.getFechaHoraPartida().isAfter(fechaLlegada) || viaje.getFechaHoraLlegada().isBefore(fechaSalida))){
-				centinela = false;
-			}
-		}
-		return centinela;
-	}
 
 	public void setMatricula(String matricula) throws IllegalArgumentException{
-		String mat = matricula.trim();
-		if (mat.isEmpty()) {
-			throw new IllegalArgumentException("La matrícula no puede estar vacía");
-		}
-		if (!mat.matches("^[A-Z]\\d{6}$")) {
-			throw new IllegalArgumentException("La matrícula tiene formato LetraMayuscula######");
-		}
-		this.matricula = mat;
+		Utilidades.validarMatricula(matricula);
+		this.matricula = matricula;
 	}
 
 	public void setAsientos(String asientos) throws IllegalArgumentException{
-		if(asientos.trim().isEmpty()){
-			throw new IllegalArgumentException("Escriba el número de asientos");
-		}
-		try {
-			int num = Integer.parseInt(asientos.trim());
-			if (num <= 0 || num > 100) {
-				throw new IllegalArgumentException("Los asientos deben ser un número entre 1 y 100");
-			}
-			this.asientos = num;
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Los asientos deben ser un número", e);
-		}
+		this.asientos = Utilidades.validarAsientos(asientos);
 	}
 
 	public void setComodidades(ArrayList<String> comodidades) throws IllegalArgumentException{
 		this.comodidades = comodidades;
 	}
 
-	public void setDisponibilidad(String disponibilidad) throws IllegalArgumentException{
-		if(disponibilidad.isEmpty()){
-			throw new IllegalArgumentException("Seleccione la disponibilidad");
-		}
+	public void setDisponibilidad(String disponibilidad){
 		this.disponibilidad = disponibilidad;
 	}
 

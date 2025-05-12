@@ -126,19 +126,8 @@ public class VentanaOmnibus extends JDialog {
     private void confirmarOmnibus() {
         try {
             String matricula = txtMatricula.getText().trim();
-            if (matricula.isEmpty()) {
-                throw new Exception("La matrícula no puede estar vacía.");
-            }
-
             String asientos = txtAsientos.getText().trim();
-            if (asientos.isEmpty()) {
-                throw new Exception("Debe especificar el número de asientos.");
-            }
-
             String disponibilidad = (String) comboDisponibilidad.getSelectedItem();
-            if (disponibilidad == null || disponibilidad.isEmpty()) {
-                throw new Exception("Debe seleccionar una opción de disponibilidad.");
-            }
 
             ArrayList<String> comodidades = new ArrayList<>();
             if (chkAire.isSelected()) comodidades.add("Aire acondicionado");

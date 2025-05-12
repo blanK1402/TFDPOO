@@ -123,41 +123,21 @@ public class VentanaViaje extends JDialog {
         });
 	}
 
-	private LocalDateTime calcularLlegada(String fechaSalida, String horaSalida, int distancia) throws IllegalArgumentException{
-		try{
-			LocalTime hora = LocalTime.parse(horaSalida, DateTimeFormatter.ofPattern("HH:mm:ss"));
-			LocalDate fecha = LocalDate.parse(fechaSalida, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-			return fecha.atTime(hora).plusHours(distancia/55);
-		}catch(Exception e){
-			throw new IllegalArgumentException("Formato de fecha invalido");
-		}
-	}
-
 	private void confirmarViaje() {
-	    String id = txtId.getText().trim();
-	    String destino = (String) comboDestinos.getSelectedItem();
-	    String fechaSalida = txtFechaPartida.getText().trim();
-	    String horaSalida = txtHoraPartida.getText().trim();
-	    Omnibus omnibus = (Omnibus) comboOmnibus.getSelectedItem();
-	    Conductor conductor = (Conductor) comboConductor.getSelectedItem();
+		try{
+			String id = txtId.getText();
+		    String destino = (String) comboDestinos.getSelectedItem();
+		    String fechaSalida = txtFechaPartida.getText();
+		    String horaSalida = txtHoraPartida.getText();
+		    Omnibus omnibus = (Omnibus) comboOmnibus.getSelectedItem();
+		    Conductor conductor = (Conductor) comboConductor.getSelectedItem();
+		    viaje = new Viaje(id, fechaSalida, horaSalida, destino, omnibus, conductor);
+		    confirmado = true;
+		    dispose();   
+		}catch(Exception ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 
-	    if (id.isEmpty() || destino == null || fechaSalida.isEmpty() || horaSalida.isEmpty() || omnibus == null || conductor == null) {
-	        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-	    }
-	    else{
-	    	int distancia = destinosDistancias.get(destino);
-		    try{
-			    LocalDateTime fechaHoraLlegada = calcularLlegada(fechaSalida, horaSalida, distancia);
-			    String horaLlegada = fechaHoraLlegada.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-			    String fechaLlegada = fechaHoraLlegada.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		    	viaje = new Viaje(id, distancia, fechaSalida, horaSalida, fechaLlegada, horaLlegada, destino, omnibus, conductor);
-		    	confirmado = true;	  
-		    	dispose();
-		    }
-		    catch(Exception ex){
-		    	JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		    }
-	    }
 	}
 
 

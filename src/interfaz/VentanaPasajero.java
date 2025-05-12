@@ -72,9 +72,8 @@ public class VentanaPasajero extends JDialog {
 
     private void confirmarPasajero() {
         try {
-            String nombre = txtNombre.getText().trim();
-            String id = txtId.getText().trim();
-
+            String nombre = txtNombre.getText();
+            String id = txtId.getText();
             pasajero = new Pasajero(nombre, id);
             confirmado = true;
             dispose();

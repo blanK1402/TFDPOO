@@ -1,25 +1,26 @@
 package utilidades;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-import clases.Reserva;
 import clases.Viaje;
 
 public class Utilidades {
-
     public static void validarNombre(String nombre) {
-        if (nombre.trim().isEmpty()) {
+        nombre = nombre.trim();
+        if (nombre.isEmpty()) {
             throw new IllegalArgumentException("El nombre no puede estar vacío.");
         }
-        if (!nombre.trim().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+        if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
             throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
         }
     }
 
     public static int validarNumeroPositivo(String value, String fieldName) {
+        value = value.trim();
         try {
-            int num = Integer.parseInt(value.trim());
+            int num = Integer.parseInt(value);
             if (num <= 0) {
                 throw new IllegalArgumentException(fieldName + " debe ser un número positivo.");
             }
@@ -30,8 +31,9 @@ public class Utilidades {
     }
 
     public static int validarNumeroNoNegativo(String value, String fieldName) {
+        value = value.trim();
         try {
-            int num = Integer.parseInt(value.trim());
+            int num = Integer.parseInt(value);
             if (num < 0) {
                 throw new IllegalArgumentException(fieldName + " no puede ser negativo.");
             }
@@ -40,17 +42,68 @@ public class Utilidades {
             throw new IllegalArgumentException(fieldName + " debe ser un número entero válido.");
         }
     }
-    
+
     public static Viaje buscarViaje(ArrayList<Viaje> viajes, LocalDate fechaDeseada){
-    	Viaje elViaje = null;
-    	int i = 0;
-    	while(i < viajes.size() && elViaje == null){
-    		Viaje v = viajes.get(i);
-    		if(v.getFechaHoraPartida().toLocalDate().equals(fechaDeseada) && v.getOmnibus().getDisponibilidad().equals("Disponible") && v.getAsientosLibres().size() > 0){
-    			elViaje = viajes.get(i);
-    		}
-    		i++;
-    	}
-		return elViaje;
+        Viaje elViaje = null;
+        int i = 0;
+        while(i < viajes.size() && elViaje == null){
+            Viaje v = viajes.get(i);
+            if(v.getFechaHoraPartida().toLocalDate().equals(fechaDeseada) && v.getOmnibus().getDisponibilidad().trim().equals("Disponible") && v.getAsientosLibres().size() > 0){
+                elViaje = viajes.get(i);
+            }
+            i++;
+        }
+        return elViaje;
+    }
+
+    public static void validarMatricula(String matricula) throws IllegalArgumentException{
+        matricula = matricula.trim();
+        if (matricula.isEmpty()) {
+            throw new IllegalArgumentException("La matrícula no puede estar vacía.");
+        }
+        if (!matricula.matches("^[A-Z]\\d{6}$")) {
+            throw new IllegalArgumentException("La matrícula debe tener el formato: Letra mayúscula seguida de 6 dígitos.");
+        }
+    }
+
+    public static int validarAsientos(String asientos) throws IllegalArgumentException{
+        asientos = asientos.trim();
+        int num;
+        if(asientos.isEmpty()){
+            throw new IllegalArgumentException("Escriba el número de asientos.");
+        }
+        try {
+            num = Integer.parseInt(asientos);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Los asientos deben ser un número entero válido.");
+        }
+        if (num <= 10 || num > 100) {
+            throw new IllegalArgumentException("Los asientos deben ser un número entre 10 y 100.");
+        }
+        return num;
+    }
+
+    public static LocalDate parsearFecha(String fecha) {
+        if (fecha == null || fecha.trim().isEmpty()) {
+            throw new IllegalArgumentException("La fecha no puede estar vacía.");
+        }
+        fecha = fecha.trim();
+        try {
+            return LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        } catch(Exception e) {
+            throw new IllegalArgumentException("Formato incorrecto de fecha, se espera el formato dd/MM/yyyy.");
+        }
+    }
+
+    public static LocalTime parsearHora(String hora){
+        if (hora == null || hora.trim().isEmpty()) {
+            throw new IllegalArgumentException("La hora no puede estar vacía.");
+        }
+        hora = hora.trim();
+        try {
+            return LocalTime.parse(hora, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        } catch(Exception e) {
+            throw new IllegalArgumentException("Formato incorrecto de hora, se espera el formato HH:mm:ss.");
+        }
     }
 }

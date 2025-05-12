@@ -25,6 +25,7 @@ public class Pasajero {
 		Utilidades.validarNumeroPositivo(id, "El id");
 		this.id = Integer.valueOf(id);	
 	}
+	
 	@Override
 	public String toString(){
 		return nombre + " id: " + id;

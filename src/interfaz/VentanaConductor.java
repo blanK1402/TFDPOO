@@ -105,10 +105,10 @@ public class VentanaConductor extends JDialog {
 
     private void confirmarConductor() {
         try {
-            String nombre = txtNombre.getText().trim();
-            String id = txtId.getText().trim();
-            String experiencia = txtExperiencia.getText().trim();
-            String licencia = txtLicencia.getText().trim();
+            String nombre = txtNombre.getText();
+            String id = txtId.getText();
+            String experiencia = txtExperiencia.getText();
+            String licencia = txtLicencia.getText();
             String categoria = (String) comboCategoria.getSelectedItem();
 
             if (categoria.equals("A")) {

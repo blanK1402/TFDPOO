@@ -43,7 +43,6 @@ public class Reserva {
 		return numReserva;
 	}
 	public void setNumReserva(String numReserva) throws IllegalArgumentException{
-		Utilidades.validarNumeroPositivo(numReserva, "El numero de reserva");
 		this.numReserva = Integer.valueOf(numReserva);
 	}
 	public String getDestino() {
