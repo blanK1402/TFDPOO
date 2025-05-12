@@ -1,24 +1,32 @@
-package tf;
+package clases;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
+
+import utilidades.Utilidades;
 
 public class Reserva {
 	private Pasajero pasajero;
 	private int numReserva;
 	private String destino;
 	private LocalDateTime fechaActual;
-	private LocalDateTime fechaDeseada;
+	private LocalDate fechaDeseada;
 	private int asiento;
 	private String estado;
 	
-	public Reserva(Pasajero pasajero, String numReserva, String destino, LocalDateTime localDateTime, LocalDateTime fechaDeseada, int asiento){
+	public Reserva(Pasajero pasajero, String numReserva, String destino, LocalDateTime localDateTime, LocalDate fechaDeseada, int asiento){
 		setPasajero(pasajero);
 		setNumReserva(numReserva);
 		setDestino(destino);
 		setFechaActual(localDateTime);
 		setFechaDeseada(fechaDeseada);
 		setAsiento(asiento);
+		setEstado(asiento);
 	}
 	
+	private void setEstado(int asientoReserva) {
+		this.estado = asientoReserva == 0 ? "En espera" : "Confirmada";
+	}
+
 	public int getAsiento() {
 		return asiento;
 	}
@@ -35,15 +43,8 @@ public class Reserva {
 		return numReserva;
 	}
 	public void setNumReserva(String numReserva) throws IllegalArgumentException{
-		try{
-			int num = Integer.parseInt(numReserva);
-			if(num <= 0){
-				throw new IllegalArgumentException("El numero de reserva debe ser un numero valido mayor a 0");
-			}
-			this.numReserva = num;
-		}catch(Exception e){
-			throw new IllegalArgumentException("El numero de reserva debe ser un numero valido mayor a 0");
-		}
+		Utilidades.validarNumeroPositivo(numReserva, "El numero de reserva");
+		this.numReserva = Integer.valueOf(numReserva);
 	}
 	public String getDestino() {
 		return destino;
@@ -63,14 +64,26 @@ public class Reserva {
 	public void setFechaActual(LocalDateTime localDateTime) {
 		this.fechaActual = localDateTime;
 	}
-	public LocalDateTime getFechaDeseada() {
+	public LocalDate getFechaDeseada() {
 		return fechaDeseada;
 	}
-	public void setFechaDeseada(LocalDateTime fechaDeseada) {
+	public void setFechaDeseada(LocalDate fechaDeseada) {
 		this.fechaDeseada = fechaDeseada;
 	}
 	@Override
 	public String toString(){
 		return String.valueOf(numReserva);
 	}
+
+	public String[] toTableList() {
+        String[] res = {
+        		String.valueOf(numReserva),
+        		String.valueOf(asiento),
+        		destino,
+        		fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+        		fechaDeseada.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+        		estado
+        };
+		return res;
+    }
 }
