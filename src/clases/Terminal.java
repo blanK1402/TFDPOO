@@ -3,6 +3,7 @@ package clases;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicLong;
@@ -10,16 +11,17 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Terminal {
     private static LocalDateTime fechaHora;
     private static final AtomicLong idReservas = new AtomicLong(1);
+    private static final AtomicLong idViajes = new AtomicLong(1);
     private static HashMap<String, Integer> destinosDistancias;
 
     private String nombre;
+    private static ArrayList<String> listaNombres;
     private ArrayList<Conductor> conductores;
     private HashSet<Integer> conductoresID;
     private HashSet<Integer> conductoresLicencias;
     private ArrayList<Omnibus> omnibuses;
     private HashSet<String> omnibusID;
     private HashMap<String, ArrayList<Viaje>> viajes;
-    private HashSet<Integer> viajesID;
     private ArrayList<Reserva> reservas;
     private ArrayList<Reserva> reservasEspera;
     private ArrayList<Pasajero> pasajeros;
@@ -30,14 +32,15 @@ public class Terminal {
         setNombre(nombre);
         fechaHora = LocalDateTime.now();
 
+        listaNombres = new ArrayList<String>();
+        
         conductores = new ArrayList<>();
         conductoresID = new HashSet<>();
         conductoresLicencias = new HashSet<>();
 
-        omnibuses = new ArrayList<>();
+        omnibuses = new ArrayList<Omnibus>();
         omnibusID = new HashSet<>();
 
-        viajesID = new HashSet<>();
         reservas = new ArrayList<>();
         reservasEspera = new ArrayList<>();
         pasajeros = new ArrayList<>();
@@ -66,6 +69,10 @@ public class Terminal {
         destinosDistancias.put("Guantánamo", 905);
     }
 
+    public static HashMap<String, Integer> getDestinosDistancias(){
+    	return destinosDistancias;
+    }
+    
     private void setViajes() {
         this.viajes = new HashMap<String, ArrayList<Viaje>>();
         for (String destino : destinosDistancias.keySet()) {
@@ -73,6 +80,25 @@ public class Terminal {
         }
     }
 
+    public static ArrayList<String> getListaNombres(){
+    	return listaNombres;
+    }
+    
+    public static void setListaNombres(){
+    	listaNombres = new ArrayList<String>(Arrays.asList(
+        	    "Alejandro", "Beatriz", "Carlos", "Daniela", "Eduardo",
+        	    "Fernanda", "Gabriel", "Hortensia", "Ignacio", "Jimena",
+        	    "Kevin", "Laura", "Manuel", "Natalia", "Oscar",
+        	    "Patricia", "Quetzal", "Ricardo", "Sofía", "Tomás",
+        	    "Ulises", "Valeria", "Wendy", "Ximena", "Yolanda",
+        	    "Zacarías", "Ana", "Beto", "Claudia", "Diego",
+        	    "Esteban", "Fabiola", "Gustavo", "Helena", "Iván",
+        	    "José", "Karla", "Luis", "María", "Noé",
+        	    "Olga", "Pablo", "Queen", "Raúl", "Silvia",
+        	    "Tania", "Uriel", "Verónica", "Wilfrido", "Xóchitl"
+        	));;
+    }
+    
     public static LocalDateTime getFechaHora() {
         return fechaHora;
     }
@@ -85,7 +111,6 @@ public class Terminal {
         return String.valueOf(idReservas.getAndIncrement());
     }
 
-    // Métodos de instancia
     public String getNombre() {
         return nombre;
     }
@@ -149,13 +174,6 @@ public class Terminal {
     }
 
     public void addViaje(Viaje viaje) {
-        if (viajesID.contains(viaje.getId())) {
-            throw new IllegalArgumentException("Ya existe un viaje con ese ID");
-        }
-        if (viaje.getFechaHoraPartida().toLocalDate().isBefore(fechaHora.toLocalDate())) {
-            throw new IllegalArgumentException("La fecha de partida debe ser mayor a la fecha actual");
-        }
-        viajesID.add(viaje.getId());
         viajes.get(viaje.getDestino()).add(viaje);
     }
 
@@ -173,4 +191,8 @@ public class Terminal {
     public static LocalDateTime getFecha() {
         return fechaHora;
     }
+    
+	public static String getIdViaje() {
+		return String.valueOf(idViajes.getAndIncrement());
+	}
 }

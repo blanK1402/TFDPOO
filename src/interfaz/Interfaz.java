@@ -29,16 +29,16 @@ public class Interfaz extends JFrame {
 	public Interfaz() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 798, 600);
-		setTitle("GestiÃ³n de Transporte");
+		setTitle("Gestión de Transporte");
 		getContentPane().setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setBounds(10, 10, 780, 540);
 		getContentPane().add(tabbedPane);
 
-		// PestaÃ±a PASAJERO
+		// Pestaña PASAJERO
 
-		String[] columnNamesPasajero = {"ID", "Nombre"};
+		String[] columnNamesPasajero = {"Nombre", "ID"};
 		final DefaultTableModel modelPasajero = new DefaultTableModel(columnNamesPasajero, 0);
 		final JTable tablePasajero = new JTable(modelPasajero);
 		tablePasajero.setRowHeight(30);
@@ -77,9 +77,9 @@ public class Interfaz extends JFrame {
 		panelPasajero.add(scrollPasajero, BorderLayout.CENTER);
 		tabbedPane.addTab("Pasajero", panelPasajero);
 
-		// PestaÃ±a CONDUCTOR
+		// Pestaña CONDUCTOR
 
-		String[] columnNamesConductor = {"Nombre", "ID", "CategorÃ­a", "AÃ±os de Experiencia", "Licencia"};
+		String[] columnNamesConductor = {"Nombre", "ID", "Categoría", "Años de Experiencia", "Licencia"};
 		final DefaultTableModel modelConductor = new DefaultTableModel(columnNamesConductor, 0);
 		JTable tableConductor = new JTable(modelConductor);
 		tableConductor.setRowHeight(30);
@@ -117,11 +117,11 @@ public class Interfaz extends JFrame {
 		panelConductor.add(scrollConductor, BorderLayout.CENTER);
 		tabbedPane.addTab("Conductor", panelConductor);
 
-		// PestaÃ±a OMNIBUS
+		// Pestaña OMNIBUS
 
 		JPanel panelOmnibus = new JPanel(new BorderLayout());
 
-		String[] columnNamesOmnibus = {"MatrÃ­cula", "Asientos", "A/C", "Televisor", "BaÃ±o", "Disponibilidad", "Conductores"};
+		String[] columnNamesOmnibus = {"Matrícula", "Asientos", "A/C", "Televisor", "Baño", "Disponibilidad", "Conductores"};
 		Object[][] dataOmnibus = {};
 		final DefaultTableModel modelOmnibus = new DefaultTableModel(dataOmnibus, columnNamesOmnibus);
 		JTable tableOmnibus = new JTable(modelOmnibus);
@@ -158,9 +158,9 @@ public class Interfaz extends JFrame {
 		panelOmnibus.add(botonesOmnibus, BorderLayout.NORTH);
 		tabbedPane.addTab("Omnibus", panelOmnibus);
 
-		// PestaÃ±a VIAJE
+		// Pestaña VIAJE
 
-		String[] columnasViaje = {"ID", "Destino", "Ã“mnibus", "Conductor", "Fecha Salida", "Precio"};
+		String[] columnasViaje = {"ID", "Destino", "Ómnibus", "Conductor", "Fecha Salida", "Precio"};
 		final DefaultTableModel modelViaje = new DefaultTableModel();
 		for(String columna : columnasViaje){
 			modelViaje.addColumn(columna);
@@ -201,9 +201,9 @@ public class Interfaz extends JFrame {
 		panelViaje.add(scrollViaje, BorderLayout.CENTER);
 		tabbedPane.addTab("Viaje", panelViaje);
 
-		// PestaÃ±a RESERVA
+		// Pestaña RESERVA
 		
-		String[] columnNamesReserva = {"Pasajero", "Nro ReservaciÃ³n", "Destino", "Fecha ReservaciÃ³n", "Fecha Viaje", "Estado"};
+		String[] columnNamesReserva = {"Pasajero", "Nro Reservación", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
 		Object[][] dataReserva = {};
 		final DefaultTableModel modelReserva = new DefaultTableModel(dataReserva, columnNamesReserva);
 		JTable tableReserva = new JTable(modelReserva);
@@ -242,7 +242,7 @@ public class Interfaz extends JFrame {
 		
 		tabbedPane.addTab("Reserva", panelReserva);
 
-		// PestaÃ±a TERMINAL
+		// Pestaña TERMINAL
 
 		JPanel panelTerminal = new JPanel(new BorderLayout());
 		JPanel panelImportar = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -308,7 +308,7 @@ public class Interfaz extends JFrame {
 		btnReporte8.setFont(new Font("SansSerif", Font.BOLD, 12));
 		panelReportes.add(btnReporte8);
 
-		JButton btnReporte10 = new JButton("RecaudaciÃ³n Ãšltimo Mes");
+		JButton btnReporte10 = new JButton("Recaudación Último Mes");
 		btnReporte10.setBounds(286, 81, 265, 25);
 		btnReporte10.setBackground(COLOR);
 		btnReporte10.setForeground(Color.WHITE);
@@ -321,7 +321,7 @@ public class Interfaz extends JFrame {
 		panelFecha.setBorder(BorderFactory.createTitledBorder("Fecha"));
 		panelFecha.setLayout(null);
 
-		JButton btnAdelantarDia = new JButton("Adelantar DÃ­a");
+		JButton btnAdelantarDia = new JButton("Adelantar Día");
 		btnAdelantarDia.setBounds(11, 55, 137, 27);
 		btnAdelantarDia.setBackground(COLOR);
 		btnAdelantarDia.setForeground(Color.WHITE);
@@ -376,7 +376,7 @@ public class Interfaz extends JFrame {
 	            Pasajero nuevoPasajero = ventanaPasajero.getPasajero();
 	            terminal.addPasajero(nuevoPasajero);
 	            modelPasajero.addRow(nuevoPasajero.toTableList());
-	            JOptionPane.showMessageDialog(null, "Pasajero creado correctamente", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
+	            JOptionPane.showMessageDialog(null, "Pasajero creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	        } catch (Exception ex) {
 	            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	            crearPasajero(modelPasajero);
@@ -397,7 +397,7 @@ public class Interfaz extends JFrame {
 						((ConductorA)nuevoConductor).toTableList() 
 						: nuevoConductor instanceof ConductorB ? ((ConductorB)nuevoConductor).toTableList() 
 						: ((ConductorC)nuevoConductor).toTableList());
-				JOptionPane.showMessageDialog(null, "ConductorCreadoCorrectamente", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "ConductorCreadoCorrectamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				crearConductor(modelConductor);
@@ -414,7 +414,7 @@ public class Interfaz extends JFrame {
 	            Omnibus nuevoOmnibus = ventanaOmnibus.getOmnibus();
 	            terminal.addOmnibus(nuevoOmnibus);
 	            modelOmnibus.addRow(nuevoOmnibus.toTableList());
-	            JOptionPane.showMessageDialog(null, "Ã“mnibus creado correctamente", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
+	            JOptionPane.showMessageDialog(null, "Ómnibus creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	        } catch (Exception ex) {
 	            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	            crearOmnibus(modelOmnibus);
@@ -431,7 +431,7 @@ public class Interfaz extends JFrame {
 	            Viaje nuevoViaje = ventanaViaje.getViaje();
 	            terminal.addViaje(nuevoViaje);
 	            modelViaje.addRow(nuevoViaje.toTableList());
-	            JOptionPane.showMessageDialog(null, "Viaje creado correctamente", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
+	            JOptionPane.showMessageDialog(null, "Viaje creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	        } catch (Exception ex) {
 	            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	            crearViaje(modelViaje);
@@ -448,7 +448,7 @@ public class Interfaz extends JFrame {
 	            Reserva nuevaReserva = ventanaReserva.getReserva();
 	            terminal.addReserva(nuevaReserva);
 	            modelReserva.addRow(nuevaReserva.toTableList());
-	            JOptionPane.showMessageDialog(null, "Reserva creada correctamente", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
+	            JOptionPane.showMessageDialog(null, "Reserva creada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	        } catch (Exception ex) {
 	            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	            crearReserva(modelReserva);

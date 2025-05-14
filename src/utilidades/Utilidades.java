@@ -4,6 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+
+import clases.Conductor;
+import clases.ConductorA;
+import clases.ConductorB;
+import clases.ConductorC;
+import clases.Pasajero;
+import clases.Terminal;
 import clases.Viaje;
 
 public class Utilidades {
@@ -106,4 +115,38 @@ public class Utilidades {
             throw new IllegalArgumentException("Formato incorrecto de hora, se espera el formato HH:mm:ss.");
         }
     }
+    
+    public Pasajero crearPasajeroRandom(HashSet<Integer> pasajerosID){
+    	int tamanyo = Terminal.getListaNombres().size(); 
+    	String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));
+    	String id = generarId(pasajerosID);
+    	
+		return new Pasajero(id, nombre);
+    }
+
+	private String generarId(HashSet<Integer> pasajerosID) {
+		int id = (int) (Math.random() * 100000);
+		return pasajerosID.contains(id) ? generarId(pasajerosID) : String.valueOf(id);
+	}
+	
+    public Conductor crearConductorRandom(HashSet<Integer> conductoresID, HashSet<Integer> conductoresLicencias){
+    	int tamanyo = Terminal.getListaNombres().size(); 
+    	String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));
+    	String id = generarId(conductoresID);
+    	String licencia = generarId(conductoresLicencias);
+    	String categoria = Arrays.asList("A", "B", "C").get((int) (Math.random() * 3));
+    	
+    	Conductor c;
+    	
+    	if(categoria.equals("A")){
+    		c = new ConductorA(nombre, id, String.valueOf(((int)Math.random() * 40)), licencia);
+    	}else if(categoria.equals("B")){
+    		c = new ConductorB(nombre, id, String.valueOf(((int)Math.random() * 40)), licencia);
+    	}else{
+    		c = new ConductorC(nombre, id, String.valueOf(((int)Math.random() * 40)), licencia);
+    	}
+    	
+		return c;
+    }
+    
 }

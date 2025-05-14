@@ -14,13 +14,15 @@ import javax.swing.*;
 
 import clases.Conductor;
 import clases.Omnibus;
+import clases.Terminal;
 import clases.Viaje;
 
 public class VentanaViaje extends JDialog {
 
 	private LocalDateTime fecha;
+	private JLabel lblId;
 	private HashMap<String, Integer> destinosDistancias;
-	private JTextField txtId, txtFechaPartida, txtHoraPartida;
+	private JTextField txtFechaPartida, txtHoraPartida;
 	private JComboBox<Omnibus> comboOmnibus;
 	private JComboBox<Conductor> comboConductor;
 	private JComboBox<String> comboDestinos;
@@ -34,25 +36,21 @@ public class VentanaViaje extends JDialog {
 		setLayout(null);
 
 		fecha = fechaActual;
-		destinosDistancias = new HashMap<>();
-		destinosDistancias.put("Pinar del Río", 163);
-		destinosDistancias.put("Artemisa", 67);
-		destinosDistancias.put("Mayabeque", 56);
-		destinosDistancias.put("Matanzas", 105);
-		destinosDistancias.put("Villa Clara", 277);
+		destinosDistancias = new HashMap<>(Terminal);
 
 		Font etiquetaFont = new Font("Arial", Font.BOLD, 16);
 		int desplazamientoDerecha = 140;
-
-		JLabel lblId = new JLabel("ID:");
-		lblId.setBounds(20, 20, 120, 30);
-		lblId.setFont(etiquetaFont);
+		
+		lblId = new JLabel("");
+		lblId.setText(Terminal.getIdViaje());
+		lblId.setBounds(desplazamientoDerecha + 100, 20, 250, 30);
 		add(lblId);
 
-		txtId = new JTextField();
-		txtId.setBounds(desplazamientoDerecha + 100, 20, 250, 30);
-		add(txtId);
-
+		JLabel lblId2 = new JLabel("ID:");
+		lblId2.setBounds(20, 20, 120, 30);
+		lblId2.setFont(etiquetaFont);
+		add(lblId2);
+		
 		JLabel lblDestino = new JLabel("Destino:");
 		lblDestino.setBounds(20, 60, 120, 30);
 		lblDestino.setFont(etiquetaFont);
@@ -125,7 +123,7 @@ public class VentanaViaje extends JDialog {
 
 	private void confirmarViaje() {
 		try{
-			String id = txtId.getText();
+			String id = lblId.getText();
 		    String destino = (String) comboDestinos.getSelectedItem();
 		    String fechaSalida = txtFechaPartida.getText();
 		    String horaSalida = txtHoraPartida.getText();
