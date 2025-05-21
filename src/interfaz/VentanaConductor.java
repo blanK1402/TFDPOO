@@ -6,6 +6,7 @@ import clases.Conductor;
 import clases.ConductorA;
 import clases.ConductorB;
 import clases.ConductorC;
+import clases.Terminal;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 public class VentanaConductor extends JDialog {
 
-    private JTextField txtNombre, txtId, txtExperiencia, txtLicencia;
+    private JTextField txtNombre, txtExperiencia, txtLicencia;
     private JComboBox<String> comboCategoria;
     private JButton btnConfirmar, btnCancelar;
     private boolean confirmado = false;
@@ -38,16 +39,6 @@ public class VentanaConductor extends JDialog {
         txtNombre.setBounds(desplazamientoDerecha, 20, 220, 25);
         txtNombre.setFont(campoFont);
         add(txtNombre);
-
-        JLabel lblId = new JLabel("Carné ID:");
-        lblId.setBounds(20, 60, 120, 25);
-        lblId.setFont(etiquetaFont);
-        add(lblId);
-
-        txtId = new JTextField();
-        txtId.setBounds(desplazamientoDerecha, 60, 220, 25);
-        txtId.setFont(campoFont);
-        add(txtId);
 
         JLabel lblExperiencia = new JLabel("Experiencia:");
         lblExperiencia.setBounds(20, 100, 120, 25);
@@ -106,7 +97,7 @@ public class VentanaConductor extends JDialog {
     private void confirmarConductor() {
         try {
             String nombre = txtNombre.getText();
-            String id = txtId.getText();
+            String id = Terminal.getIdConductor();
             String experiencia = txtExperiencia.getText();
             String licencia = txtLicencia.getText();
             String categoria = (String) comboCategoria.getSelectedItem();

@@ -1,6 +1,7 @@
 package utilidades;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import clases.Conductor;
 import clases.ConductorA;
 import clases.ConductorB;
 import clases.ConductorC;
+import clases.Omnibus;
 import clases.Pasajero;
 import clases.Terminal;
 import clases.Viaje;
@@ -129,15 +131,15 @@ public class Utilidades {
 		return pasajerosID.contains(id) ? generarId(pasajerosID) : String.valueOf(id);
 	}
 	
-    public Conductor crearConductorRandom(HashSet<Integer> conductoresID, HashSet<Integer> conductoresLicencias){
+    public Conductor crearConductorRandom(HashSet<Integer> conductoresLicencias){
     	int tamanyo = Terminal.getListaNombres().size(); 
     	String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));
-    	String id = generarId(conductoresID);
+    	String id = Terminal.getIdConductor();
     	String licencia = generarId(conductoresLicencias);
     	String categoria = Arrays.asList("A", "B", "C").get((int) (Math.random() * 3));
     	
     	Conductor c;
-    	
+
     	if(categoria.equals("A")){
     		c = new ConductorA(nombre, id, String.valueOf(((int)Math.random() * 40)), licencia);
     	}else if(categoria.equals("B")){
@@ -149,4 +151,13 @@ public class Utilidades {
 		return c;
     }
     
+    public static Viaje crearViaje(ArrayList<Omnibus> Omnibus){
+    	String id = Terminal.getIdViaje();
+    	String destino = Terminal.getDestinosDistancias().keySet().iterator().next();
+    	int distancia = Terminal.getDestinosDistancias().get(destino);
+    	Omnibus o = Omnibus.get((int) (Math.random() * Omnibus.size()));
+    	Conductor c = o.getConductores().get((int) (Math.random() * 3));
+    	LocalDateTime fHS = LocalDateTime.now().plusDays((long) (Math.random() * 100)).plusHours((long) (Math.random()*10));
+    	return new Viaje(id, fHS.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), fHS.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, o, c);
+    }
 }

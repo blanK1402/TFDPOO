@@ -12,12 +12,12 @@ public class Terminal {
     private static LocalDateTime fechaHora;
     private static final AtomicLong idReservas = new AtomicLong(1);
     private static final AtomicLong idViajes = new AtomicLong(1);
+    private static final AtomicLong idConductores = new AtomicLong(1);
     private static HashMap<String, Integer> destinosDistancias;
 
     private String nombre;
     private static ArrayList<String> listaNombres;
     private ArrayList<Conductor> conductores;
-    private HashSet<Integer> conductoresID;
     private HashSet<Integer> conductoresLicencias;
     private ArrayList<Omnibus> omnibuses;
     private HashSet<String> omnibusID;
@@ -35,7 +35,6 @@ public class Terminal {
         listaNombres = new ArrayList<String>();
         
         conductores = new ArrayList<>();
-        conductoresID = new HashSet<>();
         conductoresLicencias = new HashSet<>();
 
         omnibuses = new ArrayList<Omnibus>();
@@ -178,12 +177,6 @@ public class Terminal {
     }
 
     public void addConductor(Conductor conductor) {
-        if (conductoresID.contains(conductor.getId())) {
-            throw new IllegalArgumentException("Ya existe un conductor con ese ID");
-        } else if (conductoresLicencias.contains(conductor.getLicencia())) {
-            throw new IllegalArgumentException("Ya existe un conductor con esa licencia");
-        }
-        conductoresID.add(conductor.getId());
         conductoresLicencias.add(conductor.getLicencia());
         conductores.add(conductor);
     }
@@ -194,5 +187,9 @@ public class Terminal {
     
 	public static String getIdViaje() {
 		return String.valueOf(idViajes.getAndIncrement());
+	}
+	
+	public static String getIdConductor() {
+		return String.valueOf(idConductores.getAndIncrement());
 	}
 }

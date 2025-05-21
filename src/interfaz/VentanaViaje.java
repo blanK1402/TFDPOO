@@ -36,7 +36,7 @@ public class VentanaViaje extends JDialog {
 		setLayout(null);
 
 		fecha = fechaActual;
-		destinosDistancias = new HashMap<>(Terminal);
+		destinosDistancias = new HashMap<>(Terminal.getDestinosDistancias());
 
 		Font etiquetaFont = new Font("Arial", Font.BOLD, 16);
 		int desplazamientoDerecha = 140;
