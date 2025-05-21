@@ -1,1 +1,4 @@
 /bin
+.metadate/
+.settings/
+.RemoteSystemsTempFiles/
