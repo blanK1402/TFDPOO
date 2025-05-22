@@ -13,11 +13,11 @@ public class Reserva {
 	private int asiento;
 	private String estado;
 	
-	public Reserva(Pasajero pasajero, String numReserva, String destino, LocalDateTime localDateTime, LocalDate fechaDeseada, int asiento){
+	public Reserva(Pasajero pasajero, String numReserva, String destino, LocalDateTime fecha, LocalDate fechaDeseada, int asiento){
 		setPasajero(pasajero);
 		setNumReserva(numReserva);
 		setDestino(destino);
-		setFechaActual(localDateTime);
+		setFechaActual(fecha);
 		setFechaDeseada(fechaDeseada);
 		setAsiento(asiento);
 		setEstado(asiento);

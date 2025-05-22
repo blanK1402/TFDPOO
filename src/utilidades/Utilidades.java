@@ -14,6 +14,7 @@ import clases.ConductorB;
 import clases.ConductorC;
 import clases.Omnibus;
 import clases.Pasajero;
+import clases.Reserva;
 import clases.Terminal;
 import clases.Viaje;
 
@@ -118,20 +119,20 @@ public class Utilidades {
         }
     }
     
-    public Pasajero crearPasajeroRandom(HashSet<Integer> pasajerosID){
+    public static Pasajero crearPasajeroRandom(HashSet<Integer> pasajerosID){
     	int tamanyo = Terminal.getListaNombres().size(); 
     	String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));
     	String id = generarId(pasajerosID);
     	
-		return new Pasajero(id, nombre);
+		return new Pasajero(nombre, id);
     }
 
-	private String generarId(HashSet<Integer> pasajerosID) {
+	private static String generarId(HashSet<Integer> pasajerosID) {
 		int id = (int) (Math.random() * 100000);
 		return pasajerosID.contains(id) ? generarId(pasajerosID) : String.valueOf(id);
 	}
 	
-    public Conductor crearConductorRandom(HashSet<Integer> conductoresLicencias){
+    public static Conductor crearConductorRandom(HashSet<Integer> conductoresLicencias){
     	int tamanyo = Terminal.getListaNombres().size(); 
     	String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));
     	String id = Terminal.getIdConductor();
@@ -151,6 +152,45 @@ public class Utilidades {
 		return c;
     }
     
+    public static Omnibus crearOmnibus(HashSet<String> OmnibusId, ArrayList<Conductor> conductores){
+    	String matricula = generarMatricula(OmnibusId);
+    	String estado = "Disponible";
+    	ArrayList<String> comodidades = new ArrayList<>();
+    	HashSet<Conductor> conductoresSet = new HashSet<>();
+    	int asientos = (int) (Math.random() * 80 + 21);
+    	
+    	if(asientos % 2 == 0){
+    		comodidades.add("TV");
+    		conductoresSet.add(conductores.get((int) (Math.random() * conductores.size())));
+    	}
+    	
+    	if(asientos % 3 == 0){
+    		comodidades.add("Baño");
+    		conductoresSet.add(conductores.get((int) (Math.random() * conductores.size())));
+    		estado = "En carretera";
+    	}
+    	if(asientos % 5 == 0){
+    		estado = "En reparación";
+    		comodidades.add("Aire acondicionado");
+    	}
+
+    	conductoresSet.add(conductores.get((int) (Math.random() * conductores.size())));
+    	
+    	Omnibus o = new Omnibus(matricula, String.valueOf(asientos), estado, comodidades);
+    	
+    	for(Conductor c : conductoresSet){
+    		o.addConductor(c);
+    	}
+    		
+		return o;
+    }
+    
+    public static String generarMatricula(HashSet<String> omnibusId){
+    	char letra = (char)((char)(Math.random() * 26) + 'A');
+    	String mat = letra + String.valueOf((int) (Math.random() * 900000) + 100000);
+		return omnibusId.contains(mat) ? generarMatricula(omnibusId) : mat;
+    }
+    
     public static Viaje crearViaje(ArrayList<Omnibus> Omnibus){
     	String id = Terminal.getIdViaje();
     	String destino = Terminal.getDestinosDistancias().keySet().iterator().next();
@@ -159,5 +199,17 @@ public class Utilidades {
     	Conductor c = o.getConductores().get((int) (Math.random() * 3));
     	LocalDateTime fHS = LocalDateTime.now().plusDays((long) (Math.random() * 100)).plusHours((long) (Math.random()*10));
     	return new Viaje(id, fHS.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), fHS.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, o, c);
+    } 
+    
+    public static Reserva crearReserva(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes){
+    	Pasajero pasajero = pasajeros.get((int) (Math.random() * pasajeros.size()));
+		Viaje reservaViaje = viajes.get((int) (Math.random() * viajes.size()));
+    	String numReserva = Terminal.getIdReserva();
+    	String destino = reservaViaje.getDestino();
+    	LocalDateTime fechaActual = Terminal.getFechaHora();
+    	LocalDate fechaDeseada = fechaActual.plusDays((long) (Math.random() * 101)).toLocalDate();
+    	int asiento = reservaViaje.getAsiento();
+    	
+    	return new Reserva(pasajero, numReserva, destino, fechaActual, fechaDeseada, asiento);	
     }
 }

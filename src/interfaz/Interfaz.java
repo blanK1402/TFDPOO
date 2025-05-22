@@ -3,6 +3,7 @@ package interfaz;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import utilidades.Utilidades;
 import clases.Conductor;
 import clases.ConductorA;
 import clases.ConductorB;
@@ -247,6 +248,31 @@ public class Interfaz extends JFrame {
 		JPanel panelTerminal = new JPanel(new BorderLayout());
 		JPanel panelImportar = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JButton btnImportarDatos = new JButton("Importar Datos");
+		btnImportarDatos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				for(int i = 0; i < 100; i++){
+					Pasajero p = Utilidades.crearPasajeroRandom(terminal.getIdPasajeros());
+					Conductor c = Utilidades.crearConductorRandom(terminal.getLicencias());
+					if(i > 5){
+						Omnibus o = Utilidades.crearOmnibus(terminal.getOmnibusId(), terminal.getConductores());
+						terminal.addOmnibus(o);
+						modelOmnibus.addRow(o.toTableList());
+					}
+					if(i > 70){
+						Viaje v = Utilidades.crearViaje(terminal.getOmnibus());
+						terminal.addViaje(v);
+						modelViaje.addRow(v.toTableList());
+					}
+					terminal.addConductor(c);
+					terminal.addPasajero(p);
+					modelPasajero.addRow(p.toTableList());
+					modelConductor.addRow(c.toTableList());
+					
+				}
+				
+			}
+		});
 		btnImportarDatos.setBackground(COLOR);
 		btnImportarDatos.setForeground(Color.WHITE);
 		btnImportarDatos.setFont(new Font("SansSerif", Font.BOLD, 14));

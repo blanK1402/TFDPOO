@@ -46,10 +46,19 @@ public class Terminal {
         pasajerosID = new HashSet<>();
         registro = new HashMap<>();
 
+        setListaNombres();
         setDestinosDistancias();
         setViajes();
     }
 
+    public HashSet<String> getOmnibusId(){
+    	return omnibusID;
+    }
+    
+    public HashSet<Integer> getIdPasajeros(){
+		return pasajerosID;
+    }
+    
     private void setDestinosDistancias() {
         destinosDistancias = new HashMap<>();
         destinosDistancias.put("Pinar del Río", 169);
@@ -72,6 +81,11 @@ public class Terminal {
     	return destinosDistancias;
     }
     
+    public HashSet<Integer> getLicencias(){
+		return conductoresLicencias;
+    	
+    }
+    
     private void setViajes() {
         this.viajes = new HashMap<String, ArrayList<Viaje>>();
         for (String destino : destinosDistancias.keySet()) {
@@ -83,19 +97,43 @@ public class Terminal {
     	return listaNombres;
     }
     
-    public static void setListaNombres(){
-    	listaNombres = new ArrayList<String>(Arrays.asList(
-        	    "Alejandro", "Beatriz", "Carlos", "Daniela", "Eduardo",
-        	    "Fernanda", "Gabriel", "Hortensia", "Ignacio", "Jimena",
-        	    "Kevin", "Laura", "Manuel", "Natalia", "Oscar",
-        	    "Patricia", "Quetzal", "Ricardo", "Sofía", "Tomás",
-        	    "Ulises", "Valeria", "Wendy", "Ximena", "Yolanda",
-        	    "Zacarías", "Ana", "Beto", "Claudia", "Diego",
-        	    "Esteban", "Fabiola", "Gustavo", "Helena", "Iván",
-        	    "José", "Karla", "Luis", "María", "Noé",
-        	    "Olga", "Pablo", "Queen", "Raúl", "Silvia",
-        	    "Tania", "Uriel", "Verónica", "Wilfrido", "Xóchitl"
-        	));;
+    public static void setListaNombres() {
+        listaNombres = new ArrayList<String>(Arrays.asList(
+            "Alejandro", "Beatriz", "Carlos", "Daniela", "Eduardo",
+            "Fernanda", "Gabriel", "Hortensia", "Ignacio", "Jimena",
+            "Kevin", "Laura", "Manuel", "Natalia", "Oscar",
+            "Patricia", "Quetzal", "Ricardo", "Sofía", "Tomás",
+            "Ulises", "Valeria", "Wendy", "Ximena", "Yolanda",
+            "Zacarías", "Ana", "Beto", "Claudia", "Diego",
+            "Esteban", "Fabiola", "Gustavo", "Helena", "Iván",
+            "José", "Karla", "Luis", "María", "Noé",
+            "Olga", "Pablo", "Queen", "Raúl", "Silvia",
+            "Tania", "Uriel", "Verónica", "Wilfrido", "Xóchitl",
+            "Adrián", "Berenice", "Cecilia", "Diana", "Emilio",
+            "Fátima", "Gerardo", "Isabel", "Jorge", "Karina",
+            "Leonardo", "Mónica", "Nicolás", "Ofelia", "Pedro",
+            "Querubín", "Rocío", "Samuel", "Teresa", "Víctor",
+            "Yahir", "Zoe", "Alberto", "Bárbara", "Cristian",
+            "Dulce", "Ernesto", "Francisca", "Guillermo", "Héctor",
+            "Irene", "Joaquín", "Lorena", "Miguel", "Norma",
+            "Octavio", "Perla", "Rafael", "Salma", "Tadeo",
+            "Vanessa", "Yaretzi", "Alma", "Benito", "Camila",
+            "Damián", "Esmeralda", "Felipe", "Gloria", "Hugo",
+            "Inés", "Jacobo", "Leticia", "Mario", "Nadia",
+            "Orlando", "Paulina", "Rubén", "Sara", "Teodoro",
+            "Vanesa", "Yadira", "Alfonso", "Blanca", "César",
+            "Deborah", "Efraín", "Florencia", "Griselda", "Horacio",
+            "Ilse", "Julio", "Luisa", "Marcelo", "Nelly",
+            "Omar", "Pilar", "Ramón", "Susana", "Timoteo",
+            "Violeta", "Yael", "Arturo", "Briseida", "Clemente",
+            "Dora", "Elías", "Felicia", "Georgina", "Heriberto",
+            "Itzel", "Jazmín", "León", "Magdalena", "Néstor",
+            "Obdulia", "Priscila", "Renato", "Selene", "Tiburcio",
+            "Vianey", "Yulissa", "Aldo", "Belinda", "Cirilo",
+            "Deyanira", "Ezequiel", "Fidel", "Graciela", "Hermelinda",
+            "Isela", "Javier", "Kenia", "Lázaro", "Mireya",
+            "Natividad", "Otilia", "Pascual", "Rosario", "Santos"
+        ));
     }
     
     public static LocalDateTime getFechaHora() {
