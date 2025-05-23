@@ -25,7 +25,7 @@ public class Terminal {
     private ArrayList<Reserva> reservas;
     private ArrayList<Reserva> reservasEspera;
     private ArrayList<Pasajero> pasajeros;
-    private HashSet<Integer> pasajerosID;
+    private HashSet<String> pasajerosID;
     private HashMap<LocalDate, HashMap<Omnibus, Integer>> registro;
 
     public Terminal(String nombre) {
@@ -55,8 +55,23 @@ public class Terminal {
     	return omnibusID;
     }
     
-    public HashSet<Integer> getIdPasajeros(){
+    public static String getRandomDestino(){
+    	ArrayList<String> destinos = new ArrayList<>(destinosDistancias.keySet());
+    	return destinos.get((int) (Math.random() * destinos.size()));
+    }
+    
+    public HashSet<String> getIdPasajeros(){
 		return pasajerosID;
+    }
+    
+    public ArrayList<Viaje> getViajes2() {
+        ArrayList<Viaje> todosViajes = new ArrayList<>();
+        for(ArrayList<Viaje> viajesList : viajes.values()){
+        	for(Viaje v : viajesList){        		
+        		todosViajes.add(v);
+        	}
+        }
+		return todosViajes; 
     }
     
     private void setDestinosDistancias() {

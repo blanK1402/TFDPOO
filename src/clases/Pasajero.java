@@ -4,7 +4,7 @@ import utilidades.Utilidades;
 
 public class Pasajero {
 	private String nombre;
-	private int id;
+	private String id;
 
 	public Pasajero(String nombre, String id){
 		setNombre(nombre);
@@ -18,12 +18,12 @@ public class Pasajero {
 		Utilidades.validarNombre(nombre);
 		this.nombre = nombre;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	public void setId(String id) throws IllegalArgumentException{
-		Utilidades.validarNumeroPositivo(id, "El id");
-		this.id = Integer.valueOf(id);	
+		Utilidades.validarCarnet(id);
+		this.id = id;	
 	}
 	
 	@Override

@@ -259,10 +259,13 @@ public class Interfaz extends JFrame {
 						terminal.addOmnibus(o);
 						modelOmnibus.addRow(o.toTableList());
 					}
-					if(i > 70){
-						Viaje v = Utilidades.crearViaje(terminal.getOmnibus());
+					if(i > 10){
+						Viaje v = Utilidades.crearViajeRandom(terminal.getOmnibus());
 						terminal.addViaje(v);
 						modelViaje.addRow(v.toTableList());
+					}
+					if(i > 15){
+						Reserva r = Utilidades.crearReservaRandom(terminal.getPasajeros(), terminal.getViajes2());
 					}
 					terminal.addConductor(c);
 					terminal.addPasajero(p);
