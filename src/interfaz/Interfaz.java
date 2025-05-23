@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -385,12 +386,12 @@ public class Interfaz extends JFrame {
 		lblHora.setBounds(157, 26, 46, 14);
 		panelFecha.add(lblHora);
 
-		JLabel label = new JLabel("00/00/0000");
+		JLabel label = new JLabel(terminal.getFechaHora().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		label.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		label.setBounds(58, 28, 90, 14);
 		panelFecha.add(label);
 
-		JLabel label_1 = new JLabel("00:00:00");
+		JLabel label_1 = new JLabel(terminal.getFechaHora().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 		label_1.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		label_1.setBounds(195, 26, 90, 14);
 		panelFecha.add(label_1);
