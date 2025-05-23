@@ -208,11 +208,11 @@ public class Utilidades {
 		Conductor c;
 
 		if(categoria.equals("A")){
-			c = new ConductorA(nombre, id, String.valueOf(((int)Math.random() * 40)), licencia);
+			c = new ConductorA(nombre, id, String.valueOf((int) (Math.random() * 40)), licencia);
 		}else if(categoria.equals("B")){
-			c = new ConductorB(nombre, id, String.valueOf(((int)Math.random() * 40)), licencia);
+			c = new ConductorB(nombre, id, String.valueOf((int) (Math.random() * 40)), licencia);
 		}else{
-			c = new ConductorC(nombre, id, String.valueOf(((int)Math.random() * 40)), licencia);
+			c = new ConductorC(nombre, id, String.valueOf((int) (Math.random() * 40)), licencia);
 		}
 
 		return c;
