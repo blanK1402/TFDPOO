@@ -74,6 +74,9 @@ public class VentanaPasajero extends JDialog {
         try {
             String nombre = txtNombre.getText();
             String id = txtId.getText();
+            if(id.length() != 11){
+            	throw new IllegalArgumentException("El carnet debe tener 11 digitos");
+            }
             pasajero = new Pasajero(nombre, id);
             confirmado = true;
             dispose();

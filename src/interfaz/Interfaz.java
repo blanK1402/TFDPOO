@@ -29,12 +29,12 @@ public class Interfaz extends JFrame {
 
 	public Interfaz() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 798, 600);
+		setBounds(100, 100, 1006, 600);
 		setTitle("Gestión de Transporte");
 		getContentPane().setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.setBounds(10, 10, 780, 540);
+		tabbedPane.setBounds(10, 10, 980, 540);
 		getContentPane().add(tabbedPane);
 
 		// Pestaña PASAJERO
@@ -266,6 +266,8 @@ public class Interfaz extends JFrame {
 					}
 					if(i > 15){
 						Reserva r = Utilidades.crearReservaRandom(terminal.getPasajeros(), terminal.getViajes2());
+						terminal.addReserva(r);
+						modelReserva.addRow(r.toTableList());
 					}
 					terminal.addConductor(c);
 					terminal.addPasajero(p);

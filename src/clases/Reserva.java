@@ -12,6 +12,7 @@ public class Reserva {
 	private LocalDate fechaDeseada;
 	private int asiento;
 	private String estado;
+	private Viaje viaje;
 	
 	public Reserva(Pasajero pasajero, String numReserva, String destino, LocalDateTime fecha, LocalDate fechaDeseada, int asiento){
 		setPasajero(pasajero);
@@ -21,8 +22,16 @@ public class Reserva {
 		setFechaDeseada(fechaDeseada);
 		setAsiento(asiento);
 		setEstado(asiento);
+		viaje = null;
 	}
 	
+	public void setViaje(Viaje viaje) {
+		this.viaje = viaje;
+	}
+	public Viaje getViaje(){
+		return viaje;
+	}
+
 	private void setEstado(int asientoReserva) {
 		this.estado = asientoReserva == 0 ? "En espera" : "Confirmada";
 	}
@@ -76,8 +85,8 @@ public class Reserva {
 
 	public String[] toTableList() {
         String[] res = {
+        		String.valueOf(pasajero.toString()),
         		String.valueOf(numReserva),
-        		String.valueOf(asiento),
         		destino,
         		fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
         		fechaDeseada.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),

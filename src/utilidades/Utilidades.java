@@ -134,14 +134,14 @@ public class Utilidades {
 		}
 		return nums;
 	}
-	
+
 	private static String generarId(HashSet<String> pasajerosID) {
 		int anyo = (int) (Math.random() * 100);
 		int month = (int) ((Math.random() * 12) + 1);
-		int day = (int) (Math.random() * 29) + 1;
+		int day = (int) (Math.random() * 28) + 1;
 
 		String id = String.format("%02d%02d%02d", anyo, month, day) + generarUltimos();
-		
+
 		return pasajerosID.contains(id) ? generarId(pasajerosID) : id;
 	}
 
@@ -275,6 +275,8 @@ public class Utilidades {
 		LocalDate fechaDeseada = fechaActual.plusDays((long) (Math.random() * 101)).toLocalDate();
 		int asiento = reservaViaje.getAsiento();
 
-		return new Reserva(pasajero, numReserva, destino, fechaActual, fechaDeseada, asiento);	
+		Reserva r = new Reserva(pasajero, numReserva, destino, fechaActual, fechaDeseada, asiento);	
+		r.setViaje(reservaViaje);
+		return r;
 	}
 }

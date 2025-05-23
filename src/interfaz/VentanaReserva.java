@@ -108,6 +108,7 @@ public class VentanaReserva extends JDialog {
 	        manejarReservaListaEspera(pasajeroSeleccionado, numeroReserva, destinoSeleccionado, fechaActual, fechaDeseada);
 	    } else {
 	    	reserva = new Reserva(pasajeroSeleccionado, numeroReserva, destinoSeleccionado, fechaActual, fechaDeseada, viaje.getAsiento());
+	        reserva.setViaje(viaje);
 		    confirmado = true;
 		    viaje.addReservas(reserva);
 	    }

@@ -24,7 +24,7 @@ public class Viaje {
 
 	public Viaje(String id, String fechaPartida, String horaPartida, String destino, Omnibus omnibus, Conductor conductor){
 		setId(id);
-		setDistancia(distancia);
+		setDistancia(Terminal.getDestinosDistancias().get(destino));
 		setFechaHoraPartida(fechaPartida, horaPartida);
 		setFechaHoraLlegada(fechaPartida, horaPartida, distancia);
 		setDestino(destino);
@@ -57,7 +57,7 @@ public class Viaje {
 
 	public float precio(){
 		float importeTotal = (float) (distancia * 0.8);
-
+    	
 		if(omnibus.getComodidades().contains("Aire acondicionado")){
 			importeTotal += 15;
 		}
@@ -144,7 +144,7 @@ public class Viaje {
 				omnibus.toString(),
 				conductor.toString(),
 				fechaHoraPartida.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-				String.valueOf(this.precio())
+				String.valueOf(precio())
 		};
 		return res;
 	}
