@@ -119,12 +119,12 @@ public class Utilidades {
 		}
 	}
 
-	public static Pasajero crearPasajeroRandom(HashSet<String> pasajerosID){
+	public static Pasajero crearPasajeroRandom(HashSet<String> pasajerosID, LocalDate fecha){
 		int tamanyo = Terminal.getListaNombres().size(); 
 		String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));
 		String id = generarId(pasajerosID);
 
-		return new Pasajero(nombre, id);
+		return new Pasajero(nombre, id, fecha);
 	}
 
 	private static String generarUltimos(){
@@ -150,7 +150,7 @@ public class Utilidades {
 		return pasajerosID.contains(id) ? generarLicencia(pasajerosID) : String.valueOf(id);
 	}
 
-	public static void validarCarnet(String carnet) throws IllegalArgumentException{
+	public static void validarCarnet(String carnet, LocalDate fecha) throws IllegalArgumentException{
 		ArrayList<Integer> meses30 = new ArrayList<>();
 		meses30.add(4);
 		meses30.add(6);
@@ -165,7 +165,7 @@ public class Utilidades {
 		meses31.add(10);
 		meses31.add(12);
 
-		int anyo = completarAnyo(carnet.substring(0,2));
+		int anyo = completarAnyo(carnet.substring(0,2), fecha);
 		int terceroCuarto = Integer.valueOf(carnet.substring(2, 4));
 		int quintoSexto = Integer.valueOf(carnet.substring(4, 6));
 
@@ -193,8 +193,8 @@ public class Utilidades {
 		return (anyo % 4 == 0 && anyo % 100 != 0) || (anyo % 400 == 0);
 	}
 
-	private static int completarAnyo(String digitos) {
-		int anyo = Integer.valueOf(Terminal.getFechaHora().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy")).substring(2,4));
+	private static int completarAnyo(String digitos, LocalDate fecha) {
+		int anyo = Integer.valueOf(fecha.format(DateTimeFormatter.ofPattern("yyyy")).substring(2,4));
 		return anyo - Integer.valueOf(digitos) < 0 ? Integer.valueOf("19" + digitos) : Integer.valueOf("20" + digitos);
 	}
 
@@ -266,12 +266,12 @@ public class Utilidades {
 		return new Viaje(id, fHS.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), fHS.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, o, c);
 	} 
 
-	public static Reserva crearReservaRandom(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes){
+	public static Reserva crearReservaRandom(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes, LocalDateTime fecha){
 		Pasajero pasajero = pasajeros.get((int) (Math.random() * pasajeros.size()));
 		Viaje reservaViaje = viajes.get((int) (Math.random() * viajes.size()));
 		String numReserva = Terminal.getIdReserva();
 		String destino = reservaViaje.getDestino();
-		LocalDateTime fechaActual = Terminal.getFechaHora();
+		LocalDateTime fechaActual = fecha;
 		LocalDate fechaDeseada = fechaActual.plusDays((long) (Math.random() * 101)).toLocalDate();
 		int asiento = reservaViaje.getAsiento();
 

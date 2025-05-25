@@ -1,14 +1,16 @@
 package clases;
 
+import java.time.LocalDate;
+
 import utilidades.Utilidades;
 
 public class Pasajero {
 	private String nombre;
 	private String id;
 
-	public Pasajero(String nombre, String id){
+	public Pasajero(String nombre, String id, LocalDate fecha){
 		setNombre(nombre);
-		setId(id);
+		setId(id, fecha);
 	}
 
 	public String getNombre() {
@@ -21,8 +23,8 @@ public class Pasajero {
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) throws IllegalArgumentException{
-		Utilidades.validarCarnet(id);
+	public void setId(String id, LocalDate fecha) throws IllegalArgumentException{
+		Utilidades.validarCarnet(id, fecha);
 		this.id = id;	
 	}
 	

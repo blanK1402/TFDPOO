@@ -253,7 +253,7 @@ public class Interfaz extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				for(int i = 0; i < 100; i++){
-					Pasajero p = Utilidades.crearPasajeroRandom(terminal.getIdPasajeros());
+					Pasajero p = Utilidades.crearPasajeroRandom(terminal.getIdPasajeros(), terminal.getFecha().toLocalDate());
 					Conductor c = Utilidades.crearConductorRandom(terminal.getLicencias());
 					if(i > 5){
 						Omnibus o = Utilidades.crearOmnibus(terminal.getOmnibusId(), terminal.getConductores());
@@ -266,7 +266,7 @@ public class Interfaz extends JFrame {
 						modelViaje.addRow(v.toTableList());
 					}
 					if(i > 15){
-						Reserva r = Utilidades.crearReservaRandom(terminal.getPasajeros(), terminal.getViajes2());
+						Reserva r = Utilidades.crearReservaRandom(terminal.getPasajeros(), terminal.getViajes2(), terminal.getFecha());
 						terminal.addReserva(r);
 						modelReserva.addRow(r.toTableList());
 					}
@@ -353,13 +353,6 @@ public class Interfaz extends JFrame {
 		panelFecha.setBorder(BorderFactory.createTitledBorder("Fecha"));
 		panelFecha.setLayout(null);
 
-		JButton btnAdelantarDia = new JButton("Adelantar Día");
-		btnAdelantarDia.setBounds(11, 55, 137, 27);
-		btnAdelantarDia.setBackground(COLOR);
-		btnAdelantarDia.setForeground(Color.WHITE);
-		btnAdelantarDia.setFont(new Font("SansSerif", Font.BOLD, 14));
-		panelFecha.add(btnAdelantarDia);
-
 		JButton btnAdelantarHora = new JButton("Adelantar Hora");
 		btnAdelantarHora.setBounds(157, 55, 149, 27);
 		btnAdelantarHora.setBackground(COLOR);
@@ -386,21 +379,35 @@ public class Interfaz extends JFrame {
 		lblHora.setBounds(157, 26, 46, 14);
 		panelFecha.add(lblHora);
 
-		JLabel label = new JLabel(terminal.getFechaHora().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		final JLabel label = new JLabel(terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		label.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		label.setBounds(58, 28, 90, 14);
 		panelFecha.add(label);
 
-		JLabel label_1 = new JLabel(terminal.getFechaHora().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+		final JLabel label_1 = new JLabel(terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 		label_1.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		label_1.setBounds(195, 26, 90, 14);
 		panelFecha.add(label_1);
 		panelTerminal.add(panelCentroTerminal, BorderLayout.CENTER);
 		tabbedPane.addTab("Terminal", panelTerminal);
+		
+		JButton btnAdelantarDia = new JButton("Adelantar Día");
+		btnAdelantarDia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				terminal.adelantarDia();
+				label.setText(terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			}
+		});
+		btnAdelantarDia.setBounds(11, 55, 137, 27);
+		btnAdelantarDia.setBackground(COLOR);
+		btnAdelantarDia.setForeground(Color.WHITE);
+		btnAdelantarDia.setFont(new Font("SansSerif", Font.BOLD, 14));
+		panelFecha.add(btnAdelantarDia);
+		
 	}
 	
 	public void crearPasajero(DefaultTableModel modelPasajero) {
-	    VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, terminal.getPasajeros());
+	    VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, terminal.getPasajeros(), terminal.getFecha().toLocalDate());
 	    ventanaPasajero.setVisible(true);
 
 	    if (ventanaPasajero.isConfirmado()) {
@@ -455,7 +462,7 @@ public class Interfaz extends JFrame {
 	}
 	
 	public void crearViaje(DefaultTableModel modelViaje) {
-	    VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibus(), terminal.getConductores(), terminal.getFechaHora(), terminal.getViajes());
+	    VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibus(), terminal.getConductores(), terminal.getFecha(), terminal.getViajes());
 	    ventanaViaje.setVisible(true);
 
 	    if (ventanaViaje.isConfirmado()) {
@@ -472,7 +479,7 @@ public class Interfaz extends JFrame {
 	}
 
 	public void crearReserva(DefaultTableModel modelReserva) {
-	    VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getViajes(), terminal.getPasajeros());
+	    VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getViajes(), terminal.getPasajeros(), terminal.getFecha());
 	    ventanaReserva.setVisible(true);
 
 	    if (ventanaReserva.isConfirmado()) {

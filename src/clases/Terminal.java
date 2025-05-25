@@ -2,6 +2,7 @@ package clases;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Terminal {
-    private static LocalDateTime fechaHora;
+    private LocalDateTime fechaHora;
     private static final AtomicLong idReservas = new AtomicLong(1);
     private static final AtomicLong idViajes = new AtomicLong(1);
     private static final AtomicLong idConductores = new AtomicLong(1);
@@ -150,12 +151,8 @@ public class Terminal {
             "Natividad", "Otilia", "Pascual", "Rosario", "Santos"
         ));
     }
-    
-    public static LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
 
-    public static void setFechaHora(LocalDateTime nuevaFechaHora) {
+    public void setFechaHora(LocalDateTime nuevaFechaHora) {
         fechaHora = nuevaFechaHora;
     }
 
@@ -234,7 +231,7 @@ public class Terminal {
         conductores.add(conductor);
     }
 
-    public static LocalDateTime getFecha() {
+    public LocalDateTime getFecha() {
         return fechaHora;
     }
     
@@ -245,4 +242,13 @@ public class Terminal {
 	public static String getIdConductor() {
 		return String.valueOf(idConductores.getAndIncrement());
 	}
+
+	public void adelantarDia() {
+		setFechaHora(fechaHora.plusDays(1));
+	}
+	
+	public void adelantarHora() {
+		setFechaHora(fechaHora.plusHours(1));
+	}
+	
 }

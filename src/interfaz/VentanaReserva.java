@@ -28,7 +28,7 @@ public class VentanaReserva extends JDialog {
 	private Reserva reserva;
 	private HashMap<String, ArrayList<Viaje>> destinosViajes;
 
-	public VentanaReserva(JFrame parent, HashMap<String, ArrayList<Viaje>> destinosViajes, ArrayList<Pasajero> listaPasajeros) {
+	public VentanaReserva(JFrame parent, HashMap<String, ArrayList<Viaje>> destinosViajes, ArrayList<Pasajero> listaPasajeros, final LocalDateTime fechaA) {
 		super(parent, "Crear Nueva Reserva", true);
 		setSize(400, 250);
 		setLayout(null);
@@ -83,7 +83,7 @@ public class VentanaReserva extends JDialog {
 		btnConfirmar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				confirmarReserva();
+				confirmarReserva(fechaA);
 			}
 		});
 
@@ -95,11 +95,11 @@ public class VentanaReserva extends JDialog {
 		});
 	}
 
-	private void confirmarReserva() {
+	private void confirmarReserva(LocalDateTime fechaAct) {
 	    String numeroReserva = Terminal.getIdReserva();
 	    Pasajero pasajeroSeleccionado = (Pasajero) comboPasajeros.getSelectedItem();
 	    String destinoSeleccionado = (String) comboDestinos.getSelectedItem();
-	    LocalDateTime fechaActual = Terminal.getFechaHora();
+	    LocalDateTime fechaActual = fechaAct;
 	    LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
 	    Viaje viaje = Utilidades.buscarViaje(destinosViajes.get(destinoSeleccionado), fechaDeseada);

@@ -7,6 +7,7 @@ import clases.Pasajero;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class VentanaPasajero extends JDialog {
@@ -16,7 +17,7 @@ public class VentanaPasajero extends JDialog {
     private boolean confirmado = false;
     private Pasajero pasajero;
 
-    public VentanaPasajero(JFrame parent, ArrayList<Pasajero> listaPasajeros) {
+    public VentanaPasajero(JFrame parent, ArrayList<Pasajero> listaPasajeros, final LocalDate fecha) {
         super(parent, "Crear Nuevo Pasajero", true);
         setSize(400, 250);
         setLayout(null);
@@ -58,7 +59,7 @@ public class VentanaPasajero extends JDialog {
         btnConfirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                confirmarPasajero();
+                confirmarPasajero(fecha);
             }
         });
 
@@ -70,14 +71,14 @@ public class VentanaPasajero extends JDialog {
         });
     }
 
-    private void confirmarPasajero() {
+    private void confirmarPasajero(LocalDate fecha) {
         try {
             String nombre = txtNombre.getText();
             String id = txtId.getText();
             if(id.length() != 11){
             	throw new IllegalArgumentException("El carnet debe tener 11 digitos");
             }
-            pasajero = new Pasajero(nombre, id);
+            pasajero = new Pasajero(nombre, id, fecha);
             confirmado = true;
             dispose();
         } catch (Exception ex) {
