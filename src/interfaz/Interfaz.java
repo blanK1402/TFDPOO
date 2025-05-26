@@ -28,7 +28,8 @@ public class Interfaz extends JFrame {
 	Terminal terminal = new Terminal("Terminal");
 	private static final Color COLOR = new Color(0, 120, 215);
 
-	public Interfaz() {
+	public Interfaz(Terminal t) {
+		this.terminal = t;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1006, 600);
 		setTitle("Gestión de Transporte");

@@ -1,16 +1,27 @@
 package clases;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import utilidades.Utilidades;
 
 public class Pasajero {
 	private String nombre;
 	private String id;
+	private ArrayList<Reserva> reservas;
 
 	public Pasajero(String nombre, String id, LocalDate fecha){
 		setNombre(nombre);
 		setId(id, fecha);
+		reservas = new ArrayList<Reserva>();
+	}
+	
+	public ArrayList<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void addReserva(Reserva r) {
+		this.reservas.add(r);
 	}
 
 	public String getNombre() {

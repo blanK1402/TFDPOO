@@ -25,7 +25,7 @@ public class Terminal {
     private HashMap<String, ArrayList<Viaje>> viajes;
     private ArrayList<Reserva> reservas;
     private ArrayList<Reserva> reservasEspera;
-    private ArrayList<Pasajero> pasajeros;
+    private HashMap<String, Pasajero> pasajeros;
     private HashSet<String> pasajerosID;
     private HashMap<LocalDate, HashMap<Omnibus, Integer>> registro;
 
@@ -43,7 +43,7 @@ public class Terminal {
 
         reservas = new ArrayList<>();
         reservasEspera = new ArrayList<>();
-        pasajeros = new ArrayList<>();
+        pasajeros = new HashMap<>();
         pasajerosID = new HashSet<>();
         registro = new HashMap<>();
 
@@ -189,9 +189,13 @@ public class Terminal {
     }
 
     public ArrayList<Pasajero> getPasajeros() {
-        return pasajeros;
+        return new ArrayList<Pasajero>(pasajeros.values());
     }
 
+    public Pasajero getPasajero(String idPasajero) {
+        return pasajeros.get(idPasajero);
+    }
+    
     public void addRegistro(LocalDate fecha, Omnibus omnibus, int capacidadesVendidas) {
         HashMap<Omnibus, Integer> par = new HashMap<>();
         par.put(omnibus, capacidadesVendidas);
@@ -203,12 +207,13 @@ public class Terminal {
             throw new IllegalArgumentException("Ya existe un pasajero con ese ID");
         }
         pasajerosID.add(nuevoPasajero.getId());
-        pasajeros.add(nuevoPasajero);
+        pasajeros.put(nuevoPasajero.getId(), nuevoPasajero);
     }
 
     public void addReserva(Reserva reserva) throws IllegalArgumentException {
         if (reserva.getEstado().equals("Confirmada")) {
             reservas.add(reserva);
+            pasajeros.get(reserva.getPasajero().getId()).addReserva(reserva);;
         } else {
             reservasEspera.add(reserva);
         }
