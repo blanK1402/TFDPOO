@@ -70,15 +70,7 @@ public abstract class Conductor {
         return String.format("id:%d, %s", id, nombre);
     }
     
-    public String[] toTableList() {
-        String[] res = {
-        		String.valueOf(nombre),
-        		String.valueOf(id),
-        		String.valueOf(experiencia),
-        		String.valueOf(licencia),
-        };        
-		return res;
-    }
+    public abstract String[] toTableList();
     
     public abstract double calcularSalario();
 }

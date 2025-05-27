@@ -16,8 +16,7 @@ public class ConductorB extends Conductor{
         		String.valueOf(id),
         		"B",
         		String.valueOf(experiencia),
-        		String.valueOf(licencia),
-        		String.valueOf(viajes.size())
+        		String.valueOf(licencia)
         };
                 
 		return res;

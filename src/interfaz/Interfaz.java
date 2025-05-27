@@ -17,6 +17,7 @@ import clases.Viaje;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -148,6 +149,10 @@ public class Interfaz extends JFrame {
 		btnCrearOmnibus.setForeground(Color.WHITE);
 		btnCrearOmnibus.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JButton btnEditarOmnibus = new JButton("Editar");
+		btnEditarOmnibus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnEditarOmnibus.setBackground(COLOR);
 		btnEditarOmnibus.setForeground(Color.WHITE);
 		btnEditarOmnibus.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -285,6 +290,21 @@ public class Interfaz extends JFrame {
 		btnImportarDatos.setFont(new Font("SansSerif", Font.BOLD, 14));
 		panelImportar.add(btnImportarDatos);
 		panelTerminal.add(panelImportar, BorderLayout.NORTH);
+		
+		JButton btnGuardardatos = new JButton("GuardarDatos");
+		btnGuardardatos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Utilidades.guardarDatos(terminal);
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnGuardardatos.setForeground(Color.WHITE);
+		btnGuardardatos.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnGuardardatos.setBackground(SystemColor.textHighlight);
+		panelImportar.add(btnGuardardatos);
 		JPanel panelCentroTerminal = new JPanel();
 		panelCentroTerminal.setLayout(new BoxLayout(panelCentroTerminal, BoxLayout.Y_AXIS));
 
@@ -495,6 +515,4 @@ public class Interfaz extends JFrame {
 	        }
 	    }
 	}
-
-
 }

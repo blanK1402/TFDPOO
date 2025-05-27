@@ -19,6 +19,7 @@ public class Terminal {
     private String nombre;
     private static ArrayList<String> listaNombres;
     private ArrayList<Conductor> conductores;
+    private HashMap<String, Conductor> conductoresMap; 
     private HashSet<Integer> conductoresLicencias;
     private ArrayList<Omnibus> omnibuses;
     private HashSet<String> omnibusID;
@@ -46,6 +47,7 @@ public class Terminal {
         pasajeros = new HashMap<>();
         pasajerosID = new HashSet<>();
         registro = new HashMap<>();
+        conductoresMap = new HashMap<>();
 
         setListaNombres();
         setDestinosDistancias();
@@ -234,8 +236,13 @@ public class Terminal {
     public void addConductor(Conductor conductor) {
         conductoresLicencias.add(conductor.getLicencia());
         conductores.add(conductor);
+        conductoresMap.put(String.valueOf(conductor.getId()), conductor);
     }
 
+    public Conductor getConductor(String id){
+    	return conductoresMap.get(id);
+    }
+    
     public LocalDateTime getFecha() {
         return fechaHora;
     }
