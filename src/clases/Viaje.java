@@ -143,7 +143,7 @@ public class Viaje {
 				destino,
 				omnibus.toString(),
 				conductor.toString(),
-				fechaHoraPartida.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+				fechaHoraPartida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss")),
 				String.valueOf(precio())
 		};
 		return res;

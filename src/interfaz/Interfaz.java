@@ -3,6 +3,7 @@ package interfaz;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import utilidades.Datos;
 import utilidades.Utilidades;
 import clases.Conductor;
 import clases.ConductorA;
@@ -295,7 +296,7 @@ public class Interfaz extends JFrame {
 		btnGuardardatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Utilidades.guardarDatos(terminal);
+					Datos.guardarDatos(terminal);
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}

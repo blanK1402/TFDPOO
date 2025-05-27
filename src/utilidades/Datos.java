@@ -53,42 +53,46 @@ public class Datos {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException("Error al cargar datos");
 		}	
 	}
 
 	private static void cargarPasajeros(Terminal terminal) throws IOException {
-		Pattern patron = Pattern.compile("(.*),(.*)");
-		try {
-			BufferedReader txtPasajeros = new BufferedReader(new FileReader("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\BaseDatos\\pasajeros.txt"));
-			String linea;
-			while((linea = txtPasajeros.readLine()) != null){
-				Matcher matcher = patron.matcher(linea);
-				terminal.addPasajero(new Pasajero(matcher.group(1), matcher.group(2), terminal.getFecha().toLocalDate()));
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+        Pattern patron = Pattern.compile("(.*),(.*)");
+
+        try (BufferedReader txtPasajeros = new BufferedReader(new FileReader("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\BaseDatos\\pasajeros.txt"))) {
+            String linea;
+            while ((linea = txtPasajeros.readLine()) != null) {
+                Matcher matcher = patron.matcher(linea);
+                
+                if (matcher.find()) {
+                    terminal.addPasajero(new Pasajero(matcher.group(1), matcher.group(2), terminal.getFecha().toLocalDate()));
+                }
+            }
+        } catch (IOException e) {
+        	throw new IllegalArgumentException("Error al cargar datos");
+        }
+    }
 
 	private static void cargarViajes(Terminal terminal) throws IllegalArgumentException, IOException {
-		Pattern patron = Pattern.compile("(.*),(.*)");
-		try {
-			BufferedReader txtViajes = new BufferedReader(new FileReader("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\BaseDatos\\viajes.txt"));
+		Pattern patron = Pattern.compile("(.*),(.*),(.*),(.*),(.*),(.*),(.*),(.*)");
+		try(BufferedReader txtViajes = new BufferedReader(new FileReader("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\BaseDatos\\viajes.txt"))) {
 			String linea;
 			while((linea = txtViajes.readLine()) != null){
 				Matcher matcher = patron.matcher(linea);
-				terminal.addPasajero(new Pasajero(matcher.group(1), matcher.group(2), terminal.getFecha().toLocalDate()));
+				
+				if(matcher.find()){
+					Omnibus o = terminal.getOmnibus(matcher.group(3));
+					Conductor c = terminal.getConductor(matcher.group(4));
+					
+					terminal.addViaje(new Viaje(matcher.group(1), matcher.group(6), matcher.group(7), matcher.group(2), o, c));
+				}
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException("Error al cargar datos");
 		}
 	}
-	/*
- 				comodidades.contains("Aire acondicionado") ? "Si" : "No",
-				comodidades.contains("TV") ? "Si" : "No",
-				comodidades.contains("Baño") ? "Si" : "No",
-	 */
+
 	private static void cargarOmnibuses(Terminal terminal) throws IllegalArgumentException, IOException {
 		Pattern patron = Pattern.compile("(.*),(.*),(.*),(.*),(.*),(.*),(.*)");
 		Pattern patronId = Pattern.compile("id:([0-9]+)");

@@ -23,6 +23,7 @@ public class Terminal {
     private HashSet<Integer> conductoresLicencias;
     private ArrayList<Omnibus> omnibuses;
     private HashSet<String> omnibusID;
+    private HashMap<String, Omnibus> omnibusesMap;
     private HashMap<String, ArrayList<Viaje>> viajes;
     private ArrayList<Reserva> reservas;
     private ArrayList<Reserva> reservasEspera;
@@ -226,6 +227,7 @@ public class Terminal {
             throw new IllegalArgumentException("Ya existe un omnibus con esa matrícula");
         }
         omnibusID.add(omnibus.getMatricula());
+        omnibusesMap.put(omnibus.getMatricula(), omnibus);
         omnibuses.add(omnibus);
     }
 
@@ -261,6 +263,10 @@ public class Terminal {
 	
 	public void adelantarHora() {
 		setFechaHora(fechaHora.plusHours(1));
+	}
+
+	public Omnibus getOmnibus(String matricula) {
+		return omnibusesMap.get(matricula);
 	}
 	
 }
