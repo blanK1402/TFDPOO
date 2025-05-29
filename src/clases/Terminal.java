@@ -231,7 +231,8 @@ public class Terminal {
         viajes.get(viaje.getDestino()).add(viaje);
     }
 
-    public void addConductor(Conductor conductor) {
+
+	public void addConductor(Conductor conductor) {
         conductoresLicencias.add(conductor.getLicencia());
         conductores.add(conductor);
     }

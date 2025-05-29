@@ -205,7 +205,7 @@ public class Interfaz extends JFrame {
 		tabbedPane.addTab("Viaje", panelViaje);
 
 		// Pestaña RESERVA
-		
+
 		String[] columnNamesReserva = {"Pasajero", "Nro Reservación", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
 		Object[][] dataReserva = {};
 		final DefaultTableModel modelReserva = new DefaultTableModel(dataReserva, columnNamesReserva);
@@ -217,7 +217,7 @@ public class Interfaz extends JFrame {
 		tableReserva.getTableHeader().setForeground(Color.WHITE);
 		JScrollPane scrollReserva = new JScrollPane(tableReserva);
 
-		
+
 		JPanel panelReserva = new JPanel(new BorderLayout());
 		JPanel botonesReserva = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JButton btnCrearReserva = new JButton("Crear Reserva");
@@ -242,7 +242,7 @@ public class Interfaz extends JFrame {
 		botonesReserva.add(btnEliminarReserva);
 		panelReserva.add(botonesReserva, BorderLayout.NORTH);
 		panelReserva.add(scrollReserva, BorderLayout.CENTER);
-		
+
 		tabbedPane.addTab("Reserva", panelReserva);
 
 		// Pestaña TERMINAL
@@ -252,7 +252,7 @@ public class Interfaz extends JFrame {
 		JButton btnImportarDatos = new JButton("Importar Datos");
 		btnImportarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				for(int i = 0; i < 100; i++){
 					Pasajero p = Utilidades.crearPasajeroRandom(terminal.getIdPasajeros(), terminal.getFecha().toLocalDate());
 					Conductor c = Utilidades.crearConductorRandom(terminal.getLicencias());
@@ -275,9 +275,9 @@ public class Interfaz extends JFrame {
 					terminal.addPasajero(p);
 					modelPasajero.addRow(p.toTableList());
 					modelConductor.addRow(c.toTableList());
-					
+
 				}
-				
+
 			}
 		});
 		btnImportarDatos.setBackground(COLOR);
@@ -292,7 +292,31 @@ public class Interfaz extends JFrame {
 		panelReportes.setBorder(BorderFactory.createTitledBorder("Reportes"));
 		panelReportes.setLayout(null);
 
-		JButton btnReporte1 = new JButton("Listado de conductores");
+		JButton btnReporte1 = new JButton("conductores con mas viajes");
+		btnReporte1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<Conductor> conductores = terminal.getConductores();
+				int maxViajes = 0;
+				ArrayList<Conductor> conductoresConMasViajes = new ArrayList<>();
+
+				for (Conductor c : conductores) {
+					int numViajes = c.getViajes().size();
+					if (numViajes > maxViajes) {
+						maxViajes = numViajes;
+						conductoresConMasViajes.clear(); 
+						conductoresConMasViajes.add(c);
+					} else if (numViajes == maxViajes) {
+						conductoresConMasViajes.add(c); 
+					}
+				}
+
+				System.out.println("Conductores con más viajes (" + maxViajes + " viajes):");
+				for (Conductor c : conductoresConMasViajes) {
+					System.out.println("- " + c.getNombre());
+				}
+			}
+		});
+
 		btnReporte1.setBounds(11, 21, 265, 25);
 		btnReporte1.setBackground(COLOR);
 		btnReporte1.setForeground(Color.WHITE);
@@ -307,6 +331,16 @@ public class Interfaz extends JFrame {
 		panelReportes.add(btnReporte2);
 
 		JButton btnReporte3 = new JButton("Omnibus Disponibles");
+		btnReporte3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Omnibus disponibles: ");
+				for(Omnibus o : terminal.getOmnibus()){
+					if(o.getDisponibilidad().equals("Disponible")){
+						System.out.println(o);
+					}
+				}
+			}
+		});
 		btnReporte3.setBounds(11, 51, 265, 25);
 		btnReporte3.setBackground(COLOR);
 		btnReporte3.setForeground(Color.WHITE);
@@ -391,7 +425,7 @@ public class Interfaz extends JFrame {
 		panelFecha.add(label_1);
 		panelTerminal.add(panelCentroTerminal, BorderLayout.CENTER);
 		tabbedPane.addTab("Terminal", panelTerminal);
-		
+
 		JButton btnAdelantarDia = new JButton("Adelantar Día");
 		btnAdelantarDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -404,27 +438,27 @@ public class Interfaz extends JFrame {
 		btnAdelantarDia.setForeground(Color.WHITE);
 		btnAdelantarDia.setFont(new Font("SansSerif", Font.BOLD, 14));
 		panelFecha.add(btnAdelantarDia);
-		
+
 	}
-	
+
 	public void crearPasajero(DefaultTableModel modelPasajero) {
-	    VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, terminal.getPasajeros(), terminal.getFecha().toLocalDate());
-	    ventanaPasajero.setVisible(true);
+		VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, terminal.getPasajeros(), terminal.getFecha().toLocalDate());
+		ventanaPasajero.setVisible(true);
 
-	    if (ventanaPasajero.isConfirmado()) {
-	        try {
-	            Pasajero nuevoPasajero = ventanaPasajero.getPasajero();
-	            terminal.addPasajero(nuevoPasajero);
-	            modelPasajero.addRow(nuevoPasajero.toTableList());
-	            JOptionPane.showMessageDialog(null, "Pasajero creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-	        } catch (Exception ex) {
-	            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-	            crearPasajero(modelPasajero);
-	        }
-	    }
+		if (ventanaPasajero.isConfirmado()) {
+			try {
+				Pasajero nuevoPasajero = ventanaPasajero.getPasajero();
+				terminal.addPasajero(nuevoPasajero);
+				modelPasajero.addRow(nuevoPasajero.toTableList());
+				JOptionPane.showMessageDialog(null, "Pasajero creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				crearPasajero(modelPasajero);
+			}
+		}
 	}
 
-	
+
 	public void crearConductor(DefaultTableModel modelConductor) {
 		VentanaConductor ventanaConductor = new VentanaConductor(Interfaz.this, terminal.getConductores());
 		ventanaConductor.setVisible(true);
@@ -436,7 +470,7 @@ public class Interfaz extends JFrame {
 				modelConductor.addRow(nuevoConductor instanceof ConductorA ? 
 						((ConductorA)nuevoConductor).toTableList() 
 						: nuevoConductor instanceof ConductorB ? ((ConductorB)nuevoConductor).toTableList() 
-						: ((ConductorC)nuevoConductor).toTableList());
+								: ((ConductorC)nuevoConductor).toTableList());
 				JOptionPane.showMessageDialog(null, "ConductorCreadoCorrectamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -444,56 +478,56 @@ public class Interfaz extends JFrame {
 			}
 		}
 	}
-	
+
 	public void crearOmnibus(DefaultTableModel modelOmnibus) {
-	    VentanaOmnibus ventanaOmnibus = new VentanaOmnibus(Interfaz.this, terminal.getConductores());
-	    ventanaOmnibus.setVisible(true);
+		VentanaOmnibus ventanaOmnibus = new VentanaOmnibus(Interfaz.this, terminal.getConductores());
+		ventanaOmnibus.setVisible(true);
 
-	    if (ventanaOmnibus.isConfirmado()) {
-	        try {
-	            Omnibus nuevoOmnibus = ventanaOmnibus.getOmnibus();
-	            terminal.addOmnibus(nuevoOmnibus);
-	            modelOmnibus.addRow(nuevoOmnibus.toTableList());
-	            JOptionPane.showMessageDialog(null, "Ómnibus creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-	        } catch (Exception ex) {
-	            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-	            crearOmnibus(modelOmnibus);
-	        }
-	    }
+		if (ventanaOmnibus.isConfirmado()) {
+			try {
+				Omnibus nuevoOmnibus = ventanaOmnibus.getOmnibus();
+				terminal.addOmnibus(nuevoOmnibus);
+				modelOmnibus.addRow(nuevoOmnibus.toTableList());
+				JOptionPane.showMessageDialog(null, "Ómnibus creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				crearOmnibus(modelOmnibus);
+			}
+		}
 	}
-	
-	public void crearViaje(DefaultTableModel modelViaje) {
-	    VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibus(), terminal.getConductores(), terminal.getFecha(), terminal.getViajes());
-	    ventanaViaje.setVisible(true);
 
-	    if (ventanaViaje.isConfirmado()) {
-	        try {
-	            Viaje nuevoViaje = ventanaViaje.getViaje();
-	            terminal.addViaje(nuevoViaje);
-	            modelViaje.addRow(nuevoViaje.toTableList());
-	            JOptionPane.showMessageDialog(null, "Viaje creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-	        } catch (Exception ex) {
-	            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-	            crearViaje(modelViaje);
-	        }
-	    }
+	public void crearViaje(DefaultTableModel modelViaje) {
+		VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibus(), terminal.getConductores(), terminal.getFecha(), terminal.getViajes());
+		ventanaViaje.setVisible(true);
+
+		if (ventanaViaje.isConfirmado()) {
+			try {
+				Viaje nuevoViaje = ventanaViaje.getViaje();
+				terminal.addViaje(nuevoViaje);
+				modelViaje.addRow(nuevoViaje.toTableList());
+				JOptionPane.showMessageDialog(null, "Viaje creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				crearViaje(modelViaje);
+			}
+		}
 	}
 
 	public void crearReserva(DefaultTableModel modelReserva) {
-	    VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getViajes(), terminal.getPasajeros(), terminal.getFecha());
-	    ventanaReserva.setVisible(true);
+		VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getViajes(), terminal.getPasajeros(), terminal.getFecha());
+		ventanaReserva.setVisible(true);
 
-	    if (ventanaReserva.isConfirmado()) {
-	        try {
-	            Reserva nuevaReserva = ventanaReserva.getReserva();
-	            terminal.addReserva(nuevaReserva);
-	            modelReserva.addRow(nuevaReserva.toTableList());
-	            JOptionPane.showMessageDialog(null, "Reserva creada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-	        } catch (Exception ex) {
-	            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-	            crearReserva(modelReserva);
-	        }
-	    }
+		if (ventanaReserva.isConfirmado()) {
+			try {
+				Reserva nuevaReserva = ventanaReserva.getReserva();
+				terminal.addReserva(nuevaReserva);
+				modelReserva.addRow(nuevaReserva.toTableList());
+				JOptionPane.showMessageDialog(null, "Reserva creada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				crearReserva(modelReserva);
+			}
+		}
 	}
 
 
