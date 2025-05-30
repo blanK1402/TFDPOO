@@ -1,0 +1,84 @@
+Natividad id: 61051637976,1,Guantánamo,28/05/2025,13/06/2025,Confirmada, 1
+Aldo id: 16040929300,2,Villa Clara,28/05/2025,13/07/2025,Confirmada, 7
+Teodoro id: 66082346982,3,Ciego de Ávila,28/05/2025,28/07/2025,Confirmada, 2
+Adrián id: 32031465035,4,Guantánamo,28/05/2025,05/08/2025,Confirmada, 5
+Alfonso id: 40090679080,5,Villa Clara,28/05/2025,18/06/2025,Confirmada, 7
+Teodoro id: 66082346982,6,Pinar del Río,28/05/2025,28/05/2025,Confirmada, 4
+Alfonso id: 40090679080,7,Pinar del Río,28/05/2025,02/09/2025,Confirmada, 4
+Zoe id: 73060546554,8,Guantánamo,28/05/2025,03/07/2025,Confirmada, 5
+Wendy id: 01061170119,9,Cienfuegos,28/05/2025,02/06/2025,Confirmada, 11
+Santos id: 09040493146,10,Cienfuegos,28/05/2025,19/06/2025,Confirmada, 11
+Nelly id: 08060231670,11,Pinar del Río,28/05/2025,14/08/2025,Confirmada, 4
+Belinda id: 27112304675,12,Granma,28/05/2025,20/08/2025,Confirmada, 3
+Damián id: 92102841936,13,Artemisa,28/05/2025,10/08/2025,Confirmada, 6
+Octavio id: 79101333721,14,Matanzas,28/05/2025,01/08/2025,Confirmada, 10
+Samuel id: 14050186071,15,Pinar del Río,28/05/2025,30/06/2025,Confirmada, 8
+Teresa id: 86032546761,16,Guantánamo,28/05/2025,26/08/2025,Confirmada, 1
+Belinda id: 27112304675,17,Artemisa,28/05/2025,28/08/2025,Confirmada, 13
+Berenice id: 26101947900,18,Ciego de Ávila,28/05/2025,24/06/2025,Confirmada, 2
+Tiburcio id: 42011076637,19,Sancti Spíritus,28/05/2025,08/08/2025,Confirmada, 14
+Nelly id: 08060231670,20,Las Tunas,28/05/2025,29/08/2025,Confirmada, 22
+Teodoro id: 66082346982,21,Matanzas,28/05/2025,21/07/2025,Confirmada, 23
+Oscar id: 30071791684,22,Artemisa,28/05/2025,28/06/2025,Confirmada, 6
+Heriberto id: 57060354840,23,Guantánamo,28/05/2025,30/05/2025,Confirmada, 5
+Teresa id: 86032546761,24,Camagüey,28/05/2025,29/08/2025,Confirmada, 27
+Oscar id: 30071791684,25,Artemisa,28/05/2025,31/05/2025,Confirmada, 24
+Esteban id: 94020323424,26,Ciego de Ávila,28/05/2025,17/08/2025,Confirmada, 26
+Adrián id: 32031465035,27,Artemisa,28/05/2025,08/07/2025,Confirmada, 25
+Hermelinda id: 70121097798,28,Artemisa,28/05/2025,16/07/2025,Confirmada, 24
+Teresa id: 86032546761,29,Las Tunas,28/05/2025,23/08/2025,Confirmada, 22
+Rubén id: 95111014447,30,Cienfuegos,28/05/2025,25/08/2025,Confirmada, 12
+Belinda id: 27112304675,31,Las Tunas,28/05/2025,03/06/2025,Confirmada, 32
+Teodoro id: 66082346982,32,Las Tunas,28/05/2025,07/06/2025,Confirmada, 22
+Santos id: 09040493146,33,Villa Clara,28/05/2025,01/06/2025,Confirmada, 16
+Wendy id: 01061170119,34,Mayabeque,28/05/2025,06/07/2025,Confirmada, 20
+Belinda id: 27112304675,35,Mayabeque,28/05/2025,29/08/2025,Confirmada, 20
+Vanessa id: 78110138023,36,Villa Clara,28/05/2025,29/06/2025,Confirmada, 38
+Renato id: 79092320218,37,Artemisa,28/05/2025,31/07/2025,Confirmada, 24
+Rubén id: 95111014447,38,Santiago de Cuba,28/05/2025,11/06/2025,Confirmada, 28
+Gabriel id: 93030637363,39,Santiago de Cuba,28/05/2025,05/06/2025,Confirmada, 29
+Vanesa id: 35010683686,40,Mayabeque,28/05/2025,04/09/2025,Confirmada, 20
+Alfonso id: 40090679080,41,Las Tunas,28/05/2025,17/06/2025,Confirmada, 32
+Samuel id: 14050186071,42,Villa Clara,28/05/2025,03/08/2025,Confirmada, 15
+Nicolás id: 17072843721,43,Pinar del Río,28/05/2025,06/06/2025,Confirmada, 36
+Vanesa id: 35010683686,44,Villa Clara,28/05/2025,14/08/2025,Confirmada, 39
+Rubén id: 95111014447,45,Cienfuegos,28/05/2025,18/08/2025,Confirmada, 11
+Hermelinda id: 70121097798,46,Villa Clara,28/05/2025,22/08/2025,Confirmada, 33
+Selene id: 35110576826,47,Guantánamo,28/05/2025,19/06/2025,Confirmada, 21
+Wendy id: 01061170119,48,Matanzas,28/05/2025,28/05/2025,Confirmada, 23
+Luisa id: 51022530885,49,Guantánamo,28/05/2025,13/06/2025,Confirmada, 53
+Zoe id: 73060546554,50,Santiago de Cuba,28/05/2025,23/08/2025,Confirmada, 54
+Teresa id: 86032546761,51,Camagüey,28/05/2025,23/08/2025,Confirmada, 9
+Gabriel id: 93030637363,52,Artemisa,28/05/2025,15/06/2025,Confirmada, 25
+Luisa id: 51022530885,53,Granma,28/05/2025,03/08/2025,Confirmada, 3
+Vanesa id: 35010683686,54,Sancti Spíritus,28/05/2025,14/06/2025,Confirmada, 14
+Berenice id: 26101947900,55,Las Tunas,28/05/2025,29/06/2025,Confirmada, 45
+Ricardo id: 86032488209,56,Ciego de Ávila,28/05/2025,01/07/2025,Confirmada, 55
+Wendy id: 01061170119,57,Matanzas,28/05/2025,31/07/2025,Confirmada, 23
+Teodoro id: 66082346982,58,Holguín,28/05/2025,18/06/2025,Confirmada, 58
+Teresa id: 86032546761,59,Mayabeque,28/05/2025,09/07/2025,Confirmada, 20
+Teodoro id: 66082346982,60,Ciego de Ávila,28/05/2025,27/07/2025,Confirmada, 2
+Lorena id: 59030267818,61,Artemisa,28/05/2025,04/08/2025,Confirmada, 6
+Nelly id: 08060231670,62,Guantánamo,28/05/2025,10/07/2025,Confirmada, 1
+Kevin id: 71081681442,63,Las Tunas,28/05/2025,15/07/2025,Confirmada, 44
+Gabriel id: 93030637363,64,Villa Clara,28/05/2025,29/06/2025,Confirmada, 67
+Santos id: 09040493146,65,Ciego de Ávila,28/05/2025,04/09/2025,Confirmada, 69
+Ilse id: 60112848793,66,Sancti Spíritus,28/05/2025,02/08/2025,Confirmada, 34
+José id: 21062166837,67,Villa Clara,28/05/2025,27/07/2025,Confirmada, 33
+Luisa id: 51022530885,68,Las Tunas,28/05/2025,15/08/2025,Confirmada, 57
+Yael id: 12061915746,69,Holguín,28/05/2025,27/08/2025,Confirmada, 52
+León id: 97010281709,70,Sancti Spíritus,28/05/2025,08/06/2025,Confirmada, 40
+Fátima id: 53081079585,71,Holguín,28/05/2025,16/08/2025,Confirmada, 58
+Vanesa id: 35010683686,72,Santiago de Cuba,28/05/2025,28/07/2025,Confirmada, 77
+Zoe id: 73060546554,73,Pinar del Río,28/05/2025,04/06/2025,Confirmada, 8
+Deyanira id: 29052179062,74,Santiago de Cuba,28/05/2025,07/08/2025,Confirmada, 29
+Renato id: 79092320218,75,Cienfuegos,28/05/2025,26/06/2025,Confirmada, 80
+Yulissa id: 88031601404,76,Mayabeque,28/05/2025,06/07/2025,Confirmada, 20
+Rubén id: 95111014447,77,Guantánamo,28/05/2025,16/06/2025,Confirmada, 81
+Nelly id: 08060231670,78,Matanzas,28/05/2025,21/08/2025,Confirmada, 48
+Fátima id: 53081079585,79,Artemisa,28/05/2025,13/06/2025,Confirmada, 17
+Octavio id: 79101333721,80,Villa Clara,28/05/2025,09/07/2025,Confirmada, 33
+Elías id: 31032331611,81,Villa Clara,28/05/2025,11/07/2025,Confirmada, 15
+Horacio id: 99080938868,82,Pinar del Río,28/05/2025,19/07/2025,Confirmada, 78
+Wendy id: 01061170119,83,Matanzas,28/05/2025,20/06/2025,Confirmada, 48
+Karina id: 72031548771,84,Cienfuegos,28/05/2025,01/06/2025,Confirmada, 11

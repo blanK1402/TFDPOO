@@ -1,8 +1,5 @@
 package utilidades;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,11 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.table.DefaultTableModel;
 
 import login.Usuario;
 import clases.Conductor;
@@ -291,32 +283,14 @@ public class Utilidades {
 		return r;
 	}
 
-	private static void cargarContrasenas(HashMap<ArrayList<String>, Usuario> contrasenas) throws IllegalArgumentException, IOException {
-		Pattern patron = Pattern.compile("^(\\w+):([^,]+),([^,]+)$");
-        
-	    try (BufferedReader txt = new BufferedReader(new FileReader("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\src\\utilidades\\a.txt"))) {
-	        String linea;
-	        while ((linea = txt.readLine()) != null) {
-	            Matcher coincidencia = patron.matcher(linea);
-	            if (coincidencia.matches()) { 
-	            	ArrayList<String> usuarioContrasena = new ArrayList<String>();
-	            	usuarioContrasena.add(coincidencia.group(2));
-	            	usuarioContrasena.add(coincidencia.group(3));
-	            	Usuario usuario = new Usuario(usuarioContrasena.get(0), usuarioContrasena.get(1), coincidencia.group(1));	
-	                contrasenas.put(usuarioContrasena, usuario);
-	            }
-	        }
-	    } 
-	    catch (FileNotFoundException e) {
-	        throw new IllegalArgumentException(e);
-	    }
-	}
+	
 
 	
 	public static Usuario login(ArrayList<String> usuarioContrasena) throws IllegalArgumentException, IOException{
 		HashMap<ArrayList<String>, Usuario> contrasenas = new HashMap<ArrayList<String>, Usuario>();
 
-		cargarContrasenas(contrasenas);
+		Datos.cargarContrasenas(contrasenas);
+		
 		try{
 			return contrasenas.get(usuarioContrasena);
 		}
@@ -326,9 +300,5 @@ public class Utilidades {
 		
 	}
 
-	public static void cargarReservasUsuario(ArrayList<Reserva> reservas, DefaultTableModel modelReserva) {
-		for(Reserva r : reservas){
-			modelReserva.addRow(r.toTableList());
-		}
-	}
+
 }

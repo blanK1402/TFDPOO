@@ -12,7 +12,7 @@ public abstract class Conductor {
     protected ArrayList<Viaje> viajes;
 
     public Conductor(String nombre, String id, String experiencia, String licencia) {
-        this.viajes = new ArrayList<>();
+        viajes = new ArrayList<>();
         setNombre(nombre);
         setId(id);
         setExperiencia(experiencia);
@@ -24,9 +24,7 @@ public abstract class Conductor {
     }
     
     public void addViaje(Viaje viaje) {
-        if (viaje != null) {
-            viajes.add(viaje);
-        }
+        viajes.add(viaje);
     }
     
     public String getNombre() {

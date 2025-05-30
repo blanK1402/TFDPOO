@@ -3,6 +3,7 @@ package interfaz;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import utilidades.Datos;
 import utilidades.Utilidades;
 import clases.Conductor;
 import clases.ConductorA;
@@ -17,6 +18,8 @@ import clases.Viaje;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -252,32 +255,14 @@ public class Interfaz extends JFrame {
 		JButton btnImportarDatos = new JButton("Importar Datos");
 		btnImportarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				for(int i = 0; i < 100; i++){
-					Pasajero p = Utilidades.crearPasajeroRandom(terminal.getIdPasajeros(), terminal.getFecha().toLocalDate());
-					Conductor c = Utilidades.crearConductorRandom(terminal.getLicencias());
-					if(i > 5){
-						Omnibus o = Utilidades.crearOmnibus(terminal.getOmnibusId(), terminal.getConductores());
-						terminal.addOmnibus(o);
-						modelOmnibus.addRow(o.toTableList());
+				try {
+					Datos.importarDatos(terminal);
+					for(Pasajero p : terminal.getPasajeros()){
+						modelPasajero.addRow(p.toTableList());
 					}
-					if(i > 10){
-						Viaje v = Utilidades.crearViajeRandom(terminal.getOmnibus());
-						terminal.addViaje(v);
-						modelViaje.addRow(v.toTableList());
-					}
-					if(i > 15){
-						Reserva r = Utilidades.crearReservaRandom(terminal.getPasajeros(), terminal.getViajes2(), terminal.getFecha());
-						terminal.addReserva(r);
-						modelReserva.addRow(r.toTableList());
-					}
-					terminal.addConductor(c);
-					terminal.addPasajero(p);
-					modelPasajero.addRow(p.toTableList());
-					modelConductor.addRow(c.toTableList());
-
-				}
-
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} 
 			}
 		});
 		btnImportarDatos.setBackground(COLOR);
