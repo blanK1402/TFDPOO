@@ -12,7 +12,7 @@ public abstract class Conductor {
     protected ArrayList<Viaje> viajes;
 
     public Conductor(String nombre, String id, String experiencia, String licencia) {
-        this.viajes = new ArrayList<>();
+        viajes = new ArrayList<>();
         setNombre(nombre);
         setId(id);
         setExperiencia(experiencia);

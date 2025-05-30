@@ -250,36 +250,7 @@ public class Interfaz extends JFrame {
 		JPanel panelTerminal = new JPanel(new BorderLayout());
 		JPanel panelImportar = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JButton btnImportarDatos = new JButton("Importar Datos");
-		btnImportarDatos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				for(int i = 0; i < 100; i++){
-					Pasajero p = Utilidades.crearPasajeroRandom(terminal.getIdPasajeros(), terminal.getFecha().toLocalDate());
-					Conductor c = Utilidades.crearConductorRandom(terminal.getLicencias());
-					if(i > 5){
-						Omnibus o = Utilidades.crearOmnibus(terminal.getOmnibusId(), terminal.getConductores());
-						terminal.addOmnibus(o);
-						modelOmnibus.addRow(o.toTableList());
-					}
-					if(i > 10){
-						Viaje v = Utilidades.crearViajeRandom(terminal.getOmnibus());
-						terminal.addViaje(v);
-						modelViaje.addRow(v.toTableList());
-					}
-					if(i > 15){
-						Reserva r = Utilidades.crearReservaRandom(terminal.getPasajeros(), terminal.getViajes2(), terminal.getFecha());
-						terminal.addReserva(r);
-						modelReserva.addRow(r.toTableList());
-					}
-					terminal.addConductor(c);
-					terminal.addPasajero(p);
-					modelPasajero.addRow(p.toTableList());
-					modelConductor.addRow(c.toTableList());
-
-				}
-
-			}
-		});
+		
 		btnImportarDatos.setBackground(COLOR);
 		btnImportarDatos.setForeground(Color.WHITE);
 		btnImportarDatos.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -334,7 +305,7 @@ public class Interfaz extends JFrame {
 		btnReporte3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Omnibus disponibles: ");
-				for(Omnibus o : terminal.getOmnibus()){
+				for(Omnibus o : terminal.getOmnibuses()){
 					if(o.getDisponibilidad().equals("Disponible")){
 						System.out.println(o);
 					}
@@ -497,7 +468,7 @@ public class Interfaz extends JFrame {
 	}
 
 	public void crearViaje(DefaultTableModel modelViaje) {
-		VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibus(), terminal.getConductores(), terminal.getFecha(), terminal.getViajes());
+		VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibuses(), terminal.getConductores(), terminal.getFecha(), terminal.getViajes());
 		ventanaViaje.setVisible(true);
 
 		if (ventanaViaje.isConfirmado()) {

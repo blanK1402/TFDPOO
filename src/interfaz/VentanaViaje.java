@@ -39,7 +39,7 @@ public class VentanaViaje extends JDialog {
 		int desplazamientoDerecha = 140;
 		
 		lblId = new JLabel("");
-		lblId.setText(Terminal.getIdViaje());
+		lblId.setText(String.valueOf(Terminal.getIdViaje()));
 		lblId.setBounds(desplazamientoDerecha + 100, 20, 250, 30);
 		add(lblId);
 

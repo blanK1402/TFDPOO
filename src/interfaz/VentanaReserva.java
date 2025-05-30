@@ -96,7 +96,7 @@ public class VentanaReserva extends JDialog {
 	}
 
 	private void confirmarReserva(LocalDateTime fechaAct) {
-	    String numeroReserva = Terminal.getIdReserva();
+	    String numeroReserva = String.valueOf(Terminal.getIdReserva());
 	    Pasajero pasajeroSeleccionado = (Pasajero) comboPasajeros.getSelectedItem();
 	    String destinoSeleccionado = (String) comboDestinos.getSelectedItem();
 	    LocalDateTime fechaActual = fechaAct;

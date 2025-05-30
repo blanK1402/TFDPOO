@@ -97,7 +97,7 @@ public class VentanaConductor extends JDialog {
     private void confirmarConductor() {
         try {
             String nombre = txtNombre.getText();
-            String id = Terminal.getIdConductor();
+            String id = String.valueOf(Terminal.getIdConductor());
             String experiencia = txtExperiencia.getText();
             String licencia = txtLicencia.getText();
             String categoria = (String) comboCategoria.getSelectedItem();

@@ -212,7 +212,7 @@ public class Utilidades {
 	public static Conductor crearConductorRandom(HashSet<Integer> conductoresLicencias){
 		int tamanyo = Terminal.getListaNombres().size(); 
 		String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));
-		String id = Terminal.getIdConductor();
+		String id = String.valueOf(Terminal.getIdConductor());
 		String licencia = generarLicencia(conductoresLicencias);
 		String categoria = Arrays.asList("A", "B", "C").get((int) (Math.random() * 3));
 
@@ -269,7 +269,7 @@ public class Utilidades {
 	}
 
 	public static Viaje crearViajeRandom(ArrayList<Omnibus> Omnibus){
-		String id = Terminal.getIdViaje();
+		String id = String.valueOf(Terminal.getIdViaje());
 		String destino = Terminal.getRandomDestino();
 		Omnibus o = Omnibus.get((int) (Math.random() * Omnibus.size()));
 		Conductor c = o.getConductores().get((int) (Math.random() * o.getConductores().size()));
@@ -280,7 +280,7 @@ public class Utilidades {
 	public static Reserva crearReservaRandom(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes, LocalDateTime fecha){
 		Pasajero pasajero = pasajeros.get((int) (Math.random() * pasajeros.size()));
 		Viaje reservaViaje = viajes.get((int) (Math.random() * viajes.size()));
-		String numReserva = Terminal.getIdReserva();
+		String numReserva = String.valueOf(Terminal.getIdReserva());
 		String destino = reservaViaje.getDestino();
 		LocalDateTime fechaActual = fecha;
 		LocalDate fechaDeseada = fechaActual.plusDays((long) (Math.random() * 101)).toLocalDate();

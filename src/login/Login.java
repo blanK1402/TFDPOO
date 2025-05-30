@@ -73,6 +73,7 @@ public class Login extends JFrame {
 						Usuario usuario = Utilidades.login(usuarioContrasena);
 						if(usuario.getRol().equals("Admin")){
 							Runner.lanzarInterfazAdmin(terminal);
+							dispose();
 						}
 						else{
 							Runner.lanzarInterfazUsuario(terminal.getPasajero(usuario.getUsuario()));
