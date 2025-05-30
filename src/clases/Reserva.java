@@ -8,13 +8,13 @@ public class Reserva {
 	private Pasajero pasajero;
 	private int numReserva;
 	private String destino;
-	private LocalDateTime fechaActual;
+	private LocalDate fechaActual;
 	private LocalDate fechaDeseada;
 	private int asiento;
 	private String estado;
 	private Viaje viaje;
 	
-	public Reserva(Pasajero pasajero, String numReserva, String destino, LocalDateTime fecha, LocalDate fechaDeseada, int asiento){
+	public Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento){
 		setPasajero(pasajero);
 		setNumReserva(numReserva);
 		setDestino(destino);
@@ -66,11 +66,11 @@ public class Reserva {
 	public String getEstado() {
 		return estado;
 	}
-	public LocalDateTime getFechaActual() {
+	public LocalDate getFechaActual() {
 		return fechaActual;
 	}
-	public void setFechaActual(LocalDateTime localDateTime) {
-		this.fechaActual = localDateTime;
+	public void setFechaActual(LocalDate fecha) {
+		this.fechaActual = fecha;
 	}
 	public LocalDate getFechaDeseada() {
 		return fechaDeseada;

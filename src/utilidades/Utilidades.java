@@ -277,13 +277,13 @@ public class Utilidades {
 		return new Viaje(id, fHS.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), fHS.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, o, c);
 	} 
 
-	public static Reserva crearReservaRandom(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes, LocalDateTime fecha){
+	public static Reserva crearReservaRandom(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes, LocalDate fecha){
 		Pasajero pasajero = pasajeros.get((int) (Math.random() * pasajeros.size()));
 		Viaje reservaViaje = viajes.get((int) (Math.random() * viajes.size()));
 		String numReserva = String.valueOf(Terminal.getIdReserva());
 		String destino = reservaViaje.getDestino();
-		LocalDateTime fechaActual = fecha;
-		LocalDate fechaDeseada = fechaActual.plusDays((long) (Math.random() * 101)).toLocalDate();
+		LocalDate fechaActual = fecha;
+		LocalDate fechaDeseada = fechaActual.plusDays((long) (Math.random() * 101));
 		int asiento = reservaViaje.getAsiento();
 
 		Reserva r = new Reserva(pasajero, numReserva, destino, fechaActual, fechaDeseada, asiento);	

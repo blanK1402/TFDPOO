@@ -99,7 +99,7 @@ public class VentanaReserva extends JDialog {
 	    String numeroReserva = String.valueOf(Terminal.getIdReserva());
 	    Pasajero pasajeroSeleccionado = (Pasajero) comboPasajeros.getSelectedItem();
 	    String destinoSeleccionado = (String) comboDestinos.getSelectedItem();
-	    LocalDateTime fechaActual = fechaAct;
+	    LocalDate fechaActual = fechaAct.toLocalDate();
 	    LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
 	    Viaje viaje = Utilidades.buscarViaje(destinosViajes.get(destinoSeleccionado), fechaDeseada);
@@ -116,7 +116,7 @@ public class VentanaReserva extends JDialog {
 	    dispose();
 	}
 
-	private void manejarReservaListaEspera(Pasajero pasajero, String numeroReserva, String destino, LocalDateTime fechaActual, LocalDate fechaDeseada) {
+	private void manejarReservaListaEspera(Pasajero pasajero, String numeroReserva, String destino, LocalDate fechaActual, LocalDate fechaDeseada) {
 	    int respuesta = JOptionPane.showConfirmDialog(null, "No hay disponibilidad en esa fecha, ¿desea añadir la reserva a una lista de espera?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
 	    if (respuesta == JOptionPane.YES_OPTION) {

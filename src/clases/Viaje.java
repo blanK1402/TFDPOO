@@ -126,10 +126,11 @@ public class Viaje {
 		asientosLibres.remove(reserva.getAsiento());
 		asientosVendidos.add(reserva.getAsiento());
 	}
-	public void cancelarReserva(Reserva r){
+	public Reserva cancelarReserva(Reserva r){
 		reservas.remove(r);
 		asientosVendidos.remove(r.getAsiento());
 		asientosLibres.add(r.getAsiento());
+		return r;
 	}
 
 	@Override
