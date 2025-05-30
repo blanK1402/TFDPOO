@@ -263,6 +263,9 @@ public class Interfaz extends JFrame {
 					for(Conductor c : terminal.getConductores()){
 						modelConductor.addRow(c.toTableList());
 					}
+					for(Omnibus o : terminal.getOmnibuses()){
+						modelOmnibus.addRow(o.toTableList());
+					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} 
@@ -322,7 +325,7 @@ public class Interfaz extends JFrame {
 		btnReporte3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Omnibus disponibles: ");
-				for(Omnibus o : terminal.getOmnibus()){
+				for(Omnibus o : terminal.getOmnibuses()){
 					if(o.getDisponibilidad().equals("Disponible")){
 						System.out.println(o);
 					}
@@ -485,7 +488,7 @@ public class Interfaz extends JFrame {
 	}
 
 	public void crearViaje(DefaultTableModel modelViaje) {
-		VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibus(), terminal.getConductores(), terminal.getFecha(), terminal.getViajes());
+		VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibuses(), terminal.getConductores(), terminal.getFecha(), terminal.getViajes());
 		ventanaViaje.setVisible(true);
 
 		if (ventanaViaje.isConfirmado()) {

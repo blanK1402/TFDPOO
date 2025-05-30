@@ -18,10 +18,9 @@ public class Terminal {
 
     private String nombre;
     private static ArrayList<String> listaNombres;
-    private ArrayList<Conductor> conductores;
+    private HashMap<String, Conductor> conductores;
     private HashSet<Integer> conductoresLicencias;
-    private ArrayList<Omnibus> omnibuses;
-    private HashSet<String> omnibusID;
+    private HashMap<String, Omnibus> omnibuses;
     private HashMap<String, ArrayList<Viaje>> viajes;
     private ArrayList<Reserva> reservas;
     private ArrayList<Reserva> reservasEspera;
@@ -35,11 +34,10 @@ public class Terminal {
 
         listaNombres = new ArrayList<String>();
         
-        conductores = new ArrayList<>();
+        conductores = new HashMap<>();
         conductoresLicencias = new HashSet<>();
 
-        omnibuses = new ArrayList<Omnibus>();
-        omnibusID = new HashSet<>();
+        omnibuses = new HashMap<>();
 
         reservas = new ArrayList<>();
         reservasEspera = new ArrayList<>();
@@ -50,10 +48,6 @@ public class Terminal {
         setListaNombres();
         setDestinosDistancias();
         setViajes();
-    }
-
-    public HashSet<String> getOmnibusId(){
-    	return omnibusID;
     }
     
     public static String getRandomDestino(){
@@ -177,11 +171,11 @@ public class Terminal {
     }
 
     public ArrayList<Conductor> getConductores() {
-        return conductores;
+        return new ArrayList<>(conductores.values());
     }
 
-    public ArrayList<Omnibus> getOmnibus() {
-        return omnibuses;
+    public ArrayList<Omnibus> getOmnibuses() {
+        return new ArrayList<>(omnibuses.values());
     }
 
     public HashMap<String, ArrayList<Viaje>> getViajes() {
@@ -220,11 +214,10 @@ public class Terminal {
     }
 
     public void addOmnibus(Omnibus omnibus) {
-        if (omnibusID.contains(omnibus.getMatricula())) {
+        if (omnibuses.containsKey(omnibus.getMatricula())) {
             throw new IllegalArgumentException("Ya existe un omnibus con esa matrícula");
         }
-        omnibusID.add(omnibus.getMatricula());
-        omnibuses.add(omnibus);
+        omnibuses.put(omnibus.getMatricula(), omnibus);
     }
 
     public void addViaje(Viaje viaje) {
@@ -234,7 +227,7 @@ public class Terminal {
 
 	public void addConductor(Conductor conductor) {
         conductoresLicencias.add(conductor.getLicencia());
-        conductores.add(conductor);
+        conductores.put(String.valueOf(conductor.getId()), conductor);
     }
 
     public LocalDateTime getFecha() {
@@ -255,6 +248,10 @@ public class Terminal {
 	
 	public void adelantarHora() {
 		setFechaHora(fechaHora.plusHours(1));
+	}
+
+	public Conductor getConductor(String id) {
+		return conductores.get(id);
 	}
 	
 }

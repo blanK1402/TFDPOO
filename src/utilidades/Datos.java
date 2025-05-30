@@ -11,9 +11,11 @@ import java.util.regex.Pattern;
 
 import javax.swing.table.DefaultTableModel;
 
+import clases.Conductor;
 import clases.ConductorA;
 import clases.ConductorB;
 import clases.ConductorC;
+import clases.Omnibus;
 import clases.Pasajero;
 import clases.Reserva;
 import clases.Terminal;
@@ -21,6 +23,12 @@ import login.Usuario;
 
 public class Datos {
 
+	public static void importarDatos(Terminal t) throws FileNotFoundException, IOException{
+		importarPasajeros(t);
+		importarConductores(t);
+		importarOmnibus(t);
+	}
+	
 	public static ArrayList<String> obtenerLineas(String rutaArchivo) throws IOException {
 		ArrayList<String> lineas = new ArrayList<>();
 
@@ -59,11 +67,6 @@ public class Datos {
 		for(Reserva r : reservas){
 			modelReserva.addRow(r.toTableList());
 		}
-	}
-
-	public static void importarDatos(Terminal t) throws FileNotFoundException, IOException{
-		importarPasajeros(t);
-		importarConductores(t);
 	}
 
 	private static void importarPasajeros(Terminal t) throws FileNotFoundException, IOException {
@@ -105,6 +108,47 @@ public class Datos {
 				}
 			}
 		}
+	}
+
+	//(String matricula, String asientos, String disponibilidad, ArrayList<String> comodidades)
+	//T976211,94,No,Si,No,Disponible,[id:2, Selene, id:6, Hugo]
+
+	private static void importarOmnibus(Terminal t) throws FileNotFoundException, IOException {
+		Pattern patron = Pattern.compile("([A-Z][0-9]{6}),([0-9]*),(Si|No),(Si|No),(Si|No),([a-zA-Z]*),(.*)");
+
+		try{
+			for(String linea : obtenerLineas(".\\.\\BaseDatos\\omnibuses.txt")){
+				Matcher matcher = patron.matcher(linea);
+
+				if(matcher.find()){
+					String matricula = matcher.group(1);
+					String asientos = matcher.group(2);
+
+					ArrayList<String> comodidades = new ArrayList<>();
+
+					if ("Si".equals(matcher.group(3))) {
+						comodidades.add("Aire acondicionado");
+					}
+					if ("Si".equals(matcher.group(4))) {
+						comodidades.add("TV");
+					}
+					if ("Si".equals(matcher.group(5))) {
+						comodidades.add("Baño");
+					}
+					
+					String estado = matcher.group(6);
+
+					Omnibus o = new Omnibus(matricula, asientos, estado, comodidades);
+
+					o.addConductor(t.getConductor("1"));
+					t.addOmnibus(o);
+				}
+			}
+		}
+		catch(Exception e){
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		
 	}
 }
 
