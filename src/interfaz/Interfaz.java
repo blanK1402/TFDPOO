@@ -260,6 +260,9 @@ public class Interfaz extends JFrame {
 					for(Pasajero p : terminal.getPasajeros()){
 						modelPasajero.addRow(p.toTableList());
 					}
+					for(Conductor c : terminal.getConductores()){
+						modelConductor.addRow(c.toTableList());
+					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} 

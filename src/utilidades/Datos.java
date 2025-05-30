@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 
 import javax.swing.table.DefaultTableModel;
 
+import clases.ConductorA;
+import clases.ConductorB;
+import clases.ConductorC;
 import clases.Pasajero;
 import clases.Reserva;
 import clases.Terminal;
@@ -60,6 +63,7 @@ public class Datos {
 
 	public static void importarDatos(Terminal t) throws FileNotFoundException, IOException{
 		importarPasajeros(t);
+		importarConductores(t);
 	}
 
 	private static void importarPasajeros(Terminal t) throws FileNotFoundException, IOException {
@@ -68,9 +72,37 @@ public class Datos {
 		for(String linea : obtenerLineas(".\\.\\BaseDatos\\pasajeros.txt")){
 			Matcher matcher = patron.matcher(linea);
 			if(matcher.find()){
-				System.out.println(matcher.group(1));
+
 				Pasajero p = new Pasajero(matcher.group(1), matcher.group(2), t.getFecha().toLocalDate());
 				t.addPasajero(p);
+			}
+		}
+	}
+
+	private static void importarConductores(Terminal t) throws FileNotFoundException, IOException {
+		Pattern patron = Pattern.compile("(.*),(.*),(.*),(.*),(.*)");
+
+		//(String nombre, String id, String experiencia, String licencia)
+		//Diana,1,A,36,84719
+		for(String linea : obtenerLineas(".\\.\\BaseDatos\\conductores.txt")){
+			Matcher matcher = patron.matcher(linea);
+			if(matcher.find()){
+				String nombre = matcher.group(1);
+				String id = matcher.group(2);
+				String exp = matcher.group(4);
+				String licencia = matcher.group(5);
+
+				switch(matcher.group(3)) {  
+				case "A": 
+					t.addConductor(new ConductorA(nombre, id, exp, licencia));
+					break;
+				case "B": 
+					t.addConductor(new ConductorB(nombre, id, exp, licencia));
+					break;
+				case "C": 
+					t.addConductor(new ConductorC(nombre, id, exp, licencia));
+					break;
+				}
 			}
 		}
 	}
