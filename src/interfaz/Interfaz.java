@@ -255,8 +255,44 @@ public class Interfaz extends JFrame {
 		JButton btnImportarDatos = new JButton("Importar Datos");
 		btnImportarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Utilidades.crearConductorRandom(t.getLicencias());
-				Utilidades.crearPasajeroRandom(t.getIdPasajeros(), t.getFecha().toLocalDate());
+				for(int i = 0; i < 100; i++){
+					t.addConductor(Utilidades.crearConductorRandom(t.getLicencias()));
+					t.addPasajero(Utilidades.crearPasajeroRandom(t.getIdPasajeros(), t.getFecha().toLocalDate()));
+				}
+				
+				for(int i = 0; i < 100; i++){
+					t.addOmnibus(Utilidades.crearOmnibus(t.getMatriculas(), t.getConductores()));
+				}
+				
+				for(int i = 0; i < 100; i++){
+					t.addViaje(Utilidades.crearViajeRandom(t.getOmnibuses()));
+				}
+				
+				for(int i = 0; i < 100; i++){
+					t.addReserva(Utilidades.crearReservaRandom(t.getPasajeros(), t.getViajes2(), t.getFecha()));
+				}
+				
+				actualizar();
+				
+			}
+
+			private void actualizar() {
+
+				for(Pasajero p : t.getPasajeros()){
+					modelPasajero.addRow(p.toTableList());
+				}
+				for(Conductor c : t.getConductores()){
+					modelConductor.addRow(c.toTableList());
+				}
+				for(Omnibus o : t.getOmnibuses()){
+					modelOmnibus.addRow(o.toTableList());
+				}
+				for(Viaje v : t.getViajes2()){
+					modelViaje.addRow(v.toTableList());
+				}
+				for(Reserva r : t.getReservas()){
+					modelReserva.addRow(r.toTableList());
+				}
 			}
 		});
 		btnImportarDatos.setBackground(COLOR);

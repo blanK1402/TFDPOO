@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 import login.Usuario;
 import clases.Conductor;
@@ -221,8 +222,8 @@ public class Utilidades {
 		return c;
 	}
 
-	public static Omnibus crearOmnibus(HashSet<String> OmnibusId, ArrayList<Conductor> conductores){
-		String matricula = generarMatricula(OmnibusId);
+	public static Omnibus crearOmnibus(Set<String> set, ArrayList<Conductor> conductores){
+		String matricula = generarMatricula(set);
 		String estado = "Disponible";
 		ArrayList<String> comodidades = new ArrayList<>();
 		HashSet<Conductor> conductoresSet = new HashSet<>();
@@ -254,10 +255,10 @@ public class Utilidades {
 		return o;
 	}
 
-	public static String generarMatricula(HashSet<String> omnibusId){
+	public static String generarMatricula(Set<String> set){
 		char letra = (char)((char)(Math.random() * 26) + 'A');
 		String mat = letra + String.valueOf((int) (Math.random() * 900000) + 100000);
-		return omnibusId.contains(mat) ? generarMatricula(omnibusId) : mat;
+		return set.contains(mat) ? generarMatricula(set) : mat;
 	}
 
 	public static Viaje crearViajeRandom(ArrayList<Omnibus> Omnibus){

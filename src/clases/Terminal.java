@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Terminal {
@@ -252,6 +253,10 @@ public class Terminal {
 
 	public Conductor getConductor(String id) {
 		return conductores.get(id);
+	}
+
+	public Set<String> getMatriculas() {
+		return omnibuses.keySet();
 	}
 	
 }
