@@ -31,7 +31,7 @@ public class Interfaz extends JFrame {
 	Terminal terminal = new Terminal("Terminal");
 	private static final Color COLOR = new Color(0, 120, 215);
 
-	public Interfaz(Terminal t) {
+	public Interfaz(final Terminal t) {
 		this.terminal = t;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1006, 600);
@@ -255,20 +255,8 @@ public class Interfaz extends JFrame {
 		JButton btnImportarDatos = new JButton("Importar Datos");
 		btnImportarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					Datos.importarDatos(terminal);
-					for(Pasajero p : terminal.getPasajeros()){
-						modelPasajero.addRow(p.toTableList());
-					}
-					for(Conductor c : terminal.getConductores()){
-						modelConductor.addRow(c.toTableList());
-					}
-					for(Omnibus o : terminal.getOmnibuses()){
-						modelOmnibus.addRow(o.toTableList());
-					}
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} 
+				Utilidades.crearConductorRandom(t.getLicencias());
+				Utilidades.crearPasajeroRandom(t.getIdPasajeros(), t.getFecha().toLocalDate());
 			}
 		});
 		btnImportarDatos.setBackground(COLOR);

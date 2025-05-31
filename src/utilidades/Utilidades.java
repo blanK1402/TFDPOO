@@ -283,22 +283,24 @@ public class Utilidades {
 		return r;
 	}
 
-	
 
-	
+
+
 	public static Usuario login(ArrayList<String> usuarioContrasena) throws IllegalArgumentException, IOException{
 		HashMap<ArrayList<String>, Usuario> contrasenas = new HashMap<ArrayList<String>, Usuario>();
 
 		Datos.cargarContrasenas(contrasenas);
-		
+
 		try{
 			return contrasenas.get(usuarioContrasena);
 		}
 		catch(IllegalArgumentException e){
 			return new Usuario("asd", "asd", "asd");
 		}
-		
+
 	}
-
-
 }
+
+
+
+
