@@ -18,13 +18,9 @@ import clases.Viaje;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Interfaz extends JFrame {
 
@@ -209,7 +205,7 @@ public class Interfaz extends JFrame {
 
 		// Pestaña RESERVA
 
-		String[] columnNamesReserva = {"Pasajero", "Nro Reservación", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
+		String[] columnNamesReserva = {"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
 		Object[][] dataReserva = {};
 		final DefaultTableModel modelReserva = new DefaultTableModel(dataReserva, columnNamesReserva);
 		JTable tableReserva = new JTable(modelReserva);
@@ -264,7 +260,7 @@ public class Interfaz extends JFrame {
 					t.addOmnibus(Utilidades.crearOmnibus(t.getMatriculas(), t.getConductores()));
 				}
 				
-				for(int i = 0; i < 100; i++){
+				for(int i = 0; i < 20; i++){
 					t.addViaje(Utilidades.crearViajeRandom(t.getOmnibuses()));
 				}
 				
@@ -300,6 +296,21 @@ public class Interfaz extends JFrame {
 		btnImportarDatos.setFont(new Font("SansSerif", Font.BOLD, 14));
 		panelImportar.add(btnImportarDatos);
 		panelTerminal.add(panelImportar, BorderLayout.NORTH);
+		
+		JButton btnGuardarDatos = new JButton("Guardar Datos");
+		btnGuardarDatos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Datos.guardarDatos(terminal);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btnGuardarDatos.setForeground(Color.WHITE);
+		btnGuardarDatos.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnGuardarDatos.setBackground(SystemColor.textHighlight);
+		panelImportar.add(btnGuardarDatos);
 		JPanel panelCentroTerminal = new JPanel();
 		panelCentroTerminal.setLayout(new BoxLayout(panelCentroTerminal, BoxLayout.Y_AXIS));
 

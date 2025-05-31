@@ -1,10 +1,11 @@
 package clases;
 
+import Interfaces.mostrable;
 import java.util.ArrayList;
 
 import utilidades.Utilidades;
 
-public abstract class Conductor {
+public abstract class Conductor implements mostrable {
     protected String nombre;
     protected int id;
     protected int experiencia;

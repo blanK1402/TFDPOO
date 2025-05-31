@@ -1,3 +1,0 @@
-Admin:Admin,1234
-Admin:Admin,0000
-Admin:Admin,1111

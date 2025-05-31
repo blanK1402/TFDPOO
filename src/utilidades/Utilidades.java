@@ -261,10 +261,15 @@ public class Utilidades {
 		return set.contains(mat) ? generarMatricula(set) : mat;
 	}
 
+	private static Omnibus obtenerOmnibus(ArrayList<Omnibus> os){
+		Omnibus o = os.get((int) (Math.random() * os.size()));
+		return o.getDisponibilidad().equals("Disponible") ? o : obtenerOmnibus(os);
+	}
+	
 	public static Viaje crearViajeRandom(ArrayList<Omnibus> Omnibus){
 		String id = Terminal.getIdViaje();
 		String destino = Terminal.getRandomDestino();
-		Omnibus o = Omnibus.get((int) (Math.random() * Omnibus.size()));
+		Omnibus o = obtenerOmnibus(Omnibus);
 		Conductor c = o.getConductores().get((int) (Math.random() * o.getConductores().size()));
 		LocalDateTime fHS = LocalDateTime.now().plusDays((long) (Math.random() * 100)).plusHours((long) (Math.random()*10));
 		return new Viaje(id, fHS.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), fHS.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, o, c);
@@ -272,7 +277,7 @@ public class Utilidades {
 
 	public static Reserva crearReservaRandom(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes, LocalDateTime fecha){
 		Pasajero pasajero = pasajeros.get((int) (Math.random() * pasajeros.size()));
-		Viaje reservaViaje = viajes.get((int) (Math.random() * viajes.size()));
+		Viaje reservaViaje = obtenerViaje(viajes);
 		String numReserva = Terminal.getIdReserva();
 		String destino = reservaViaje.getDestino();
 		LocalDateTime fechaActual = fecha;
@@ -281,11 +286,17 @@ public class Utilidades {
 
 		Reserva r = new Reserva(pasajero, numReserva, destino, fechaActual, fechaDeseada, asiento);	
 		r.setViaje(reservaViaje);
+		reservaViaje.addReservas(r);
 		return r;
 	}
 
 
 
+
+	private static Viaje obtenerViaje(ArrayList<Viaje> viajes) {
+		Viaje v = viajes.get((int) (Math.random() * viajes.size()));
+		return v.getAsientosLibres().size() > 0 ? v : obtenerViaje(viajes);
+	}
 
 	public static Usuario login(ArrayList<String> usuarioContrasena) throws IllegalArgumentException, IOException{
 		HashMap<ArrayList<String>, Usuario> contrasenas = new HashMap<ArrayList<String>, Usuario>();

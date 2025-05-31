@@ -1,8 +1,11 @@
 package utilidades;
 
+import Interfaces.mostrable;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +31,7 @@ public class Datos {
 		importarConductores(t);
 		importarOmnibus(t);
 	}
-	
+
 	public static ArrayList<String> obtenerLineas(String rutaArchivo) throws IOException {
 		ArrayList<String> lineas = new ArrayList<>();
 
@@ -45,7 +48,7 @@ public class Datos {
 	public static void cargarContrasenas(HashMap<ArrayList<String>, Usuario> contrasenas) throws IllegalArgumentException, IOException {
 		Pattern patron = Pattern.compile("^(\\w+):([^,]+),([^,]+)$");
 
-		try (BufferedReader txt = new BufferedReader(new FileReader("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\src\\utilidades\\a.txt"))) {
+		try (BufferedReader txt = new BufferedReader(new FileReader(".\\.\\BaseDatos\\contrasenas.txt"))) {
 			String linea;
 			while ((linea = txt.readLine()) != null) {
 				Matcher coincidencia = patron.matcher(linea);
@@ -135,7 +138,7 @@ public class Datos {
 					if ("Si".equals(matcher.group(5))) {
 						comodidades.add("Baño");
 					}
-					
+
 					String estado = matcher.group(6);
 
 					Omnibus o = new Omnibus(matricula, asientos, estado, comodidades);
@@ -148,7 +151,33 @@ public class Datos {
 		catch(Exception e){
 			throw new IllegalArgumentException(e.getMessage());
 		}
+
+	}
+
+	public static void guardarDatos(Terminal t) throws IOException{
+		String[] rutas = {
+				".\\.\\BaseDatos\\pasajeros.txt",
+				".\\.\\BaseDatos\\conductores.txt",
+				".\\.\\BaseDatos\\omnibuses.txt",
+				".\\.\\BaseDatos\\viajes.txt",
+				".\\.\\BaseDatos\\reservas.txt"
+		};
+			
+		escribirArchivo(t.getPasajeros(), rutas[0]);
+		escribirArchivo(t.getConductores(), rutas[1]);
+		escribirArchivo(t.getOmnibuses(), rutas[2]);
+		escribirArchivo(t.getViajes2(), rutas[3]);
+		escribirArchivo(t.getReservas(), rutas[4]);
 		
 	}
+
+	private static <T extends mostrable> void escribirArchivo(ArrayList<T> lista, String ruta) throws IOException {
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ruta))) {
+			for (T item : lista) {
+				writer.write(String.join(",", item.toTableList()) + "\n");
+			}
+		}
+	}
+
 }
 

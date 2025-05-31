@@ -1,5 +1,6 @@
 package clases;
 
+import Interfaces.mostrable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,7 +11,7 @@ import java.util.Set;
 
 import utilidades.Utilidades;
 
-public class Viaje {
+public class Viaje implements mostrable{
 	private int id;
 	private int distancia;
 	private LocalDateTime fechaHoraPartida;
