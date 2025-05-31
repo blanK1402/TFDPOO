@@ -1,10 +1,12 @@
 package clases;
 import java.time.*;
+import Interfaces.mostrable;
 import java.time.format.DateTimeFormatter;
 
+import Interfaces.mostrable;
 import utilidades.Utilidades;
 
-public class Reserva {
+public class Reserva implements mostrable{
 	private Pasajero pasajero;
 	private int numReserva;
 	private String destino;
@@ -22,11 +24,13 @@ public class Reserva {
 		setFechaDeseada(fechaDeseada);
 		setAsiento(asiento);
 		setEstado(asiento);
+		estado = "En espera";
 		viaje = null;
 	}
 	
 	public void setViaje(Viaje viaje) {
 		this.viaje = viaje;
+		estado = "Confirmada";
 	}
 	public Viaje getViaje(){
 		return viaje;
@@ -87,6 +91,8 @@ public class Reserva {
         String[] res = {
         		String.valueOf(pasajero.toString()),
         		String.valueOf(numReserva),
+        		String.valueOf(viaje.getId()),
+        		estado.equals("Confirmada") ? String.valueOf(asiento) : "None",
         		destino,
         		fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
         		fechaDeseada.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),

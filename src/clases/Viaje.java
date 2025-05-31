@@ -1,5 +1,6 @@
 package clases;
 
+import Interfaces.mostrable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,7 +11,7 @@ import java.util.Set;
 
 import utilidades.Utilidades;
 
-public class Viaje {
+public class Viaje implements mostrable{
 	private int id;
 	private int distancia;
 	private LocalDateTime fechaHoraPartida;
@@ -144,7 +145,7 @@ public class Viaje {
 				destino,
 				omnibus.toString(),
 				conductor.toString(),
-				fechaHoraPartida.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+				fechaHoraPartida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss")),
 				String.valueOf(precio())
 		};
 		return res;

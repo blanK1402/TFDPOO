@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import utilidades.Datos;
 import utilidades.Utilidades;
 import clases.Pasajero;
 import clases.Terminal;
@@ -36,7 +37,7 @@ public class InterfazUsuario extends JFrame {
 		String[] columnNamesReserva = {"Pasajero", "Nro Reservación", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
 		Object[][] dataReserva = {};
 		final DefaultTableModel modelReserva = new DefaultTableModel(dataReserva, columnNamesReserva);
-		Utilidades.cargarReservasUsuario(usuario.getReservas(), modelReserva);
+		Datos.cargarReservasUsuario(usuario.getReservas(), modelReserva);
 		JTable tableReserva = new JTable(modelReserva);
 		tableReserva.setRowHeight(30);
 		tableReserva.setFont(new Font("SansSerif", Font.PLAIN, 14));

@@ -3,7 +3,6 @@ package interfaz;
 import javax.swing.*;
 
 import utilidades.Utilidades;
-import clases.Omnibus;
 import clases.Pasajero;
 import clases.Reserva;
 import clases.Terminal;

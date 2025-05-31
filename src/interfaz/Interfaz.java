@@ -3,6 +3,7 @@ package interfaz;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import utilidades.Datos;
 import utilidades.Utilidades;
 import clases.Conductor;
 import clases.ConductorA;
@@ -17,18 +18,18 @@ import clases.Viaje;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Interfaz extends JFrame {
 
 	Terminal terminal = new Terminal("Terminal");
 	private static final Color COLOR = new Color(0, 120, 215);
 
-	public Interfaz(Terminal t) {
+	public Interfaz(final Terminal t) {
 		this.terminal = t;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1006, 600);
@@ -206,7 +207,7 @@ public class Interfaz extends JFrame {
 
 		// Pestaña RESERVA
 
-		String[] columnNamesReserva = {"Pasajero", "Nro Reservación", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
+		String[] columnNamesReserva = {"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
 		Object[][] dataReserva = {};
 		final DefaultTableModel modelReserva = new DefaultTableModel(dataReserva, columnNamesReserva);
 		JTable tableReserva = new JTable(modelReserva);
@@ -250,12 +251,35 @@ public class Interfaz extends JFrame {
 		JPanel panelTerminal = new JPanel(new BorderLayout());
 		JPanel panelImportar = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JButton btnImportarDatos = new JButton("Importar Datos");
-		
+
+		btnImportarDatos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actualizar();
+			}
+
+			private void actualizar() {}
+		});
+
 		btnImportarDatos.setBackground(COLOR);
 		btnImportarDatos.setForeground(Color.WHITE);
 		btnImportarDatos.setFont(new Font("SansSerif", Font.BOLD, 14));
 		panelImportar.add(btnImportarDatos);
 		panelTerminal.add(panelImportar, BorderLayout.NORTH);
+		
+		JButton btnGuardarDatos = new JButton("Guardar Datos");
+		btnGuardarDatos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Datos.guardarDatos(terminal);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btnGuardarDatos.setForeground(Color.WHITE);
+		btnGuardarDatos.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnGuardarDatos.setBackground(SystemColor.textHighlight);
+		panelImportar.add(btnGuardarDatos);
 		JPanel panelCentroTerminal = new JPanel();
 		panelCentroTerminal.setLayout(new BoxLayout(panelCentroTerminal, BoxLayout.Y_AXIS));
 
@@ -485,7 +509,8 @@ public class Interfaz extends JFrame {
 	}
 
 	public void crearReserva(DefaultTableModel modelReserva) {
-		VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getViajes(), terminal.getPasajeros(), terminal.getFecha());
+		//(JFrame parent, HashMap<String, ArrayList<Viaje>> destinosViajes, ArrayList<Pasajero> listaPasajeros, final LocalDateTime fechaA) {
+		VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getDestinosViajes(), terminal.getPasajeros(), terminal.getFecha());
 		ventanaReserva.setVisible(true);
 
 		if (ventanaReserva.isConfirmado()) {

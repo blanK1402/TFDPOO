@@ -1,13 +1,13 @@
 package clases;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
+
+import Interfaces.mostrable;
 
 public class Terminal {
     private LocalDateTime fechaHora;
@@ -23,7 +23,6 @@ public class Terminal {
     private HashMap<String, Pasajero> pasajeros;
     private HashMap<String, Omnibus> omnibuses;
     private HashMap<String, Viaje> viajes;
-    private HashMap<String, ArrayList<Viaje>> destinoViajes;
     private HashMap<String, Reserva> reservas;
     private HashMap<String, Reserva> reservasEspera;
     private HashMap<String, Reserva> reservasCanceladas;
@@ -35,20 +34,13 @@ public class Terminal {
         listaNombres = new ArrayList<String>();
         
         conductores = new HashMap<>();
-
-        omnibuses = new HashMap<>();
-        reservas = new HashMap<>();
-        reservasEspera = new HashMap<>();
         pasajeros = new HashMap<>();
         setListaNombres();
         setDestinosDistancias();
     }
 
-    private void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public static String getRandomDestino(){
 
-	public static String getRandomDestino(){
     	ArrayList<String> destinos = new ArrayList<>(destinosDistancias.keySet());
     	return destinos.get((int) (Math.random() * destinos.size()));
     }
@@ -123,6 +115,15 @@ public class Terminal {
         fechaHora = nuevaFechaHora;
     }
 
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public LocalDateTime getFecha() {
         return fechaHora;
     }
@@ -135,8 +136,20 @@ public class Terminal {
 		setFechaHora(fechaHora.plusHours(1));
 	}
 
-	public void addOmnibus(Omnibus o) {
-		omnibuses.put(o.getMatricula(), o);
+	public Conductor getConductor(String id) {
+		return conductores.get(id);
+	}
+
+	public Set<String> getMatriculas() {
+		return omnibuses.keySet();
+	}
+
+	public Pasajero getPasajero(String usuario) {
+		return pasajeros.get(usuario);
+	}
+
+	public ArrayList<Pasajero> getPasajeros() {
+		return new ArrayList<>(pasajeros.values());
 	}
 
 	public ArrayList<Conductor> getConductores() {
@@ -146,34 +159,16 @@ public class Terminal {
 	public ArrayList<Omnibus> getOmnibuses() {
 		return new ArrayList<>(omnibuses.values());
 	}
-
-	public ArrayList<Pasajero> getPasajeros() {
-		return new ArrayList<>(pasajeros.values());
+	
+	public ArrayList<Viaje> getViajes() {
+		return new ArrayList<>(viajes.values());
+	}
+	
+	public ArrayList<Reserva> getReservas() {
+		return new ArrayList<>(reservas.values());
 	}
 
-	public void addPasajero(Pasajero p) {
-		pasajeros.put(p.getId(), p);
-	}
-
-	public void addConductor(Conductor c) {
-		conductores.put(String.valueOf(c.getId()), c);
-	}
-
-	public void addViaje(Viaje v) {
-		viajes.put(String.valueOf(v.getId()), v);
-		destinoViajes.get(v.getDestino()).add(v);
-		v.getConductor().addViaje(v);
-	}
-
-	public HashMap<String, ArrayList<Viaje>> getViajes() {
-		return destinoViajes;
-	}
-
-	public void addReserva(Reserva r) {
-		reservas.put(String.valueOf(r.getNumReserva()), r);
-	}
-
-	public static long getIdConductor() {
+	public static long getConductoresId() {
 		return idConductores.getAndIncrement();
 	}
 
@@ -185,8 +180,37 @@ public class Terminal {
 		return idViajes.getAndIncrement();
 	}
 
-	public Pasajero getPasajero(String usuario) {
-		return pasajeros.get(usuario);
+	public void addOmnibus(Omnibus o) {
+		omnibuses.put(o.getMatricula(), o);
 	}
-	
+
+	public void addConductor(Conductor c) {
+		conductores.put(String.valueOf(c.getId()), c);
+	}
+
+	public void addPasajero(Pasajero p) {
+		pasajeros.put(p.getId(), p);
+	}
+
+	public void addViaje(Viaje v) {
+		viajes.put(String.valueOf(v.getId()), v);
+	}
+
+	public void addReserva(Reserva r) {
+		reservas.put(String.valueOf(r.getNumReserva()), r);
+	}
+
+	public HashMap<String, ArrayList<Viaje>> getDestinosViajes() {
+		HashMap<String, ArrayList<Viaje>> destinosViajes = new HashMap<>();
+		
+		for(String destino : destinosDistancias.keySet()){
+			destinosViajes.put(destino, new ArrayList<Viaje>());
+		}
+		
+		for(Viaje v : viajes.values()){
+			destinosViajes.get(v.getDestino()).add(v);
+		}
+		
+		return destinosViajes;
+	}
 }

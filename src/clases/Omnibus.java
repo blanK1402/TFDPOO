@@ -1,14 +1,13 @@
 package clases;
 
-import java.awt.List;
+import Interfaces.mostrable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import utilidades.Utilidades;
 
-public class Omnibus {
+public class Omnibus implements mostrable{
 	private String matricula;
 	private int asientos;
 	private ArrayList<String> comodidades;

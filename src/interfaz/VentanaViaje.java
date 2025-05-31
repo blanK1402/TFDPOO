@@ -27,7 +27,7 @@ public class VentanaViaje extends JDialog {
 	private boolean confirmado = false;
 	private Viaje viaje;
 
-	public VentanaViaje(JFrame parent, ArrayList<Omnibus> listaOmnibus, ArrayList<Conductor> listaConductores, LocalDateTime fechaActual, HashMap<String, ArrayList<Viaje>> hashMap) {
+	public VentanaViaje(JFrame parent, ArrayList<Omnibus> listaOmnibus, ArrayList<Conductor> listaConductores, LocalDateTime fechaActual, ArrayList<Viaje> arrayList) {
 		super(parent, "Crear Nuevo Viaje", true);
 		setSize(600, 380);
 		setLayout(null);

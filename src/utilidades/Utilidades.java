@@ -1,32 +1,14 @@
 package utilidades;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.table.DefaultTableModel;
+import java.util.Set;
 
 import login.Usuario;
-import clases.Conductor;
-import clases.ConductorA;
-import clases.ConductorB;
-import clases.ConductorC;
-import clases.Omnibus;
-import clases.Pasajero;
-import clases.Reserva;
-import clases.Terminal;
 import clases.Viaje;
 
 public class Utilidades {
@@ -130,37 +112,6 @@ public class Utilidades {
 		}
 	}
 
-	public static Pasajero crearPasajeroRandom(HashSet<String> pasajerosID, LocalDate fecha){
-		int tamanyo = Terminal.getListaNombres().size(); 
-		String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));
-		String id = generarId(pasajerosID);
-
-		return new Pasajero(nombre, id, fecha);
-	}
-
-	private static String generarUltimos(){
-		String nums = "";
-		for(int i = 0; i < 5; i++){
-			nums = nums + (int)(Math.random() * 10);
-		}
-		return nums;
-	}
-
-	private static String generarId(HashSet<String> pasajerosID) {
-		int anyo = (int) (Math.random() * 100);
-		int month = (int) ((Math.random() * 12) + 1);
-		int day = (int) (Math.random() * 28) + 1;
-
-		String id = String.format("%02d%02d%02d", anyo, month, day) + generarUltimos();
-
-		return pasajerosID.contains(id) ? generarId(pasajerosID) : id;
-	}
-
-	private static String generarLicencia(HashSet<Integer> pasajerosID) {
-		int id = (int) (Math.random() * 100000);
-		return pasajerosID.contains(id) ? generarLicencia(pasajerosID) : String.valueOf(id);
-	}
-
 	public static void validarCarnet(String carnet, LocalDate fecha) throws IllegalArgumentException{
 		ArrayList<Integer> meses30 = new ArrayList<>();
 		meses30.add(4);
@@ -208,127 +159,27 @@ public class Utilidades {
 		int anyo = Integer.valueOf(fecha.format(DateTimeFormatter.ofPattern("yyyy")).substring(2,4));
 		return anyo - Integer.valueOf(digitos) < 0 ? Integer.valueOf("19" + digitos) : Integer.valueOf("20" + digitos);
 	}
+	
+	
 
-	public static Conductor crearConductorRandom(HashSet<Integer> conductoresLicencias){
-		int tamanyo = Terminal.getListaNombres().size(); 
-		String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));
-		String id = String.valueOf(Terminal.getIdConductor());
-		String licencia = generarLicencia(conductoresLicencias);
-		String categoria = Arrays.asList("A", "B", "C").get((int) (Math.random() * 3));
-
-		Conductor c;
-
-		if(categoria.equals("A")){
-			c = new ConductorA(nombre, id, String.valueOf((int) (Math.random() * 40)), licencia);
-		}else if(categoria.equals("B")){
-			c = new ConductorB(nombre, id, String.valueOf((int) (Math.random() * 40)), licencia);
-		}else{
-			c = new ConductorC(nombre, id, String.valueOf((int) (Math.random() * 40)), licencia);
-		}
-
-		return c;
-	}
-
-	public static Omnibus crearOmnibus(HashSet<String> OmnibusId, ArrayList<Conductor> conductores){
-		String matricula = generarMatricula(OmnibusId);
-		String estado = "Disponible";
-		ArrayList<String> comodidades = new ArrayList<>();
-		HashSet<Conductor> conductoresSet = new HashSet<>();
-		int asientos = (int) (Math.random() * 80 + 21);
-
-		if(asientos % 2 == 0){
-			comodidades.add("TV");
-			conductoresSet.add(conductores.get((int) (Math.random() * conductores.size())));
-		}
-
-		if(asientos % 3 == 0){
-			comodidades.add("Baño");
-			conductoresSet.add(conductores.get((int) (Math.random() * conductores.size())));
-			estado = "En carretera";
-		}
-		if(asientos % 5 == 0){
-			estado = "En reparación";
-			comodidades.add("Aire acondicionado");
-		}
-
-		conductoresSet.add(conductores.get((int) (Math.random() * conductores.size())));
-
-		Omnibus o = new Omnibus(matricula, String.valueOf(asientos), estado, comodidades);
-
-		for(Conductor c : conductoresSet){
-			o.addConductor(c);
-		}
-
-		return o;
-	}
-
-	public static String generarMatricula(HashSet<String> omnibusId){
+	public static String generarMatricula(Set<String> set){
 		char letra = (char)((char)(Math.random() * 26) + 'A');
 		String mat = letra + String.valueOf((int) (Math.random() * 900000) + 100000);
-		return omnibusId.contains(mat) ? generarMatricula(omnibusId) : mat;
+		return set.contains(mat) ? generarMatricula(set) : mat;
 	}
 
-	public static Viaje crearViajeRandom(ArrayList<Omnibus> Omnibus){
-		String id = String.valueOf(Terminal.getIdViaje());
-		String destino = Terminal.getRandomDestino();
-		Omnibus o = Omnibus.get((int) (Math.random() * Omnibus.size()));
-		Conductor c = o.getConductores().get((int) (Math.random() * o.getConductores().size()));
-		LocalDateTime fHS = LocalDateTime.now().plusDays((long) (Math.random() * 100)).plusHours((long) (Math.random()*10));
-		return new Viaje(id, fHS.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), fHS.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, o, c);
-	} 
 
-	public static Reserva crearReservaRandom(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes, LocalDate fecha){
-		Pasajero pasajero = pasajeros.get((int) (Math.random() * pasajeros.size()));
-		Viaje reservaViaje = viajes.get((int) (Math.random() * viajes.size()));
-		String numReserva = String.valueOf(Terminal.getIdReserva());
-		String destino = reservaViaje.getDestino();
-		LocalDate fechaActual = fecha;
-		LocalDate fechaDeseada = fechaActual.plusDays((long) (Math.random() * 101));
-		int asiento = reservaViaje.getAsiento();
-
-		Reserva r = new Reserva(pasajero, numReserva, destino, fechaActual, fechaDeseada, asiento);	
-		r.setViaje(reservaViaje);
-		return r;
-	}
-
-	private static void cargarContrasenas(HashMap<ArrayList<String>, Usuario> contrasenas) throws IllegalArgumentException, IOException {
-		Pattern patron = Pattern.compile("^(\\w+):([^,]+),([^,]+)$");
-        
-	    try (BufferedReader txt = new BufferedReader(new FileReader("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\src\\utilidades\\a.txt"))) {
-	        String linea;
-	        while ((linea = txt.readLine()) != null) {
-	            Matcher coincidencia = patron.matcher(linea);
-	            if (coincidencia.matches()) { 
-	            	ArrayList<String> usuarioContrasena = new ArrayList<String>();
-	            	usuarioContrasena.add(coincidencia.group(2));
-	            	usuarioContrasena.add(coincidencia.group(3));
-	            	Usuario usuario = new Usuario(usuarioContrasena.get(0), usuarioContrasena.get(1), coincidencia.group(1));	
-	                contrasenas.put(usuarioContrasena, usuario);
-	            }
-	        }
-	    } 
-	    catch (FileNotFoundException e) {
-	        throw new IllegalArgumentException(e);
-	    }
-	}
-
-	
 	public static Usuario login(ArrayList<String> usuarioContrasena) throws IllegalArgumentException, IOException{
 		HashMap<ArrayList<String>, Usuario> contrasenas = new HashMap<ArrayList<String>, Usuario>();
 
-		cargarContrasenas(contrasenas);
+		Datos.cargarContrasenas(contrasenas);
+
 		try{
 			return contrasenas.get(usuarioContrasena);
 		}
 		catch(IllegalArgumentException e){
 			return new Usuario("asd", "asd", "asd");
 		}
-		
-	}
 
-	public static void cargarReservasUsuario(ArrayList<Reserva> reservas, DefaultTableModel modelReserva) {
-		for(Reserva r : reservas){
-			modelReserva.addRow(r.toTableList());
-		}
 	}
 }
