@@ -477,7 +477,7 @@ public class Interfaz extends JFrame {
 
 
 	public void crearConductor(DefaultTableModel modelConductor) {
-		VentanaConductor ventanaConductor = new VentanaConductor(Interfaz.this, terminal.getConductores());
+		VentanaConductor ventanaConductor = new VentanaConductor(Interfaz.this, terminal);
 		ventanaConductor.setVisible(true);
 
 		if (ventanaConductor.isConfirmado()) {
@@ -497,7 +497,7 @@ public class Interfaz extends JFrame {
 	}
 
 	public void crearOmnibus(DefaultTableModel modelOmnibus) {
-		VentanaOmnibus ventanaOmnibus = new VentanaOmnibus(Interfaz.this, terminal.getConductores());
+		VentanaOmnibus ventanaOmnibus = new VentanaOmnibus(Interfaz.this, terminal);
 		ventanaOmnibus.setVisible(true);
 
 		if (ventanaOmnibus.isConfirmado()) {
@@ -514,7 +514,7 @@ public class Interfaz extends JFrame {
 	}
 
 	public void crearViaje(DefaultTableModel modelViaje) {
-		VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibuses(), terminal.getConductores(), terminal.getFecha(), terminal.getViajes());
+		VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal);
 		ventanaViaje.setVisible(true);
 
 		if (ventanaViaje.isConfirmado()) {
@@ -532,7 +532,7 @@ public class Interfaz extends JFrame {
 
 	public void crearReserva(DefaultTableModel modelReserva) {
 		//(JFrame parent, HashMap<String, ArrayList<Viaje>> destinosViajes, ArrayList<Pasajero> listaPasajeros, final LocalDateTime fechaA) {
-		VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getDestinosViajes(), terminal.getPasajeros(), terminal.getFecha());
+		VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal);
 		ventanaReserva.setVisible(true);
 
 		if (ventanaReserva.isConfirmado()) {

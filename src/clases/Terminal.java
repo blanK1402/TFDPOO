@@ -131,18 +131,33 @@ public class Terminal {
 		return new ArrayList<>(reservas.values());
 	}
 
-	public static long getConductoresId() {
-		return idConductores.getAndIncrement();
+	public long getConductoresId() {
+		long id = idConductores.getAndIncrement();
+		return conductores.containsKey(String.valueOf(id)) ? getConductoresId() : id;
 	}
 
-	public static long getIdReserva() {
-		return idReservas.getAndIncrement();
+	public long getIdReserva() {
+		long id = idReservas.getAndIncrement();
+		return reservas.containsKey(String.valueOf(id)) ? getIdReserva() : id;
 	}
 
-	public static long getIdViaje() {
-		return idViajes.getAndIncrement();
+	public long getIdViaje() {
+		long id = idViajes.getAndIncrement();
+		return viajes.containsKey(String.valueOf(id)) ? getIdViaje() : id;
 	}
 
+	public void decrementIdViaje(){
+		idViajes.getAndDecrement();
+	}
+	
+	public void decrementIdConductor(){
+		idConductores.getAndDecrement();
+	}
+	
+	public void decrementIdReserva(){
+		idReservas.getAndDecrement();
+	}
+	
 	public void addOmnibus(Omnibus o) {
 		omnibuses.put(o.getMatricula(), o);
 	}

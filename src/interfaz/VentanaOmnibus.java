@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import clases.Conductor;
 import clases.Omnibus;
+import clases.Terminal;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,9 +20,11 @@ public class VentanaOmnibus extends JDialog {
     private JButton btnConfirmar, btnCancelar;
     private boolean confirmado = false;
     private Omnibus omnibus;
+    Terminal t;
 
-    public VentanaOmnibus(JFrame parent, ArrayList<Conductor> listaConductores) {
+    public VentanaOmnibus(JFrame parent, Terminal t) {
         super(parent, "Crear Nuevo Ómnibus", true);
+        setT(t);
         setSize(400, 400);
         setLayout(null);
 
@@ -80,19 +83,19 @@ public class VentanaOmnibus extends JDialog {
         lblConductores.setFont(etiquetaFont);
         add(lblConductores);
 
-        comboConductor1 = new JComboBox<Conductor>(listaConductores.toArray(new Conductor[0]));
+        comboConductor1 = new JComboBox<Conductor>(t.getConductores().toArray(new Conductor[0]));
         comboConductor1.addItem(null);
         comboConductor1.setSelectedItem(null);
         comboConductor1.setBounds(desplazamientoDerecha, 230, 220, 25);
         add(comboConductor1);
 
-        comboConductor2 = new JComboBox<>(listaConductores.toArray(new Conductor[0]));
+        comboConductor2 = new JComboBox<>(t.getConductores().toArray(new Conductor[0]));
         comboConductor2.addItem(null);
         comboConductor2.setSelectedItem(null);
         comboConductor2.setBounds(desplazamientoDerecha, 260, 220, 25);
         add(comboConductor2);
 
-        comboConductor3 = new JComboBox<>(listaConductores.toArray(new Conductor[0]));
+        comboConductor3 = new JComboBox<>(t.getConductores().toArray(new Conductor[0]));
         comboConductor3.addItem(null);
         comboConductor3.setSelectedItem(null);
         comboConductor3.setBounds(desplazamientoDerecha, 290, 220, 25);
@@ -123,7 +126,11 @@ public class VentanaOmnibus extends JDialog {
         });
     }
 
-    private void confirmarOmnibus() {
+    private void setT(Terminal t) {
+		this.t = t;
+	}
+
+	private void confirmarOmnibus() {
         try {
             String matricula = txtMatricula.getText().trim();
             String asientos = txtAsientos.getText().trim();

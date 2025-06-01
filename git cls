@@ -1,0 +1,331 @@
+[1mdiff --git a/src/clases/Pasajero.java b/src/clases/Pasajero.java[m
+[1mindex c3f10a7..f1c9c50 100644[m
+[1m--- a/src/clases/Pasajero.java[m
+[1m+++ b/src/clases/Pasajero.java[m
+[36m@@ -1,14 +1,16 @@[m
+ package clases;[m
+ [m
+[32m+[m[32mimport java.time.LocalDate;[m
+[32m+[m
+ import utilidades.Utilidades;[m
+ [m
+ public class Pasajero {[m
+ 	private String nombre;[m
+ 	private String id;[m
+ [m
+[31m-	public Pasajero(String nombre, String id){[m
+[32m+[m	[32mpublic Pasajero(String nombre, String id, LocalDate fecha){[m
+ 		setNombre(nombre);[m
+[31m-		setId(id);[m
+[32m+[m		[32msetId(id, fecha);[m
+ 	}[m
+ [m
+ 	public String getNombre() {[m
+[36m@@ -21,8 +23,8 @@[m [mpublic class Pasajero {[m
+ 	public String getId() {[m
+ 		return id;[m
+ 	}[m
+[31m-	public void setId(String id) throws IllegalArgumentException{[m
+[31m-		Utilidades.validarCarnet(id);[m
+[32m+[m	[32mpublic void setId(String id, LocalDate fecha) throws IllegalArgumentException{[m
+[32m+[m		[32mUtilidades.validarCarnet(id, fecha);[m
+ 		this.id = id;	[m
+ 	}[m
+ 	[m
+[1mdiff --git a/src/clases/Terminal.java b/src/clases/Terminal.java[m
+[1mindex fb682cc..1e02db0 100644[m
+[1m--- a/src/clases/Terminal.java[m
+[1m+++ b/src/clases/Terminal.java[m
+[36m@@ -2,6 +2,7 @@[m [mpackage clases;[m
+ [m
+ import java.time.LocalDate;[m
+ import java.time.LocalDateTime;[m
+[32m+[m[32mimport java.time.format.DateTimeFormatter;[m
+ import java.util.ArrayList;[m
+ import java.util.Arrays;[m
+ import java.util.HashMap;[m
+[36m@@ -9,7 +10,7 @@[m [mimport java.util.HashSet;[m
+ import java.util.concurrent.atomic.AtomicLong;[m
+ [m
+ public class Terminal {[m
+[31m-    private static LocalDateTime fechaHora;[m
+[32m+[m[32m    private LocalDateTime fechaHora;[m
+     private static final AtomicLong idReservas = new AtomicLong(1);[m
+     private static final AtomicLong idViajes = new AtomicLong(1);[m
+     private static final AtomicLong idConductores = new AtomicLong(1);[m
+[36m@@ -150,12 +151,8 @@[m [mpublic class Terminal {[m
+             "Natividad", "Otilia", "Pascual", "Rosario", "Santos"[m
+         ));[m
+     }[m
+[31m-    [m
+[31m-    public static LocalDateTime getFechaHora() {[m
+[31m-        return fechaHora;[m
+[31m-    }[m
+ [m
+[31m-    public static void setFechaHora(LocalDateTime nuevaFechaHora) {[m
+[32m+[m[32m    public void setFechaHora(LocalDateTime nuevaFechaHora) {[m
+         fechaHora = nuevaFechaHora;[m
+     }[m
+ [m
+[36m@@ -234,7 +231,7 @@[m [mpublic class Terminal {[m
+         conductores.add(conductor);[m
+     }[m
+ [m
+[31m-    public static LocalDateTime getFecha() {[m
+[32m+[m[32m    public LocalDateTime getFecha() {[m
+         return fechaHora;[m
+     }[m
+     [m
+[36m@@ -245,4 +242,13 @@[m [mpublic class Terminal {[m
+ 	public static String getIdConductor() {[m
+ 		return String.valueOf(idConductores.getAndIncrement());[m
+ 	}[m
+[32m+[m
+[32m+[m	[32mpublic void adelantarDia() {[m
+[32m+[m		[32msetFechaHora(fechaHora.plusDays(1));[m
+[32m+[m	[32m}[m
+[32m+[m[41m	[m
+[32m+[m	[32mpublic void adelantarHora() {[m
+[32m+[m		[32msetFechaHora(fechaHora.plusHours(1));[m
+[32m+[m	[32m}[m
+[32m+[m[41m	[m
+ }[m
+[1mdiff --git a/src/interfaz/Interfaz.java b/src/interfaz/Interfaz.java[m
+[1mindex f3521c0..300c0e1 100644[m
+[1m--- a/src/interfaz/Interfaz.java[m
+[1m+++ b/src/interfaz/Interfaz.java[m
+[36m@@ -253,7 +253,7 @@[m [mpublic class Interfaz extends JFrame {[m
+ 			public void actionPerformed(ActionEvent arg0) {[m
+ 				[m
+ 				for(int i = 0; i < 100; i++){[m
+[31m-					Pasajero p = Utilidades.crearPasajeroRandom(terminal.getIdPasajeros());[m
+[32m+[m					[32mPasajero p = Utilidades.crearPasajeroRandom(terminal.getIdPasajeros(), terminal.getFecha().toLocalDate());[m
+ 					Conductor c = Utilidades.crearConductorRandom(terminal.getLicencias());[m
+ 					if(i > 5){[m
+ 						Omnibus o = Utilidades.crearOmnibus(terminal.getOmnibusId(), terminal.getConductores());[m
+[36m@@ -266,7 +266,7 @@[m [mpublic class Interfaz extends JFrame {[m
+ 						modelViaje.addRow(v.toTableList());[m
+ 					}[m
+ 					if(i > 15){[m
+[31m-						Reserva r = Utilidades.crearReservaRandom(terminal.getPasajeros(), terminal.getViajes2());[m
+[32m+[m						[32mReserva r = Utilidades.crearReservaRandom(terminal.getPasajeros(), terminal.getViajes2(), terminal.getFecha());[m
+ 						terminal.addReserva(r);[m
+ 						modelReserva.addRow(r.toTableList());[m
+ 					}[m
+[36m@@ -353,13 +353,6 @@[m [mpublic class Interfaz extends JFrame {[m
+ 		panelFecha.setBorder(BorderFactory.createTitledBorder("Fecha"));[m
+ 		panelFecha.setLayout(null);[m
+ [m
+[31m-		JButton btnAdelantarDia = new JButton("Adelantar Día");[m
+[31m-		btnAdelantarDia.setBounds(11, 55, 137, 27);[m
+[31m-		btnAdelantarDia.setBackground(COLOR);[m
+[31m-		btnAdelantarDia.setForeground(Color.WHITE);[m
+[31m-		btnAdelantarDia.setFont(new Font("SansSerif", Font.BOLD, 14));[m
+[31m-		panelFecha.add(btnAdelantarDia);[m
+[31m-[m
+ 		JButton btnAdelantarHora = new JButton("Adelantar Hora");[m
+ 		btnAdelantarHora.setBounds(157, 55, 149, 27);[m
+ 		btnAdelantarHora.setBackground(COLOR);[m
+[36m@@ -386,21 +379,35 @@[m [mpublic class Interfaz extends JFrame {[m
+ 		lblHora.setBounds(157, 26, 46, 14);[m
+ 		panelFecha.add(lblHora);[m
+ [m
+[31m-		JLabel label = new JLabel(terminal.getFechaHora().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));[m
+[32m+[m		[32mfinal JLabel label = new JLabel(terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));[m
+ 		label.setFont(new Font("SansSerif", Font.PLAIN, 14));[m
+ 		label.setBounds(58, 28, 90, 14);[m
+ 		panelFecha.add(label);[m
+ [m
+[31m-		JLabel label_1 = new JLabel(terminal.getFechaHora().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));[m
+[32m+[m		[32mfinal JLabel label_1 = new JLabel(terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));[m
+ 		label_1.setFont(new Font("SansSerif", Font.PLAIN, 14));[m
+ 		label_1.setBounds(195, 26, 90, 14);[m
+ 		panelFecha.add(label_1);[m
+ 		panelTerminal.add(panelCentroTerminal, BorderLayout.CENTER);[m
+ 		tabbedPane.addTab("Terminal", panelTerminal);[m
+[32m+[m[41m		[m
+[32m+[m		[32mJButton btnAdelantarDia = new JButton("Adelantar Día");[m
+[32m+[m		[32mbtnAdelantarDia.addActionListener(new ActionListener() {[m
+[32m+[m			[32mpublic void actionPerformed(ActionEvent arg0) {[m
+[32m+[m				[32mterminal.adelantarDia();[m
+[32m+[m				[32mlabel.setText(terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));[m
+[32m+[m			[32m}[m
+[32m+[m		[32m});[m
+[32m+[m		[32mbtnAdelantarDia.setBounds(11, 55, 137, 27);[m
+[32m+[m		[32mbtnAdelantarDia.setBackground(COLOR);[m
+[32m+[m		[32mbtnAdelantarDia.setForeground(Color.WHITE);[m
+[32m+[m		[32mbtnAdelantarDia.setFont(new Font("SansSerif", Font.BOLD, 14));[m
+[32m+[m		[32mpanelFecha.add(btnAdelantarDia);[m
+[32m+[m[41m		[m
+ 	}[m
+ 	[m
+ 	public void crearPasajero(DefaultTableModel modelPasajero) {[m
+[31m-	    VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, terminal.getPasajeros());[m
+[32m+[m	[32m    VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, terminal.getPasajeros(), terminal.getFecha().toLocalDate());[m
+ 	    ventanaPasajero.setVisible(true);[m
+ [m
+ 	    if (ventanaPasajero.isConfirmado()) {[m
+[36m@@ -455,7 +462,7 @@[m [mpublic class Interfaz extends JFrame {[m
+ 	}[m
+ 	[m
+ 	public void crearViaje(DefaultTableModel modelViaje) {[m
+[31m-	    VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibus(), terminal.getConductores(), terminal.getFechaHora(), terminal.getViajes());[m
+[32m+[m	[32m    VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal.getOmnibus(), terminal.getConductores(), terminal.getFecha(), terminal.getViajes());[m
+ 	    ventanaViaje.setVisible(true);[m
+ [m
+ 	    if (ventanaViaje.isConfirmado()) {[m
+[36m@@ -472,7 +479,7 @@[m [mpublic class Interfaz extends JFrame {[m
+ 	}[m
+ [m
+ 	public void crearReserva(DefaultTableModel modelReserva) {[m
+[31m-	    VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getViajes(), terminal.getPasajeros());[m
+[32m+[m	[32m    VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal.getViajes(), terminal.getPasajeros(), terminal.getFecha());[m
+ 	    ventanaReserva.setVisible(true);[m
+ [m
+ 	    if (ventanaReserva.isConfirmado()) {[m
+[1mdiff --git a/src/interfaz/VentanaPasajero.java b/src/interfaz/VentanaPasajero.java[m
+[1mindex 459e882..f3674ec 100644[m
+[1m--- a/src/interfaz/VentanaPasajero.java[m
+[1m+++ b/src/interfaz/VentanaPasajero.java[m
+[36m@@ -7,6 +7,7 @@[m [mimport clases.Pasajero;[m
+ import java.awt.*;[m
+ import java.awt.event.ActionEvent;[m
+ import java.awt.event.ActionListener;[m
+[32m+[m[32mimport java.time.LocalDate;[m
+ import java.util.ArrayList;[m
+ [m
+ public class VentanaPasajero extends JDialog {[m
+[36m@@ -16,7 +17,7 @@[m [mpublic class VentanaPasajero extends JDialog {[m
+     private boolean confirmado = false;[m
+     private Pasajero pasajero;[m
+ [m
+[31m-    public VentanaPasajero(JFrame parent, ArrayList<Pasajero> listaPasajeros) {[m
+[32m+[m[32m    public VentanaPasajero(JFrame parent, ArrayList<Pasajero> listaPasajeros, final LocalDate fecha) {[m
+         super(parent, "Crear Nuevo Pasajero", true);[m
+         setSize(400, 250);[m
+         setLayout(null);[m
+[36m@@ -58,7 +59,7 @@[m [mpublic class VentanaPasajero extends JDialog {[m
+         btnConfirmar.addActionListener(new ActionListener() {[m
+             @Override[m
+             public void actionPerformed(ActionEvent e) {[m
+[31m-                confirmarPasajero();[m
+[32m+[m[32m                confirmarPasajero(fecha);[m
+             }[m
+         });[m
+ [m
+[36m@@ -70,14 +71,14 @@[m [mpublic class VentanaPasajero extends JDialog {[m
+         });[m
+     }[m
+ [m
+[31m-    private void confirmarPasajero() {[m
+[32m+[m[32m    private void confirmarPasajero(LocalDate fecha) {[m
+         try {[m
+             String nombre = txtNombre.getText();[m
+             String id = txtId.getText();[m
+             if(id.length() != 11){[m
+             	throw new IllegalArgumentException("El carnet debe tener 11 digitos");[m
+             }[m
+[31m-            pasajero = new Pasajero(nombre, id);[m
+[32m+[m[32m            pasajero = new Pasajero(nombre, id, fecha);[m
+             confirmado = true;[m
+             dispose();[m
+         } catch (Exception ex) {[m
+[1mdiff --git a/src/interfaz/VentanaReserva.java b/src/interfaz/VentanaReserva.java[m
+[1mindex 20b2dba..b984392 100644[m
+[1m--- a/src/interfaz/VentanaReserva.java[m
+[1m+++ b/src/interfaz/VentanaReserva.java[m
+[36m@@ -28,7 +28,7 @@[m [mpublic class VentanaReserva extends JDialog {[m
+ 	private Reserva reserva;[m
+ 	private HashMap<String, ArrayList<Viaje>> destinosViajes;[m
+ [m
+[31m-	public VentanaReserva(JFrame parent, HashMap<String, ArrayList<Viaje>> destinosViajes, ArrayList<Pasajero> listaPasajeros) {[m
+[32m+[m	[32mpublic VentanaReserva(JFrame parent, HashMap<String, ArrayList<Viaje>> destinosViajes, ArrayList<Pasajero> listaPasajeros, final LocalDateTime fechaA) {[m
+ 		super(parent, "Crear Nueva Reserva", true);[m
+ 		setSize(400, 250);[m
+ 		setLayout(null);[m
+[36m@@ -83,7 +83,7 @@[m [mpublic class VentanaReserva extends JDialog {[m
+ 		btnConfirmar.addActionListener(new ActionListener() {[m
+ 			@Override[m
+ 			public void actionPerformed(ActionEvent e) {[m
+[31m-				confirmarReserva();[m
+[32m+[m				[32mconfirmarReserva(fechaA);[m
+ 			}[m
+ 		});[m
+ [m
+[36m@@ -95,11 +95,11 @@[m [mpublic class VentanaReserva extends JDialog {[m
+ 		});[m
+ 	}[m
+ [m
+[31m-	private void confirmarReserva() {[m
+[32m+[m	[32mprivate void confirmarReserva(LocalDateTime fechaAct) {[m
+ 	    String numeroReserva = Terminal.getIdReserva();[m
+ 	    Pasajero pasajeroSeleccionado = (Pasajero) comboPasajeros.getSelectedItem();[m
+ 	    String destinoSeleccionado = (String) comboDestinos.getSelectedItem();[m
+[31m-	    LocalDateTime fechaActual = Terminal.getFechaHora();[m
+[32m+[m	[32m    LocalDateTime fechaActual = fechaAct;[m
+ 	    LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));[m
+ [m
+ 	    Viaje viaje = Utilidades.buscarViaje(destinosViajes.get(destinoSeleccionado), fechaDeseada);[m
+[1mdiff --git a/src/utilidades/Utilidades.java b/src/utilidades/Utilidades.java[m
+[1mindex 8d5628a..f912f63 100644[m
+[1m--- a/src/utilidades/Utilidades.java[m
+[1m+++ b/src/utilidades/Utilidades.java[m
+[36m@@ -119,12 +119,12 @@[m [mpublic class Utilidades {[m
+ 		}[m
+ 	}[m
+ [m
+[31m-	public static Pasajero crearPasajeroRandom(HashSet<String> pasajerosID){[m
+[32m+[m	[32mpublic static Pasajero crearPasajeroRandom(HashSet<String> pasajerosID, LocalDate fecha){[m
+ 		int tamanyo = Terminal.getListaNombres().size(); [m
+ 		String nombre = Terminal.getListaNombres().get((int) (Math.random() * tamanyo));[m
+ 		String id = generarId(pasajerosID);[m
+ [m
+[31m-		return new Pasajero(nombre, id);[m
+[32m+[m		[32mreturn new Pasajero(nombre, id, fecha);[m
+ 	}[m
+ [m
+ 	private static String generarUltimos(){[m
+[36m@@ -150,7 +150,7 @@[m [mpublic class Utilidades {[m
+ 		return pasajerosID.contains(id) ? generarLicencia(pasajerosID) : String.valueOf(id);[m
+ 	}[m
+ [m
+[31m-	public static void validarCarnet(String carnet) throws IllegalArgumentException{[m
+[32m+[m	[32mpublic static void validarCarnet(String carnet, LocalDate fecha) throws IllegalArgumentException{[m
+ 		ArrayList<Integer> meses30 = new ArrayList<>();[m
+ 		meses30.add(4);[m
+ 		meses30.add(6);[m
+[36m@@ -165,7 +165,7 @@[m [mpublic class Utilidades {[m
+ 		meses31.add(10);[m
+ 		meses31.add(12);[m
+ [m
+[31m-		int anyo = completarAnyo(carnet.substring(0,2));[m
+[32m+[m		[32mint anyo = completarAnyo(carnet.substring(0,2), fecha);[m
+ 		int terceroCuarto = Integer.valueOf(carnet.substring(2, 4));[m
+ 		int quintoSexto = Integer.valueOf(carnet.substring(4, 6));[m
+ [m
+[36m@@ -193,8 +193,8 @@[m [mpublic class Utilidades {[m
+ 		return (anyo % 4 == 0 && anyo % 100 != 0) || (anyo % 400 == 0);[m
+ 	}[m
+ [m
+[31m-	private static int completarAnyo(String digitos) {[m
+[31m-		int anyo = Integer.valueOf(Terminal.getFechaHora().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy")).substring(2,4));[m
+[32m+[m	[32mprivate static int completarAnyo(String digitos, LocalDate fecha) {[m
+[32m+[m		[32mint anyo = Integer.valueOf(fecha.format(DateTimeFormatter.ofPattern("yyyy")).substring(2,4));[m
+ 		return anyo - Integer.valueOf(digitos) < 0 ? Integer.valueOf("19" + digitos) : Integer.valueOf("20" + digitos);[m
+ 	}[m
+ [m
+[36m@@ -266,12 +266,12 @@[m [mpublic class Utilidades {[m
+ 		return new Viaje(id, fHS.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), fHS.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, o, c);[m
+ 	} [m
+ [m
+[31m-	public static Reserva crearReservaRandom(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes){[m
+[32m+[m	[32mpublic static Reserva crearReservaRandom(ArrayList<Pasajero> pasajeros, ArrayList<Viaje> viajes, LocalDateTime fecha){[m
+ 		Pasajero pasajero = pasajeros.get((int) (Math.random() * pasajeros.size()));[m
+ 		Viaje reservaViaje = viajes.get((int) (Math.random() * viajes.size()));[m
+ 		String numReserva = Terminal.getIdReserva();[m
+ 		String destino = reservaViaje.getDestino();[m
+[31m-		LocalDateTime fechaActual = Terminal.getFechaHora();[m
+[32m+[m		[32mLocalDateTime fechaActual = fecha;[m
+ 		LocalDate fechaDeseada = fechaActual.plusDays((long) (Math.random() * 101)).toLocalDate();[m
+ 		int asiento = reservaViaje.getAsiento();[m
+ [m

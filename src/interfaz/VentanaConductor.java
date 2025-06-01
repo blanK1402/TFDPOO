@@ -11,32 +11,46 @@ import clases.Terminal;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class VentanaConductor extends JDialog {
 
     private JTextField txtNombre, txtExperiencia, txtLicencia;
     private JComboBox<String> comboCategoria;
     private JButton btnConfirmar, btnCancelar;
+    private JLabel lblId;
     private boolean confirmado = false;
     private Conductor conductor;
+    private Terminal t;
 
-    public VentanaConductor(JFrame parent, ArrayList<Conductor> listaConductores) {
+    public VentanaConductor(JFrame parent, final Terminal t) {
         super(parent, "Crear Nuevo Conductor", true);
+        setT(t);
         setSize(400, 300);
         setLayout(null);
 
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        
         Font etiquetaFont = new Font("Arial", Font.BOLD, 14);
         Font campoFont = new Font("Arial", Font.PLAIN, 14);
         int desplazamientoDerecha = 150;
 
+        JLabel lblIdTitulo = new JLabel("ID Conductor:");
+        lblIdTitulo.setBounds(20, 20, 120, 25);
+        lblIdTitulo.setFont(etiquetaFont);
+        add(lblIdTitulo);
+
+        lblId = new JLabel(String.valueOf(t.getConductoresId()));
+        lblId.setBounds(desplazamientoDerecha, 20, 220, 25);
+        lblId.setFont(campoFont);
+        add(lblId);
+
         JLabel lblNombre = new JLabel("Nombre:");
-        lblNombre.setBounds(20, 20, 120, 25);
+        lblNombre.setBounds(20, 60, 120, 25);
         lblNombre.setFont(etiquetaFont);
         add(lblNombre);
 
         txtNombre = new JTextField();
-        txtNombre.setBounds(desplazamientoDerecha, 20, 220, 25);
+        txtNombre.setBounds(desplazamientoDerecha, 60, 220, 25);
         txtNombre.setFont(campoFont);
         add(txtNombre);
 
@@ -89,15 +103,20 @@ public class VentanaConductor extends JDialog {
         btnCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	t.decrementIdConductor();
                 dispose();
             }
         });
     }
 
+    private void setT(Terminal t) {
+        this.t = t;
+    }
+
     private void confirmarConductor() {
         try {
             String nombre = txtNombre.getText();
-            String id = String.valueOf(Terminal.getConductoresId());
+            String id = String.valueOf(t.getConductoresId());
             String experiencia = txtExperiencia.getText();
             String licencia = txtLicencia.getText();
             String categoria = (String) comboCategoria.getSelectedItem();

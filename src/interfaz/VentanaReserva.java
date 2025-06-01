@@ -23,13 +23,17 @@ public class VentanaReserva extends JDialog {
 	private JComboBox<String> comboDestinos;
 	private JTextField txtFechaDeseada;
 	private JButton btnConfirmar, btnCancelar;
+	private JLabel lblIdReserva;
 	private boolean confirmado = false;
 	private Reserva reserva;
 	private HashMap<String, ArrayList<Viaje>> destinosViajes;
+	private Terminal t;
 
-	public VentanaReserva(JFrame parent, HashMap<String, ArrayList<Viaje>> destinosViajes, ArrayList<Pasajero> listaPasajeros, final LocalDateTime fechaA) {
+	public VentanaReserva(JFrame parent, final Terminal t) {
 		super(parent, "Crear Nueva Reserva", true);
-		setSize(400, 250);
+		setT(t);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setSize(400, 300);  
 		setLayout(null);
 
 		this.destinosViajes = destinosViajes;
@@ -38,43 +42,53 @@ public class VentanaReserva extends JDialog {
 		Font campoFont = new Font("Arial", Font.PLAIN, 14);
 		int desplazamientoDerecha = 140;
 
+		JLabel lblIdTitulo = new JLabel("ID Reserva:");
+		lblIdTitulo.setBounds(20, 20, 120, 25);
+		lblIdTitulo.setFont(etiquetaFont);
+		add(lblIdTitulo);
+
+		lblIdReserva = new JLabel(String.valueOf(t.getIdReserva()));
+		lblIdReserva.setBounds(desplazamientoDerecha, 20, 220, 25);
+		lblIdReserva.setFont(campoFont);
+		add(lblIdReserva);
+
 		JLabel lblPasajero = new JLabel("Seleccionar Pasajero:");
-		lblPasajero.setBounds(20, 20, 120, 25);
+		lblPasajero.setBounds(20, 60, 120, 25);  
 		lblPasajero.setFont(etiquetaFont);
 		add(lblPasajero);
 
-		comboPasajeros = new JComboBox<>(listaPasajeros.toArray(new Pasajero[0]));
-		comboPasajeros.setBounds(desplazamientoDerecha, 20, 220, 25);
+		comboPasajeros = new JComboBox<>(t.getPasajeros().toArray(new Pasajero[0]));
+		comboPasajeros.setBounds(desplazamientoDerecha, 60, 220, 25);  
 		add(comboPasajeros);
 
 		JLabel lblViaje = new JLabel("Seleccionar Destino:");
-		lblViaje.setBounds(20, 60, 120, 25);
+		lblViaje.setBounds(20, 100, 120, 25);  
 		lblViaje.setFont(etiquetaFont);
 		add(lblViaje);
 
 		comboDestinos = new JComboBox<>();
-		for(String d : destinosViajes.keySet()){
+		for(String d : t.getDestinosViajes().keySet()){
 			comboDestinos.addItem(d);
 		}
-		comboDestinos.setBounds(desplazamientoDerecha, 60, 220, 25);
+		comboDestinos.setBounds(desplazamientoDerecha, 100, 220, 25);  
 		add(comboDestinos);
 
 		JLabel lblFechaDeseada = new JLabel("Fecha Deseada:");
-		lblFechaDeseada.setBounds(20, 100, 120, 25);
+		lblFechaDeseada.setBounds(20, 140, 120, 25);  
 		lblFechaDeseada.setFont(etiquetaFont);
 		add(lblFechaDeseada);
 
 		txtFechaDeseada = new JTextField();
-		txtFechaDeseada.setBounds(desplazamientoDerecha, 100, 220, 25);
+		txtFechaDeseada.setBounds(desplazamientoDerecha, 140, 220, 25);  
 		txtFechaDeseada.setFont(campoFont);
 		add(txtFechaDeseada);
 
 		btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBounds(70, 180, 120, 30);
+		btnConfirmar.setBounds(70, 220, 120, 30);  
 		add(btnConfirmar);
 
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(210, 180, 120, 30);
+		btnCancelar.setBounds(210, 220, 120, 30);  
 		add(btnCancelar);
 
 		setLocationRelativeTo(parent);
@@ -82,20 +96,25 @@ public class VentanaReserva extends JDialog {
 		btnConfirmar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				confirmarReserva(fechaA);
+				confirmarReserva(t.getFecha());
 			}
 		});
 
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				t.decrementIdReserva();
 				dispose();
 			}
 		});
 	}
 
+	private void setT(Terminal t) {
+		this.t = t;
+	}
+
 	private void confirmarReserva(LocalDateTime fechaAct) {
-	    String numeroReserva = String.valueOf(Terminal.getIdReserva());
+	    String numeroReserva = String.valueOf(t.getIdReserva());
 	    Pasajero pasajeroSeleccionado = (Pasajero) comboPasajeros.getSelectedItem();
 	    String destinoSeleccionado = (String) comboDestinos.getSelectedItem();
 	    LocalDate fechaActual = fechaAct.toLocalDate();

@@ -34,7 +34,9 @@ public class Datos {
 		importarConductores(t);
 		importarOmnibus(t);
 		importarViajes(t);
-		importarReservas(t);
+		for(int i = 0; i < 170; i++){			
+			crearReservas(t);
+		}
 	}
 
 	public static ArrayList<String> obtenerLineas(String rutaArchivo) throws IOException {
@@ -178,7 +180,28 @@ public class Datos {
 			}
 		}
 	}
-
+//Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento){
+	private static void crearReservas(Terminal t){
+		HashMap<String, ArrayList<Viaje>> vs = t.getDestinosViajes();
+		
+		String destino = t.getViajes().get((int) (Math.random() * t.getViajes().size())).getDestino();
+		Pasajero p = t.getPasajeros().get((int) (Math.random() * t.getPasajeros().size()));
+		Viaje v = vs.get(destino).get((int) (Math.random() * vs.get(destino).size()));
+		
+		LocalDate fecha = t.getFecha().toLocalDate();
+		LocalDate fechaDeseada = fecha.plusDays((long) (Math.random() * 200));
+		
+		Reserva r = new Reserva(p, String.valueOf(t.getIdReserva()), destino, fecha, fechaDeseada, 0);
+		
+		if(v.getAsientosLibres().size() > 0){
+			r.setAsiento(v.getAsiento());
+			r.setViaje(v);
+			v.addReservas(r);
+		}
+		
+		t.addReserva(r);
+	}
+	
 	//Alfonso id: 40090679080,5,Villa Clara,28/05/2025,18/06/2025,Confirmada, 7
 	//Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento)
 	

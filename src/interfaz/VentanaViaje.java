@@ -26,20 +26,25 @@ public class VentanaViaje extends JDialog {
 	private JButton btnConfirmar, btnCancelar;
 	private boolean confirmado = false;
 	private Viaje viaje;
+	Terminal t;
 
-	public VentanaViaje(JFrame parent, ArrayList<Omnibus> listaOmnibus, ArrayList<Conductor> listaConductores, LocalDateTime fechaActual, ArrayList<Viaje> arrayList) {
+	public VentanaViaje(JFrame parent, final Terminal t) {
 		super(parent, "Crear Nuevo Viaje", true);
+		setT(t);
 		setSize(600, 380);
 		setLayout(null);
+		
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-		fecha = fechaActual;
+		fecha = t.getFecha();
 		destinosDistancias = new HashMap<>(Terminal.getDestinosDistancias());
 
 		Font etiquetaFont = new Font("Arial", Font.BOLD, 16);
 		int desplazamientoDerecha = 140;
 		
 		lblId = new JLabel("");
-		lblId.setText(String.valueOf(Terminal.getIdViaje()));
+		
+		lblId.setText(String.valueOf(t.getIdViaje()));
 		lblId.setBounds(desplazamientoDerecha + 100, 20, 250, 30);
 		add(lblId);
 
@@ -80,7 +85,7 @@ public class VentanaViaje extends JDialog {
 		lblOmnibus.setFont(etiquetaFont);
 		add(lblOmnibus);
 
-		comboOmnibus = new JComboBox<>(listaOmnibus.toArray(new Omnibus[0]));
+		comboOmnibus = new JComboBox<>(t.getOmnibuses().toArray(new Omnibus[0]));
 		comboOmnibus.setBounds(desplazamientoDerecha + 100, 180, 250, 30);
 		add(comboOmnibus);
 
@@ -89,7 +94,7 @@ public class VentanaViaje extends JDialog {
 		lblConductor.setFont(etiquetaFont);
 		add(lblConductor);
 
-		comboConductor = new JComboBox<>(listaConductores.toArray(new Conductor[0]));
+		comboConductor = new JComboBox<>(t.getConductores().toArray(new Conductor[0]));
 		comboConductor.setBounds(desplazamientoDerecha + 100, 220, 250, 30);
 		add(comboConductor);
 
@@ -113,11 +118,16 @@ public class VentanaViaje extends JDialog {
         btnCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                t.decrementIdViaje();
+            	dispose();
             }
         });
 	}
 
+	private void setT(Terminal t) {
+		this.t = t;
+	}
+	
 	private void confirmarViaje() {
 		try{
 			String id = lblId.getText();

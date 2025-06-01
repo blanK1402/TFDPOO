@@ -91,7 +91,7 @@ public class Reserva implements mostrable{
         String[] res = {
         		String.valueOf(pasajero.toString()),
         		String.valueOf(numReserva),
-        		String.valueOf(viaje.getId()),
+        		estado.equals("Confirmada") ? String.valueOf(viaje.getId()) : "Sin viaje",
         		estado.equals("Confirmada") ? String.valueOf(asiento) : "None",
         		destino,
         		fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
