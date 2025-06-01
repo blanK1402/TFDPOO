@@ -18,6 +18,7 @@ import clases.Viaje;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -254,10 +255,31 @@ public class Interfaz extends JFrame {
 
 		btnImportarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Datos.importarDatos(terminal);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				actualizar();
 			}
 
-			private void actualizar() {}
+			private void actualizar() {
+				for(Pasajero p : terminal.getPasajeros()){
+					modelPasajero.addRow(p.toTableList());
+				}
+				for(Conductor c : terminal.getConductores()){
+					modelConductor.addRow(c.toTableList());
+				}
+				for(Omnibus o : terminal.getOmnibuses()){
+					modelOmnibus.addRow(o.toTableList());
+				}
+				for(Viaje v : terminal.getViajes()){
+					modelViaje.addRow(v.toTableList());
+				}
+				for(Reserva r : terminal.getReservas()){
+					modelReserva.addRow(r.toTableList());
+				}
+			}
 		});
 
 		btnImportarDatos.setBackground(COLOR);

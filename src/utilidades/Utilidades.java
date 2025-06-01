@@ -6,7 +6,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import login.Usuario;
 import clases.Viaje;
@@ -160,14 +159,6 @@ public class Utilidades {
 		return anyo - Integer.valueOf(digitos) < 0 ? Integer.valueOf("19" + digitos) : Integer.valueOf("20" + digitos);
 	}
 	
-	
-
-	public static String generarMatricula(Set<String> set){
-		char letra = (char)((char)(Math.random() * 26) + 'A');
-		String mat = letra + String.valueOf((int) (Math.random() * 900000) + 100000);
-		return set.contains(mat) ? generarMatricula(set) : mat;
-	}
-
 
 	public static Usuario login(ArrayList<String> usuarioContrasena) throws IllegalArgumentException, IOException{
 		HashMap<ArrayList<String>, Usuario> contrasenas = new HashMap<ArrayList<String>, Usuario>();

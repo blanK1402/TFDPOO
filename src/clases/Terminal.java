@@ -2,7 +2,6 @@ package clases;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
@@ -33,9 +32,12 @@ public class Terminal {
 
         listaNombres = new ArrayList<String>();
         
-        conductores = new HashMap<>();
         pasajeros = new HashMap<>();
-        setListaNombres();
+        conductores = new HashMap<>();
+        omnibuses = new HashMap<>();
+        viajes = new HashMap<>();
+        reservas = new HashMap<>();
+     
         setDestinosDistancias();
     }
 
@@ -72,45 +74,6 @@ public class Terminal {
     	return listaNombres;
     }
     
-    public static void setListaNombres() {
-        listaNombres = new ArrayList<String>(Arrays.asList(
-            "Alejandro", "Beatriz", "Carlos", "Daniela", "Eduardo",
-            "Fernanda", "Gabriel", "Hortensia", "Ignacio", "Jimena",
-            "Kevin", "Laura", "Manuel", "Natalia", "Oscar",
-            "Patricia", "Quetzal", "Ricardo", "Sofía", "Tomás",
-            "Ulises", "Valeria", "Wendy", "Ximena", "Yolanda",
-            "Zacarías", "Ana", "Beto", "Claudia", "Diego",
-            "Esteban", "Fabiola", "Gustavo", "Helena", "Iván",
-            "José", "Karla", "Luis", "María", "Noé",
-            "Olga", "Pablo", "Queen", "Raúl", "Silvia",
-            "Tania", "Uriel", "Verónica", "Wilfrido", "Xóchitl",
-            "Adrián", "Berenice", "Cecilia", "Diana", "Emilio",
-            "Fátima", "Gerardo", "Isabel", "Jorge", "Karina",
-            "Leonardo", "Mónica", "Nicolás", "Ofelia", "Pedro",
-            "Querubín", "Rocío", "Samuel", "Teresa", "Víctor",
-            "Yahir", "Zoe", "Alberto", "Bárbara", "Cristian",
-            "Dulce", "Ernesto", "Francisca", "Guillermo", "Héctor",
-            "Irene", "Joaquín", "Lorena", "Miguel", "Norma",
-            "Octavio", "Perla", "Rafael", "Salma", "Tadeo",
-            "Vanessa", "Yaretzi", "Alma", "Benito", "Camila",
-            "Damián", "Esmeralda", "Felipe", "Gloria", "Hugo",
-            "Inés", "Jacobo", "Leticia", "Mario", "Nadia",
-            "Orlando", "Paulina", "Rubén", "Sara", "Teodoro",
-            "Vanesa", "Yadira", "Alfonso", "Blanca", "César",
-            "Deborah", "Efraín", "Florencia", "Griselda", "Horacio",
-            "Ilse", "Julio", "Luisa", "Marcelo", "Nelly",
-            "Omar", "Pilar", "Ramón", "Susana", "Timoteo",
-            "Violeta", "Yael", "Arturo", "Briseida", "Clemente",
-            "Dora", "Elías", "Felicia", "Georgina", "Heriberto",
-            "Itzel", "Jazmín", "León", "Magdalena", "Néstor",
-            "Obdulia", "Priscila", "Renato", "Selene", "Tiburcio",
-            "Vianey", "Yulissa", "Aldo", "Belinda", "Cirilo",
-            "Deyanira", "Ezequiel", "Fidel", "Graciela", "Hermelinda",
-            "Isela", "Javier", "Kenia", "Lázaro", "Mireya",
-            "Natividad", "Otilia", "Pascual", "Rosario", "Santos"
-        ));
-    }
-
     public void setFechaHora(LocalDateTime nuevaFechaHora) {
         fechaHora = nuevaFechaHora;
     }
@@ -212,5 +175,9 @@ public class Terminal {
 		}
 		
 		return destinosViajes;
+	}
+
+	public Omnibus getOmnibus(String matricula) {
+		return omnibuses.get(matricula);
 	}
 }

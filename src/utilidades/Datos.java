@@ -1,18 +1,22 @@
 package utilidades;
 
 import Interfaces.mostrable;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.table.DefaultTableModel;
+
+import clases.Conductor;
 import clases.ConductorA;
 import clases.ConductorB;
 import clases.ConductorC;
@@ -20,6 +24,7 @@ import clases.Omnibus;
 import clases.Pasajero;
 import clases.Reserva;
 import clases.Terminal;
+import clases.Viaje;
 import login.Usuario;
 
 public class Datos {
@@ -28,6 +33,8 @@ public class Datos {
 		importarPasajeros(t);
 		importarConductores(t);
 		importarOmnibus(t);
+		importarViajes(t);
+		importarReservas(t);
 	}
 
 	public static ArrayList<String> obtenerLineas(String rutaArchivo) throws IOException {
@@ -39,7 +46,7 @@ public class Datos {
 				lineas.add(linea);
 			}
 		}
-
+		
 		return lineas;
 	}
 
@@ -115,43 +122,86 @@ public class Datos {
 	//T976211,94,No,Si,No,Disponible,[id:2, Selene, id:6, Hugo]
 
 	private static void importarOmnibus(Terminal t) throws FileNotFoundException, IOException {
-		Pattern patron = Pattern.compile("([A-Z][0-9]{6}),([0-9]*),(Si|No),(Si|No),(Si|No),([a-zA-Z]*),(.*)");
-
-		try{
-			for(String linea : obtenerLineas(".\\.\\BaseDatos\\omnibuses.txt")){
+		Pattern patron = Pattern.compile("^([A-Z]{1}[0-9]{6}),([0-9]*),([Si]{2}|[No]{2}),([Si]{2}|[No]{2}),([Si]{2}|[No]{2}),([^,]+),(.*)$");
+		Pattern patronId = Pattern.compile("id:([0-9]+)");
+		
+			for(String linea : obtenerLineas("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\BaseDatos\\omnibuses.txt")){
+				
 				Matcher matcher = patron.matcher(linea);
-
+				
 				if(matcher.find()){
+					Matcher matcherId = patronId.matcher(matcher.group(7));
 					String matricula = matcher.group(1);
 					String asientos = matcher.group(2);
-
-					ArrayList<String> comodidades = new ArrayList<>();
-
-					if ("Si".equals(matcher.group(3))) {
+					
+					ArrayList<String> comodidades = new ArrayList<>();				
+					if (matcher.group(3).equals("Si")) {
 						comodidades.add("Aire acondicionado");
 					}
-					if ("Si".equals(matcher.group(4))) {
+					if (matcher.group(4).equals("Si")) {
 						comodidades.add("TV");
 					}
-					if ("Si".equals(matcher.group(5))) {
+					if (matcher.group(5).equals("Si")) {
 						comodidades.add("Baño");
 					}
 
 					String estado = matcher.group(6);
 
 					Omnibus o = new Omnibus(matricula, asientos, estado, comodidades);
-
-					o.addConductor(t.getConductor("1"));
+					
+					while(matcherId.find()){
+						o.addConductor(t.getConductor(matcherId.group(1)));
+					}
 					t.addOmnibus(o);
 				}
 			}
-		}
-		catch(Exception e){
-			throw new IllegalArgumentException(e.getMessage());
-		}
 
 	}
+	
+	//2,Ciego de Ávila,V110538,id:5, Esmeralda,22/06/2025, 08:41:56,391.0
+	//(String id, String fechaPartida, String horaPartida, String destino, Omnibus omnibus, Conductor conductor){
+	private static void importarViajes(Terminal t) throws FileNotFoundException, IOException {
+		Pattern patron = Pattern.compile("(.*),(.*),(.*),id:(.*), (.*),(.*), (.*),(.*)");
 
+		for(String linea : obtenerLineas(".\\.\\BaseDatos\\viajes.txt")){
+			Matcher matcher = patron.matcher(linea);
+			if(matcher.find()){
+				String id = matcher.group(1);
+				String destino = matcher.group(2);
+				String matricula = matcher.group(3);
+				String idConductor = matcher.group(4);
+				String fecha = matcher.group(6);
+				String hora = matcher.group(7);
+
+				Viaje v = new Viaje(id, fecha, hora, destino, t.getOmnibus(matricula), t.getConductor(idConductor));
+				t.addViaje(v);
+			}
+		}
+	}
+
+	//Alfonso id: 40090679080,5,Villa Clara,28/05/2025,18/06/2025,Confirmada, 7
+	//Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento)
+	
+	private static void importarReservas(Terminal t) throws FileNotFoundException, IOException {
+		Pattern patron = Pattern.compile("id: (.*),(.*),(.*),(.*),(.*),(.*), (.*)");
+
+		for(String linea : obtenerLineas(".\\.\\BaseDatos\\reservas.txt")){
+			Matcher matcher = patron.matcher(linea);
+			if(matcher.find()){
+				Pasajero p = t.getPasajero(matcher.group(1));
+				String destino = matcher.group(3);
+				String numReserva = matcher.group(2);
+				LocalDate fechaActual = Utilidades.parsearFecha(matcher.group(4));
+				LocalDate fechaDeseada = Utilidades.parsearFecha(matcher.group(5));
+				int asiento = Integer.valueOf(matcher.group(7));
+
+				Reserva r = new Reserva(p, numReserva, destino, fechaActual, fechaDeseada, asiento);
+				t.addReserva(r);
+			}
+		}
+	}
+
+	
 	public static void guardarDatos(Terminal t) throws IOException{
 		String[] rutas = {
 				".\\.\\BaseDatos\\pasajeros.txt",
