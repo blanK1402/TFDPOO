@@ -31,6 +31,7 @@ public class Reserva implements mostrable{
 	public void setViaje(Viaje viaje) {
 		this.viaje = viaje;
 		estado = "Confirmada";
+		asiento = viaje.getAsiento();
 	}
 	public Viaje getViaje(){
 		return viaje;

@@ -34,9 +34,7 @@ public class Datos {
 		importarConductores(t);
 		importarOmnibus(t);
 		importarViajes(t);
-		for(int i = 0; i < 170; i++){			
-			crearReservas(t);
-		}
+		importarReservas(t);
 	}
 
 	public static ArrayList<String> obtenerLineas(String rutaArchivo) throws IOException {
@@ -48,7 +46,7 @@ public class Datos {
 				lineas.add(linea);
 			}
 		}
-		
+
 		return lineas;
 	}
 
@@ -93,28 +91,28 @@ public class Datos {
 	}
 
 	private static void importarConductores(Terminal t) throws FileNotFoundException, IOException {
-		Pattern patron = Pattern.compile("(.*),(.*),(.*),(.*),(.*)");
+		Pattern patron = Pattern.compile("([a-zA-Z]+),([0-9]+),([A]|[B]|[C]),([0-9]+),([0-9]+)");
 
 		//(String nombre, String id, String experiencia, String licencia)
 		//Diana,1,A,36,84719
+
 		for(String linea : obtenerLineas(".\\.\\BaseDatos\\conductores.txt")){
 			Matcher matcher = patron.matcher(linea);
 			if(matcher.find()){
+
 				String nombre = matcher.group(1);
 				String id = matcher.group(2);
 				String exp = matcher.group(4);
 				String licencia = matcher.group(5);
 
-				switch(matcher.group(3)) {  
-				case "A": 
+				if(matcher.group(3).equals("A")) {  
 					t.addConductor(new ConductorA(nombre, id, exp, licencia));
-					break;
-				case "B": 
+				}
+				else if(matcher.group(3).equals("B")){
 					t.addConductor(new ConductorB(nombre, id, exp, licencia));
-					break;
-				case "C": 
+				}
+				else{
 					t.addConductor(new ConductorC(nombre, id, exp, licencia));
-					break;
 				}
 			}
 		}
@@ -126,40 +124,40 @@ public class Datos {
 	private static void importarOmnibus(Terminal t) throws FileNotFoundException, IOException {
 		Pattern patron = Pattern.compile("^([A-Z]{1}[0-9]{6}),([0-9]*),([Si]{2}|[No]{2}),([Si]{2}|[No]{2}),([Si]{2}|[No]{2}),([^,]+),(.*)$");
 		Pattern patronId = Pattern.compile("id:([0-9]+)");
-		
-			for(String linea : obtenerLineas("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\BaseDatos\\omnibuses.txt")){
-				
-				Matcher matcher = patron.matcher(linea);
-				
-				if(matcher.find()){
-					Matcher matcherId = patronId.matcher(matcher.group(7));
-					String matricula = matcher.group(1);
-					String asientos = matcher.group(2);
-					
-					ArrayList<String> comodidades = new ArrayList<>();				
-					if (matcher.group(3).equals("Si")) {
-						comodidades.add("Aire acondicionado");
-					}
-					if (matcher.group(4).equals("Si")) {
-						comodidades.add("TV");
-					}
-					if (matcher.group(5).equals("Si")) {
-						comodidades.add("Baño");
-					}
 
-					String estado = matcher.group(6);
+		for(String linea : obtenerLineas("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\BaseDatos\\omnibuses.txt")){
 
-					Omnibus o = new Omnibus(matricula, asientos, estado, comodidades);
-					
-					while(matcherId.find()){
-						o.addConductor(t.getConductor(matcherId.group(1)));
-					}
-					t.addOmnibus(o);
+			Matcher matcher = patron.matcher(linea);
+
+			if(matcher.find()){
+				Matcher matcherId = patronId.matcher(matcher.group(7));
+				String matricula = matcher.group(1);
+				String asientos = matcher.group(2);
+
+				ArrayList<String> comodidades = new ArrayList<>();				
+				if (matcher.group(3).equals("Si")) {
+					comodidades.add("Aire acondicionado");
 				}
+				if (matcher.group(4).equals("Si")) {
+					comodidades.add("TV");
+				}
+				if (matcher.group(5).equals("Si")) {
+					comodidades.add("Baño");
+				}
+
+				String estado = matcher.group(6);
+
+				Omnibus o = new Omnibus(matricula, asientos, estado, comodidades);
+
+				while(matcherId.find()){
+					o.addConductor(t.getConductor(matcherId.group(1)));
+				}
+				t.addOmnibus(o);
 			}
+		}
 
 	}
-	
+
 	//2,Ciego de Ávila,V110538,id:5, Esmeralda,22/06/2025, 08:41:56,391.0
 	//(String id, String fechaPartida, String horaPartida, String destino, Omnibus omnibus, Conductor conductor){
 	private static void importarViajes(Terminal t) throws FileNotFoundException, IOException {
@@ -180,51 +178,61 @@ public class Datos {
 			}
 		}
 	}
-//Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento){
+	//Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento){
 	private static void crearReservas(Terminal t){
 		HashMap<String, ArrayList<Viaje>> vs = t.getDestinosViajes();
-		
+
 		String destino = t.getViajes().get((int) (Math.random() * t.getViajes().size())).getDestino();
 		Pasajero p = t.getPasajeros().get((int) (Math.random() * t.getPasajeros().size()));
 		Viaje v = vs.get(destino).get((int) (Math.random() * vs.get(destino).size()));
-		
+
 		LocalDate fecha = t.getFecha().toLocalDate();
 		LocalDate fechaDeseada = fecha.plusDays((long) (Math.random() * 200));
-		
+
 		Reserva r = new Reserva(p, String.valueOf(t.getIdReserva()), destino, fecha, fechaDeseada, 0);
-		
+
 		if(v.getAsientosLibres().size() > 0){
 			r.setAsiento(v.getAsiento());
 			r.setViaje(v);
 			v.addReservas(r);
 		}
-		
+
 		t.addReserva(r);
 	}
-	
-	//Alfonso id: 40090679080,5,Villa Clara,28/05/2025,18/06/2025,Confirmada, 7
+
+	//Vanesa id: 35010683686,88,2,45,Ciego de Ávila,02/06/2025,29/09/2025,Confirmada
 	//Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento)
-	
+
+	//"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"
 	private static void importarReservas(Terminal t) throws FileNotFoundException, IOException {
-		Pattern patron = Pattern.compile("id: (.*),(.*),(.*),(.*),(.*),(.*), (.*)");
+		Pattern patron = Pattern.compile("id: ([0-9]+),([0-9]+),([0-9]+),([0-9]+),(.*),([0-9/]+),([0-9/]+),(.*)");
 
 		for(String linea : obtenerLineas(".\\.\\BaseDatos\\reservas.txt")){
 			Matcher matcher = patron.matcher(linea);
 			if(matcher.find()){
 				Pasajero p = t.getPasajero(matcher.group(1));
-				String destino = matcher.group(3);
+				String destino = matcher.group(5);
 				String numReserva = matcher.group(2);
-				LocalDate fechaActual = Utilidades.parsearFecha(matcher.group(4));
-				LocalDate fechaDeseada = Utilidades.parsearFecha(matcher.group(5));
-				int asiento = Integer.valueOf(matcher.group(7));
+				LocalDate fechaActual = Utilidades.parsearFecha(matcher.group(6));
+				LocalDate fechaDeseada = Utilidades.parsearFecha(matcher.group(7));
+				Viaje v = null;
+				
+				if(matcher.group(3).matches("[0-9]")){
+					v = t.getViaje(matcher.group(3));
+				}
 
-				Reserva r = new Reserva(p, numReserva, destino, fechaActual, fechaDeseada, asiento);
+				Reserva r = new Reserva(p, numReserva, destino, fechaActual, fechaDeseada, 0);
+				
+				if(v != null){
+					r.setViaje(v);
+					v.addReservas(r);
+				}
 				t.addReserva(r);
 			}
 		}
 	}
 
-	
+
 	public static void guardarDatos(Terminal t) throws IOException{
 		String[] rutas = {
 				".\\.\\BaseDatos\\pasajeros.txt",
@@ -233,13 +241,13 @@ public class Datos {
 				".\\.\\BaseDatos\\viajes.txt",
 				".\\.\\BaseDatos\\reservas.txt"
 		};
-			
+
 		escribirArchivo(t.getPasajeros(), rutas[0]);
 		escribirArchivo(t.getConductores(), rutas[1]);
 		escribirArchivo(t.getOmnibuses(), rutas[2]);
 		escribirArchivo(t.getViajes(), rutas[3]);
 		escribirArchivo(t.getReservas(), rutas[4]);
-		
+
 	}
 
 	private static <T extends mostrable> void escribirArchivo(ArrayList<T> lista, String ruta) throws IOException {

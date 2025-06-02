@@ -24,19 +24,6 @@ public class Runner {
 		});
 	}
 
-	public static void lanzarInterfazAdmin(final Terminal terminal) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Interfaz frame = new Interfaz(terminal);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public static void lanzarInterfazUsuario(final Pasajero pasajero) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

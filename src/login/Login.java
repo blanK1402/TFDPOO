@@ -1,5 +1,7 @@
 package login;
 
+import interfaz.Interfaz;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -72,8 +74,13 @@ public class Login extends JFrame {
 					try{
 						Usuario usuario = Utilidades.login(usuarioContrasena);
 						if(usuario.getRol().equals("Admin")){
-							Runner.lanzarInterfazAdmin(terminal);
-							dispose();
+							try {
+								Interfaz frame = new Interfaz(terminal);
+								frame.setVisible(true);
+								dispose();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 						else{
 							Runner.lanzarInterfazUsuario(terminal.getPasajero(usuario.getUsuario()));

@@ -195,4 +195,8 @@ public class Terminal {
 	public Omnibus getOmnibus(String matricula) {
 		return omnibuses.get(matricula);
 	}
+
+	public Viaje getViaje(String id) {
+		return viajes.get(id);
+	}
 }

@@ -39,7 +39,7 @@ public class Viaje implements mostrable{
 	public void setFechaHoraPartida(String fecha, String hora) throws IllegalArgumentException {
 		this.fechaHoraPartida = LocalDateTime.of(Utilidades.parsearFecha(fecha), Utilidades.parsearHora(hora));
 	}
-
+	
 	public LocalDateTime getFechaHoraPartida() {
 		return fechaHoraPartida;
 	}
