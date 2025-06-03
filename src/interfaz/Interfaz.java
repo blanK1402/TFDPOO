@@ -44,7 +44,12 @@ public class Interfaz extends JFrame {
 		// Pestaña PASAJERO
 
 		String[] columnNamesPasajero = {"Nombre", "ID"};
-		final DefaultTableModel modelPasajero = new DefaultTableModel(columnNamesPasajero, 0);
+		final DefaultTableModel modelPasajero = new DefaultTableModel(columnNamesPasajero, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		final JTable tablePasajero = new JTable(modelPasajero);
 		tablePasajero.setRowHeight(30);
 		tablePasajero.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -85,7 +90,12 @@ public class Interfaz extends JFrame {
 		// Pestaña CONDUCTOR
 
 		String[] columnNamesConductor = {"Nombre", "ID", "Categoría", "Años de Experiencia", "Licencia"};
-		final DefaultTableModel modelConductor = new DefaultTableModel(columnNamesConductor, 0);
+		final DefaultTableModel modelConductor = new DefaultTableModel(columnNamesConductor, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		JTable tableConductor = new JTable(modelConductor);
 		tableConductor.setRowHeight(30);
 		tableConductor.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -128,7 +138,12 @@ public class Interfaz extends JFrame {
 
 		String[] columnNamesOmnibus = {"Matrícula", "Asientos", "A/C", "Televisor", "Baño", "Disponibilidad", "Conductores"};
 		Object[][] dataOmnibus = {};
-		final DefaultTableModel modelOmnibus = new DefaultTableModel(dataOmnibus, columnNamesOmnibus);
+		final DefaultTableModel modelOmnibus = new DefaultTableModel(columnNamesOmnibus, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		JTable tableOmnibus = new JTable(modelOmnibus);
 		tableOmnibus.setRowHeight(30);
 		tableOmnibus.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -166,7 +181,12 @@ public class Interfaz extends JFrame {
 		// Pestaña VIAJE
 
 		String[] columnasViaje = {"ID", "Destino", "Ómnibus", "Conductor", "Fecha Salida", "Precio"};
-		final DefaultTableModel modelViaje = new DefaultTableModel();
+		final DefaultTableModel modelViaje = new DefaultTableModel(columnasViaje, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		for(String columna : columnasViaje){
 			modelViaje.addColumn(columna);
 		}
@@ -210,7 +230,12 @@ public class Interfaz extends JFrame {
 
 		String[] columnNamesReserva = {"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
 		Object[][] dataReserva = {};
-		final DefaultTableModel modelReserva = new DefaultTableModel(dataReserva, columnNamesReserva);
+		final DefaultTableModel modelReserva = new DefaultTableModel(columnNamesReserva, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		JTable tableReserva = new JTable(modelReserva);
 		tableReserva.setRowHeight(30);
 		tableReserva.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -260,25 +285,7 @@ public class Interfaz extends JFrame {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				actualizar();
-			}
-
-			private void actualizar() {
-				for(Pasajero p : terminal.getPasajeros()){
-					modelPasajero.addRow(p.toTableList());
-				}
-				for(Conductor c : terminal.getConductores()){
-					modelConductor.addRow(c.toTableList());
-				}
-				for(Omnibus o : terminal.getOmnibuses()){
-					modelOmnibus.addRow(o.toTableList());
-				}
-				for(Viaje v : terminal.getViajes()){
-					modelViaje.addRow(v.toTableList());
-				}
-				for(Reserva r : terminal.getReservas()){
-					modelReserva.addRow(r.toTableList());
-				}
+				actualizar(modelPasajero, modelConductor, modelReserva, modelViaje, modelOmnibus);
 			}
 		});
 
@@ -287,7 +294,7 @@ public class Interfaz extends JFrame {
 		btnImportarDatos.setFont(new Font("SansSerif", Font.BOLD, 14));
 		panelImportar.add(btnImportarDatos);
 		panelTerminal.add(panelImportar, BorderLayout.NORTH);
-		
+
 		JButton btnGuardarDatos = new JButton("Guardar Datos");
 		btnGuardarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -405,13 +412,6 @@ public class Interfaz extends JFrame {
 		panelFecha.setBorder(BorderFactory.createTitledBorder("Fecha"));
 		panelFecha.setLayout(null);
 
-		JButton btnAdelantarHora = new JButton("Adelantar Hora");
-		btnAdelantarHora.setBounds(157, 55, 149, 27);
-		btnAdelantarHora.setBackground(COLOR);
-		btnAdelantarHora.setForeground(Color.WHITE);
-		btnAdelantarHora.setFont(new Font("SansSerif", Font.BOLD, 14));
-		panelFecha.add(btnAdelantarHora);
-
 		JButton btnEstablecerFecha = new JButton("Establecer Nueva Fecha");
 		btnEstablecerFecha.setBounds(11, 90, 295, 27);
 		btnEstablecerFecha.setBackground(COLOR);
@@ -436,10 +436,10 @@ public class Interfaz extends JFrame {
 		label.setBounds(58, 28, 90, 14);
 		panelFecha.add(label);
 
-		final JLabel label_1 = new JLabel(terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-		label_1.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		label_1.setBounds(195, 26, 90, 14);
-		panelFecha.add(label_1);
+		final JLabel labelHora = new JLabel(terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+		labelHora.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		labelHora.setBounds(195, 26, 90, 14);
+		panelFecha.add(labelHora);
 		panelTerminal.add(panelCentroTerminal, BorderLayout.CENTER);
 		tabbedPane.addTab("Terminal", panelTerminal);
 
@@ -448,6 +448,7 @@ public class Interfaz extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				terminal.adelantarDia();
 				label.setText(terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+				actualizar(modelPasajero, modelConductor, modelReserva, modelViaje, modelOmnibus);
 			}
 		});
 		btnAdelantarDia.setBounds(11, 55, 137, 27);
@@ -456,8 +457,44 @@ public class Interfaz extends JFrame {
 		btnAdelantarDia.setFont(new Font("SansSerif", Font.BOLD, 14));
 		panelFecha.add(btnAdelantarDia);
 
+		final JButton btnAdelantarHora = new JButton("Adelantar Hora");
+		btnAdelantarHora.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				terminal.adelantarHora();
+				labelHora.setText(terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+			}
+		});
+
+		btnAdelantarHora.setBounds(157, 55, 149, 27);
+		btnAdelantarHora.setBackground(COLOR);
+		btnAdelantarHora.setForeground(Color.WHITE);
+		btnAdelantarHora.setFont(new Font("SansSerif", Font.BOLD, 14));
+		panelFecha.add(btnAdelantarHora);
 	}
 
+	protected void actualizar(DefaultTableModel modelPasajero,DefaultTableModel modelConductor, DefaultTableModel modelReserva, DefaultTableModel modelViaje, DefaultTableModel modelOmnibus) {
+		modelPasajero.setRowCount(0);
+		modelConductor.setRowCount(0);
+		modelOmnibus.setRowCount(0);
+		modelViaje.setRowCount(0);
+		modelReserva.setRowCount(0);
+		for(Pasajero p : terminal.getPasajeros()){
+			modelPasajero.addRow(p.toTableList());
+		}
+		for(Conductor c : terminal.getConductores()){
+			modelConductor.addRow(c.toTableList());
+		}
+		for(Omnibus o : terminal.getOmnibuses()){
+			modelOmnibus.addRow(o.toTableList());
+		}
+		for(Viaje v : terminal.getViajes()){
+			modelViaje.addRow(v.toTableList());
+		}
+		for(Reserva r : terminal.getReservas()){
+			modelReserva.addRow(r.toTableList());
+		}
+	}
+	
 	public void crearPasajero(DefaultTableModel modelPasajero) {
 		VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, terminal.getPasajeros(), terminal.getFecha().toLocalDate());
 		ventanaPasajero.setVisible(true);
@@ -547,6 +584,7 @@ public class Interfaz extends JFrame {
 			}
 		}
 	}
+
 
 
 }

@@ -50,19 +50,17 @@ public class Datos {
 		return lineas;
 	}
 
-	public static void cargarContrasenas(HashMap<ArrayList<String>, Usuario> contrasenas) throws IllegalArgumentException, IOException {
-		Pattern patron = Pattern.compile("^(\\w+):([^,]+),([^,]+)$");
+	public static void cargarContrasenas(HashMap<String, Usuario> contrasenas) throws IllegalArgumentException, IOException {
+		Pattern patron = Pattern.compile("(.*):(.*),(.*)");
 
 		try (BufferedReader txt = new BufferedReader(new FileReader(".\\.\\BaseDatos\\contrasenas.txt"))) {
 			String linea;
+			
 			while ((linea = txt.readLine()) != null) {
 				Matcher coincidencia = patron.matcher(linea);
-				if (coincidencia.matches()) { 
-					ArrayList<String> usuarioContrasena = new ArrayList<String>();
-					usuarioContrasena.add(coincidencia.group(2));
-					usuarioContrasena.add(coincidencia.group(3));
-					Usuario usuario = new Usuario(usuarioContrasena.get(0), usuarioContrasena.get(1), coincidencia.group(1));	
-					contrasenas.put(usuarioContrasena, usuario);
+				if (coincidencia.find()) {
+					Usuario usuario = new Usuario(coincidencia.group(2), coincidencia.group(3), coincidencia.group(1));	
+					contrasenas.put(usuario.getUsuario(), usuario);
 				}
 			}
 		} 
@@ -256,6 +254,41 @@ public class Datos {
 				writer.write(String.join(",", item.toTableList()) + "\n");
 			}
 		}
+	}
+	
+	public static void actualizarPasajeros(DefaultTableModel modelPasajero, Terminal terminal) {
+	    modelPasajero.setRowCount(0); // Limpiar tabla antes de actualizar
+	    for(Pasajero p : terminal.getPasajeros()) {
+	        modelPasajero.addRow(p.toTableList());
+	    }
+	}
+
+	public static void actualizarConductores(DefaultTableModel modelConductor, Terminal terminal) {
+	    modelConductor.setRowCount(0);
+	    for(Conductor c : terminal.getConductores()) {
+	        modelConductor.addRow(c.toTableList());
+	    }
+	}
+
+	public static void actualizarOmnibuses(DefaultTableModel modelOmnibus, Terminal terminal) {
+	    modelOmnibus.setRowCount(0);
+	    for(Omnibus o : terminal.getOmnibuses()) {
+	        modelOmnibus.addRow(o.toTableList());
+	    }
+	}
+
+	public static void actualizarViajes(DefaultTableModel modelViaje, Terminal terminal) {
+	    modelViaje.setRowCount(0);
+	    for(Viaje v : terminal.getViajes()) {
+	        modelViaje.addRow(v.toTableList());
+	    }
+	}
+
+	public static void actualizarReservas(DefaultTableModel modelReserva, Terminal terminal) {
+	    modelReserva.setRowCount(0);
+	    for(Reserva r : terminal.getReservas()) {
+	        modelReserva.addRow(r.toTableList());
+	    }
 	}
 
 }

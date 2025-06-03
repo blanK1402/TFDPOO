@@ -1,5 +1,6 @@
 package clases;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,9 +92,29 @@ public class Terminal {
         return fechaHora;
     }
 
-	public void adelantarDia() {
-		setFechaHora(fechaHora.plusDays(1));
-	}
+    public void adelantarDia() {
+        // 1. Avanzar la fecha
+        LocalDateTime nuevaFecha = fechaHora.plusDays(1);
+        setFechaHora(nuevaFecha);
+        
+        // 2. Obtener la fecha sin componente de hora
+        LocalDate fechaActual = nuevaFecha.toLocalDate();
+        
+        // 3. Identificar reservas a eliminar (evitando ConcurrentModificationException)
+        ArrayList<Integer> reservasAEliminar = new ArrayList<>();
+        
+        for (Reserva r : reservas.values()) {
+            if (r.getFechaDeseada().isEqual(fechaActual)) {
+                reservasAEliminar.add(r.getNumReserva());
+                r.getPasajero().removeReserva(r);
+            }
+        }
+        
+        // 4. Eliminar reservas del mapa
+        for (Integer numReserva : reservasAEliminar) {
+            reservas.remove(numReserva);
+        }
+    }
 	
 	public void adelantarHora() {
 		setFechaHora(fechaHora.plusHours(1));
@@ -175,6 +196,7 @@ public class Terminal {
 	}
 
 	public void addReserva(Reserva r) {
+		r.getPasajero().addReserva(r);
 		reservas.put(String.valueOf(r.getNumReserva()), r);
 	}
 

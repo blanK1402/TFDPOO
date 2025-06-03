@@ -40,6 +40,9 @@ public class Pasajero implements mostrable{
 		Utilidades.validarCarnet(id, fecha);
 		this.id = id;	
 	}
+	public void removeReserva(Reserva r){
+		reservas.remove(r);
+	}
 	
 	@Override
 	public String toString(){

@@ -16,8 +16,10 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import clases.Pasajero;
 import clases.Terminal;
 import runner.Runner;
+import utilidades.Datos;
 import utilidades.Utilidades;
 
 import java.awt.event.ActionListener;
@@ -32,7 +34,7 @@ public class Login extends JFrame {
 	private JTextField textField;
 
 	public Login(final Terminal terminal) {
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 220, 250);
 		contentPane = new JPanel();
@@ -56,14 +58,14 @@ public class Login extends JFrame {
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblUsuario.setBounds(10, 11, 110, 37);
 		contentPane.add(lblUsuario);
-		
+
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField.setFocusCycleRoot(true);
 		textField.setColumns(10);
 		textField.setBounds(10, 59, 185, 27);
 		contentPane.add(textField);
-		
+
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -71,24 +73,19 @@ public class Login extends JFrame {
 					ArrayList<String> usuarioContrasena = new ArrayList<String>();
 					usuarioContrasena.add(textField.getText());
 					usuarioContrasena.add(txtAsda.getText());
-					try{
-						Usuario usuario = Utilidades.login(usuarioContrasena);
-						if(usuario.getRol().equals("Admin")){
-							try {
-								Interfaz frame = new Interfaz(terminal);
-								frame.setVisible(true);
-								dispose();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-						else{
-							Runner.lanzarInterfazUsuario(terminal.getPasajero(usuario.getUsuario()));
-						}
+					
+					Usuario usuario = Utilidades.login(usuarioContrasena);
+
+					if(usuario.getRol().equals("Admin")){
+						Interfaz frame = new Interfaz(terminal);
+						frame.setVisible(true);
+						dispose();
 					}
-					catch(IllegalArgumentException e){
-						JOptionPane.showMessageDialog(null, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-					}	
+					else if(usuario.getRol().equals("User")){
+						Datos.importarDatos(terminal);
+						Pasajero pasajero = terminal.getPasajero(usuario.getUsuario());
+						Runner.lanzarInterfazUsuario(pasajero, terminal);
+					}
 				} catch (IllegalArgumentException | IOException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
