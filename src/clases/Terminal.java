@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
+import login.Usuario;
 import Interfaces.mostrable;
 
 public class Terminal {
@@ -18,7 +19,7 @@ public class Terminal {
 
     private String nombre;
 
-    private static ArrayList<String> listaNombres;
+    private static HashMap<String, Usuario> usuarios;
     private HashMap<String, Conductor> conductores;
     private HashMap<String, Pasajero> pasajeros;
     private HashMap<String, Omnibus> omnibuses;
@@ -30,15 +31,12 @@ public class Terminal {
     public Terminal(String nombre) {
         setNombre(nombre);
         fechaHora = LocalDateTime.now();
-
-        listaNombres = new ArrayList<String>();
-        
+        usuarios = new HashMap<>();
         pasajeros = new HashMap<>();
         conductores = new HashMap<>();
         omnibuses = new HashMap<>();
         viajes = new HashMap<>();
         reservas = new HashMap<>();
-     
         setDestinosDistancias();
     }
 
@@ -69,11 +67,6 @@ public class Terminal {
     public static HashMap<String, Integer> getDestinosDistancias(){
     	return destinosDistancias;
     }
-   
-
-    public static ArrayList<String> getListaNombres(){
-    	return listaNombres;
-    }
     
     public void setFechaHora(LocalDateTime nuevaFechaHora) {
         fechaHora = nuevaFechaHora;
@@ -92,28 +85,29 @@ public class Terminal {
         return fechaHora;
     }
 
-    public void adelantarDia() {
-        // 1. Avanzar la fecha
+    public ArrayList<Integer> adelantarDia() {
         LocalDateTime nuevaFecha = fechaHora.plusDays(1);
         setFechaHora(nuevaFecha);
-        
-        // 2. Obtener la fecha sin componente de hora
         LocalDate fechaActual = nuevaFecha.toLocalDate();
-        
-        // 3. Identificar reservas a eliminar (evitando ConcurrentModificationException)
+       
         ArrayList<Integer> reservasAEliminar = new ArrayList<>();
         
         for (Reserva r : reservas.values()) {
-            if (r.getFechaDeseada().isEqual(fechaActual)) {
+            if (r.getFechaDeseada().isEqual(fechaActual) || r.getFechaDeseada().isBefore(fechaActual)) {
                 reservasAEliminar.add(r.getNumReserva());
                 r.getPasajero().removeReserva(r);
             }
         }
         
-        // 4. Eliminar reservas del mapa
         for (Integer numReserva : reservasAEliminar) {
             reservas.remove(numReserva);
         }
+        
+        return reservasAEliminar;
+    }
+    
+    public ArrayList<Reserva> getReservas(){
+    	return new ArrayList<>(reservas.values());
     }
 	
 	public void adelantarHora() {
@@ -146,10 +140,6 @@ public class Terminal {
 	
 	public ArrayList<Viaje> getViajes() {
 		return new ArrayList<>(viajes.values());
-	}
-	
-	public ArrayList<Reserva> getReservas() {
-		return new ArrayList<>(reservas.values());
 	}
 
 	public long getConductoresId() {

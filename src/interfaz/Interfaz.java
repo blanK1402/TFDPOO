@@ -446,9 +446,8 @@ public class Interfaz extends JFrame {
 		JButton btnAdelantarDia = new JButton("Adelantar Día");
 		btnAdelantarDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				terminal.adelantarDia();
+				eliminarFilas(terminal.adelantarDia(), modelReserva);
 				label.setText(terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-				actualizar(modelPasajero, modelConductor, modelReserva, modelViaje, modelOmnibus);
 			}
 		});
 		btnAdelantarDia.setBounds(11, 55, 137, 27);
@@ -470,6 +469,18 @@ public class Interfaz extends JFrame {
 		btnAdelantarHora.setForeground(Color.WHITE);
 		btnAdelantarHora.setFont(new Font("SansSerif", Font.BOLD, 14));
 		panelFecha.add(btnAdelantarHora);
+	}
+
+	protected void eliminarFilas(ArrayList<Integer> ids, DefaultTableModel modelReserva) {
+		int i = modelReserva.getRowCount() - 1;
+		while(i >= 0){
+			int valor = Integer.valueOf(String.valueOf(modelReserva.getValueAt(i, 1)));
+			if(ids.contains(valor)){
+				modelReserva.removeRow(i);
+			}
+			i--;
+		}
+		
 	}
 
 	protected void actualizar(DefaultTableModel modelPasajero,DefaultTableModel modelConductor, DefaultTableModel modelReserva, DefaultTableModel modelViaje, DefaultTableModel modelOmnibus) {

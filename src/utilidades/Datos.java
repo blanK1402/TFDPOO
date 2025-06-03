@@ -123,7 +123,7 @@ public class Datos {
 		Pattern patron = Pattern.compile("^([A-Z]{1}[0-9]{6}),([0-9]*),([Si]{2}|[No]{2}),([Si]{2}|[No]{2}),([Si]{2}|[No]{2}),([^,]+),(.*)$");
 		Pattern patronId = Pattern.compile("id:([0-9]+)");
 
-		for(String linea : obtenerLineas("C:\\Users\\Roger\\Desktop\\DPOO FINAL\\TareaFinal\\BaseDatos\\omnibuses.txt")){
+		for(String linea : obtenerLineas(".\\.\\BaseDatos\\omnibuses.txt")){
 
 			Matcher matcher = patron.matcher(linea);
 
