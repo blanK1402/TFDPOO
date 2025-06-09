@@ -29,7 +29,8 @@ import login.Usuario;
 
 public class Datos {
 
-	public static void importarDatos(Terminal t) throws FileNotFoundException, IOException{
+	public static void importarDatos() throws FileNotFoundException, IOException{
+		Terminal t = Terminal.getTerminal();
 		importarPasajeros(t);
 		importarConductores(t);
 		importarOmnibus(t);
@@ -82,7 +83,7 @@ public class Datos {
 			Matcher matcher = patron.matcher(linea);
 			if(matcher.find()){
 
-				Pasajero p = new Pasajero(matcher.group(1), matcher.group(2), t.getFecha().toLocalDate());
+				Pasajero p = new Pasajero(matcher.group(1), matcher.group(2), Terminal.getFecha().toLocalDate());
 				t.addPasajero(p);
 			}
 		}
@@ -176,30 +177,6 @@ public class Datos {
 			}
 		}
 	}
-	//Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento){
-	private static void crearReservas(Terminal t){
-		HashMap<String, ArrayList<Viaje>> vs = t.getDestinosViajes();
-
-		String destino = t.getViajes().get((int) (Math.random() * t.getViajes().size())).getDestino();
-		Pasajero p = t.getPasajeros().get((int) (Math.random() * t.getPasajeros().size()));
-		Viaje v = vs.get(destino).get((int) (Math.random() * vs.get(destino).size()));
-
-		LocalDate fecha = t.getFecha().toLocalDate();
-		LocalDate fechaDeseada = fecha.plusDays((long) (Math.random() * 200));
-
-		Reserva r = new Reserva(p, String.valueOf(t.getIdReserva()), destino, fecha, fechaDeseada, 0);
-
-		if(v.getAsientosLibres().size() > 0){
-			r.setAsiento(v.getAsiento());
-			r.setViaje(v);
-			v.addReservas(r);
-		}
-
-		t.addReserva(r);
-	}
-
-	//Vanesa id: 35010683686,88,2,45,Ciego de Ávila,02/06/2025,29/09/2025,Confirmada
-	//Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento)
 
 	//"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"
 	private static void importarReservas(Terminal t) throws FileNotFoundException, IOException {
@@ -231,7 +208,8 @@ public class Datos {
 	}
 
 
-	public static void guardarDatos(Terminal t) throws IOException{
+	public static void guardarDatos() throws IOException{
+		Terminal t = Terminal.getTerminal();
 		String[] rutas = {
 				".\\.\\BaseDatos\\pasajeros.txt",
 				".\\.\\BaseDatos\\conductores.txt",

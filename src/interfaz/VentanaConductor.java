@@ -22,7 +22,7 @@ public class VentanaConductor extends JDialog {
     private Conductor conductor;
     private Terminal t;
 
-    public VentanaConductor(JFrame parent, final Terminal t) {
+    public VentanaConductor(JFrame parent) {
         super(parent, "Crear Nuevo Conductor", true);
         setT(t);
         setSize(400, 300);

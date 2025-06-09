@@ -77,12 +77,12 @@ public class Login extends JFrame {
 					Usuario usuario = Utilidades.login(usuarioContrasena);
 
 					if(usuario.getRol().equals("Admin")){
-						Interfaz frame = new Interfaz(terminal);
+						Interfaz frame = new Interfaz();
 						frame.setVisible(true);
 						dispose();
 					}
 					else if(usuario.getRol().equals("User")){
-						Datos.importarDatos(terminal);
+						Datos.importarDatos();
 						Pasajero pasajero = terminal.getPasajero(usuario.getUsuario());
 						Runner.lanzarInterfazUsuario(pasajero, terminal);
 					}

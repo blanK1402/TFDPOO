@@ -12,11 +12,11 @@ import login.Login;
 
 public class Runner {
 	public static void main(String[] args) {
-		final Terminal terminal = new Terminal("Terminal");
+		Terminal terminal = Terminal.getTerminal();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login(terminal);
+					Login frame = new Login(Terminal.getTerminal());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -29,7 +29,7 @@ public class Runner {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Datos.importarDatos(t);
+					Datos.importarDatos();
 					InterfazUsuario frame = new InterfazUsuario(pasajero);
 					frame.setVisible(true);
 				} catch (Exception e) {

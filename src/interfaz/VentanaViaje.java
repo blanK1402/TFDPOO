@@ -28,7 +28,7 @@ public class VentanaViaje extends JDialog {
 	private Viaje viaje;
 	Terminal t;
 
-	public VentanaViaje(JFrame parent, final Terminal t) {
+	public VentanaViaje(JFrame parent) {
 		super(parent, "Crear Nuevo Viaje", true);
 		setT(t);
 		setSize(600, 380);

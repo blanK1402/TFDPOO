@@ -26,12 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Interfaz extends JFrame {
-
-	Terminal terminal = new Terminal("Terminal");
+	
 	private static final Color COLOR = new Color(0, 120, 215);
 
-	public Interfaz(final Terminal t) {
-		this.terminal = t;
+	public Interfaz() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1006, 600);
 		setTitle("Gestión de Transporte");
@@ -281,7 +279,7 @@ public class Interfaz extends JFrame {
 		btnImportarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Datos.importarDatos(terminal);
+					Datos.importarDatos();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -299,7 +297,7 @@ public class Interfaz extends JFrame {
 		btnGuardarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Datos.guardarDatos(terminal);
+					Datos.guardarDatos();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -319,7 +317,7 @@ public class Interfaz extends JFrame {
 		JButton btnReporte1 = new JButton("conductores con mas viajes");
 		btnReporte1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ArrayList<Conductor> conductores = terminal.getConductores();
+				ArrayList<Conductor> conductores = Terminal.getTerminal().getConductores();
 				int maxViajes = 0;
 				ArrayList<Conductor> conductoresConMasViajes = new ArrayList<>();
 
@@ -358,7 +356,7 @@ public class Interfaz extends JFrame {
 		btnReporte3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Omnibus disponibles: ");
-				for(Omnibus o : terminal.getOmnibuses()){
+				for(Omnibus o : Terminal.getTerminal().getOmnibuses()){
 					if(o.getDisponibilidad().equals("Disponible")){
 						System.out.println(o);
 					}
@@ -431,12 +429,12 @@ public class Interfaz extends JFrame {
 		lblHora.setBounds(157, 26, 46, 14);
 		panelFecha.add(lblHora);
 
-		final JLabel label = new JLabel(terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		final JLabel label = new JLabel(Terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		label.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		label.setBounds(58, 28, 90, 14);
 		panelFecha.add(label);
 
-		final JLabel labelHora = new JLabel(terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+		final JLabel labelHora = new JLabel(Terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 		labelHora.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		labelHora.setBounds(195, 26, 90, 14);
 		panelFecha.add(labelHora);
@@ -446,8 +444,8 @@ public class Interfaz extends JFrame {
 		JButton btnAdelantarDia = new JButton("Adelantar Día");
 		btnAdelantarDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				eliminarFilas(terminal.adelantarDia(), modelReserva);
-				label.setText(terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+				eliminarFilas(Terminal.getTerminal().adelantarDia(), modelReserva);
+				label.setText(Terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 			}
 		});
 		btnAdelantarDia.setBounds(11, 55, 137, 27);
@@ -459,8 +457,8 @@ public class Interfaz extends JFrame {
 		final JButton btnAdelantarHora = new JButton("Adelantar Hora");
 		btnAdelantarHora.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				terminal.adelantarHora();
-				labelHora.setText(terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+				Terminal.getTerminal().adelantarHora();
+				labelHora.setText(Terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 			}
 		});
 
@@ -489,31 +487,31 @@ public class Interfaz extends JFrame {
 		modelOmnibus.setRowCount(0);
 		modelViaje.setRowCount(0);
 		modelReserva.setRowCount(0);
-		for(Pasajero p : terminal.getPasajeros()){
+		for(Pasajero p : Terminal.getTerminal().getPasajeros()){
 			modelPasajero.addRow(p.toTableList());
 		}
-		for(Conductor c : terminal.getConductores()){
+		for(Conductor c : Terminal.getTerminal().getConductores()){
 			modelConductor.addRow(c.toTableList());
 		}
-		for(Omnibus o : terminal.getOmnibuses()){
+		for(Omnibus o : Terminal.getTerminal().getOmnibuses()){
 			modelOmnibus.addRow(o.toTableList());
 		}
-		for(Viaje v : terminal.getViajes()){
+		for(Viaje v : Terminal.getTerminal().getViajes()){
 			modelViaje.addRow(v.toTableList());
 		}
-		for(Reserva r : terminal.getReservas()){
+		for(Reserva r : Terminal.getTerminal().getReservas()){
 			modelReserva.addRow(r.toTableList());
 		}
 	}
 	
 	public void crearPasajero(DefaultTableModel modelPasajero) {
-		VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, terminal.getPasajeros(), terminal.getFecha().toLocalDate());
+		VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, Terminal.getTerminal().getPasajeros(), Terminal.getFecha().toLocalDate());
 		ventanaPasajero.setVisible(true);
 
 		if (ventanaPasajero.isConfirmado()) {
 			try {
 				Pasajero nuevoPasajero = ventanaPasajero.getPasajero();
-				terminal.addPasajero(nuevoPasajero);
+				Terminal.getTerminal().addPasajero(nuevoPasajero);
 				modelPasajero.addRow(nuevoPasajero.toTableList());
 				JOptionPane.showMessageDialog(null, "Pasajero creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception ex) {
@@ -525,13 +523,13 @@ public class Interfaz extends JFrame {
 
 
 	public void crearConductor(DefaultTableModel modelConductor) {
-		VentanaConductor ventanaConductor = new VentanaConductor(Interfaz.this, terminal);
+		VentanaConductor ventanaConductor = new VentanaConductor(Interfaz.this);
 		ventanaConductor.setVisible(true);
 
 		if (ventanaConductor.isConfirmado()) {
 			try {
 				Conductor nuevoConductor = ventanaConductor.getConductor();
-				terminal.addConductor(nuevoConductor);
+				Terminal.getTerminal().addConductor(nuevoConductor);
 				modelConductor.addRow(nuevoConductor instanceof ConductorA ? 
 						((ConductorA)nuevoConductor).toTableList() 
 						: nuevoConductor instanceof ConductorB ? ((ConductorB)nuevoConductor).toTableList() 
@@ -545,13 +543,13 @@ public class Interfaz extends JFrame {
 	}
 
 	public void crearOmnibus(DefaultTableModel modelOmnibus) {
-		VentanaOmnibus ventanaOmnibus = new VentanaOmnibus(Interfaz.this, terminal);
+		VentanaOmnibus ventanaOmnibus = new VentanaOmnibus(Interfaz.this);
 		ventanaOmnibus.setVisible(true);
 
 		if (ventanaOmnibus.isConfirmado()) {
 			try {
 				Omnibus nuevoOmnibus = ventanaOmnibus.getOmnibus();
-				terminal.addOmnibus(nuevoOmnibus);
+				Terminal.getTerminal().addOmnibus(nuevoOmnibus);
 				modelOmnibus.addRow(nuevoOmnibus.toTableList());
 				JOptionPane.showMessageDialog(null, "Ómnibus creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception ex) {
@@ -562,13 +560,13 @@ public class Interfaz extends JFrame {
 	}
 
 	public void crearViaje(DefaultTableModel modelViaje) {
-		VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this, terminal);
+		VentanaViaje ventanaViaje = new VentanaViaje(Interfaz.this);
 		ventanaViaje.setVisible(true);
 
 		if (ventanaViaje.isConfirmado()) {
 			try {
 				Viaje nuevoViaje = ventanaViaje.getViaje();
-				terminal.addViaje(nuevoViaje);
+				Terminal.getTerminal().addViaje(nuevoViaje);
 				modelViaje.addRow(nuevoViaje.toTableList());
 				JOptionPane.showMessageDialog(null, "Viaje creado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception ex) {
@@ -580,13 +578,13 @@ public class Interfaz extends JFrame {
 
 	public void crearReserva(DefaultTableModel modelReserva) {
 		//(JFrame parent, HashMap<String, ArrayList<Viaje>> destinosViajes, ArrayList<Pasajero> listaPasajeros, final LocalDateTime fechaA) {
-		VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this, terminal);
+		VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this);
 		ventanaReserva.setVisible(true);
 
 		if (ventanaReserva.isConfirmado()) {
 			try {
 				Reserva nuevaReserva = ventanaReserva.getReserva();
-				terminal.addReserva(nuevaReserva);
+				Terminal.getTerminal().addReserva(nuevaReserva);
 				modelReserva.addRow(nuevaReserva.toTableList());
 				JOptionPane.showMessageDialog(null, "Reserva creada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception ex) {

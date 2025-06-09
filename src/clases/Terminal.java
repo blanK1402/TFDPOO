@@ -11,7 +11,7 @@ import login.Usuario;
 import Interfaces.mostrable;
 
 public class Terminal {
-    private LocalDateTime fechaHora;
+    private static LocalDateTime fechaHora;
     private static final AtomicLong idReservas = new AtomicLong(1);
     private static final AtomicLong idViajes = new AtomicLong(1);
     private static final AtomicLong idConductores = new AtomicLong(1);
@@ -19,6 +19,7 @@ public class Terminal {
 
     private String nombre;
 
+    private static Terminal terminal;
     private static HashMap<String, Usuario> usuarios;
     private HashMap<String, Conductor> conductores;
     private HashMap<String, Pasajero> pasajeros;
@@ -28,7 +29,7 @@ public class Terminal {
     private HashMap<String, Reserva> reservasEspera;
     private HashMap<String, Reserva> reservasCanceladas;
 
-    public Terminal(String nombre) {
+    private Terminal(String nombre) {
         setNombre(nombre);
         fechaHora = LocalDateTime.now();
         usuarios = new HashMap<>();
@@ -40,6 +41,13 @@ public class Terminal {
         setDestinosDistancias();
     }
 
+    public static Terminal getTerminal(){
+		if(terminal == null){
+			terminal = new Terminal("Terminal");
+		}
+		return terminal;
+    }
+    
     public static String getRandomDestino(){
 
     	ArrayList<String> destinos = new ArrayList<>(destinosDistancias.keySet());
@@ -68,7 +76,7 @@ public class Terminal {
     	return destinosDistancias;
     }
     
-    public void setFechaHora(LocalDateTime nuevaFechaHora) {
+    public static void setFechaHora(LocalDateTime nuevaFechaHora) {
         fechaHora = nuevaFechaHora;
     }
 
@@ -81,7 +89,7 @@ public class Terminal {
         this.nombre = nombre;
     }
 
-    public LocalDateTime getFecha() {
+    public static LocalDateTime getFecha() {
         return fechaHora;
     }
 

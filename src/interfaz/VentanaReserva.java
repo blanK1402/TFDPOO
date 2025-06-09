@@ -29,7 +29,7 @@ public class VentanaReserva extends JDialog {
 	private HashMap<String, ArrayList<Viaje>> destinosViajes;
 	private Terminal t;
 
-	public VentanaReserva(JFrame parent, final Terminal t) {
+	public VentanaReserva(JFrame parent) {
 		super(parent, "Crear Nueva Reserva", true);
 		setT(t);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
