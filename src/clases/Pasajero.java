@@ -1,13 +1,11 @@
 package clases;
 
-import Interfaces.mostrable;
+import Interfaces.Mostrable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import Interfaces.mostrable;
 import utilidades.Utilidades;
 
-public class Pasajero implements mostrable{
+public class Pasajero implements Mostrable{
 	private String nombre;
 	private String id;
 	private ArrayList<Reserva> reservas;

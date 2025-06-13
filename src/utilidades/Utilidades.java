@@ -166,6 +166,7 @@ public class Utilidades {
 		String contrasena = usuarioContrasena.get(1);
 		
 		Datos.cargarContrasenas(contrasenas);
+		contrasenas.put("Admin", new Usuario("Admin", "1234", "Admin"));
 
 		if(contrasenas.containsKey(usuario) && contrasenas.get(usuario).getContraseña().equals(contrasena)){
 			return contrasenas.get(usuario);

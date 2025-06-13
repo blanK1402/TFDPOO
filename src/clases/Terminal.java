@@ -4,11 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
-
 import login.Usuario;
-import Interfaces.mostrable;
 
 public class Terminal {
     private static LocalDateTime fechaHora;
@@ -126,10 +123,6 @@ public class Terminal {
 		return conductores.get(id);
 	}
 
-	public Set<String> getMatriculas() {
-		return omnibuses.keySet();
-	}
-
 	public Pasajero getPasajero(String usuario) {
 		return pasajeros.get(usuario);
 	}
@@ -187,10 +180,13 @@ public class Terminal {
 
 	public void addPasajero(Pasajero p) {
 		pasajeros.put(p.getId(), p);
+		usuarios.put(p.getId(), new Usuario(p.getId(), "0000", "User"));
 	}
 
 	public void addViaje(Viaje v) {
 		viajes.put(String.valueOf(v.getId()), v);
+		v.getConductor().addViaje(v);
+		v.getOmnibus().addViaje(v);
 	}
 
 	public void addReserva(Reserva r) {
@@ -218,5 +214,9 @@ public class Terminal {
 
 	public Viaje getViaje(String id) {
 		return viajes.get(id);
+	}
+
+	public ArrayList<Usuario> getUsuarios() {
+		return new ArrayList<Usuario>(usuarios.values());
 	}
 }

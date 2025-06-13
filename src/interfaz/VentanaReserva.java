@@ -31,8 +31,7 @@ public class VentanaReserva extends JDialog {
 
 	public VentanaReserva(JFrame parent) {
 		super(parent, "Crear Nueva Reserva", true);
-		setT(t);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setT();
 		setSize(400, 300);  
 		setLayout(null);
 
@@ -48,6 +47,7 @@ public class VentanaReserva extends JDialog {
 		add(lblIdTitulo);
 
 		lblIdReserva = new JLabel(String.valueOf(t.getIdReserva()));
+		t.decrementIdReserva();
 		lblIdReserva.setBounds(desplazamientoDerecha, 20, 220, 25);
 		lblIdReserva.setFont(campoFont);
 		add(lblIdReserva);
@@ -109,29 +109,34 @@ public class VentanaReserva extends JDialog {
 		});
 	}
 
-	private void setT(Terminal t) {
-		this.t = t;
+	private void setT() {
+		this.t = Terminal.getTerminal();
 	}
 
 	private void confirmarReserva(LocalDateTime fechaAct) {
-	    String numeroReserva = String.valueOf(t.getIdReserva());
-	    Pasajero pasajeroSeleccionado = (Pasajero) comboPasajeros.getSelectedItem();
-	    String destinoSeleccionado = (String) comboDestinos.getSelectedItem();
-	    LocalDate fechaActual = fechaAct.toLocalDate();
-	    LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		try{
+		    Pasajero pasajeroSeleccionado = (Pasajero) comboPasajeros.getSelectedItem();
+		    String destinoSeleccionado = (String) comboDestinos.getSelectedItem();
+		    LocalDate fechaActual = fechaAct.toLocalDate();
+		    LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-	    Viaje viaje = Utilidades.buscarViaje(destinosViajes.get(destinoSeleccionado), fechaDeseada);
+		    Viaje viaje = Utilidades.buscarViaje(destinosViajes.get(destinoSeleccionado), fechaDeseada);
 
-	    if (viaje == null) {
-	        manejarReservaListaEspera(pasajeroSeleccionado, numeroReserva, destinoSeleccionado, fechaActual, fechaDeseada);
-	    } else {
-	    	reserva = new Reserva(pasajeroSeleccionado, numeroReserva, destinoSeleccionado, fechaActual, fechaDeseada, viaje.getAsiento());
-	        reserva.setViaje(viaje);
-		    confirmado = true;
-		    viaje.addReservas(reserva);
-	    }
+		    if (viaje == null) {
+		        manejarReservaListaEspera(pasajeroSeleccionado, String.valueOf(t.getIdReserva()), destinoSeleccionado, fechaActual, fechaDeseada);
+		    } else {
+		    	reserva = new Reserva(pasajeroSeleccionado, String.valueOf(t.getIdReserva()), destinoSeleccionado, fechaActual, fechaDeseada, viaje.getAsiento());
+		        reserva.setViaje(viaje);
+			    confirmado = true;
+			    viaje.addReservas(reserva);
+		    }
+		    
+		    dispose();
+		}catch(Exception ex){
+			t.decrementIdReserva();
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	    
-	    dispose();
 	}
 
 	private void manejarReservaListaEspera(Pasajero pasajero, String numeroReserva, String destino, LocalDate fechaActual, LocalDate fechaDeseada) {

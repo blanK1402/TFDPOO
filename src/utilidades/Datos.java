@@ -1,6 +1,6 @@
 package utilidades;
 
-import Interfaces.mostrable;
+import Interfaces.Mostrable;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -52,7 +52,7 @@ public class Datos {
 	}
 
 	public static void cargarContrasenas(HashMap<String, Usuario> contrasenas) throws IllegalArgumentException, IOException {
-		Pattern patron = Pattern.compile("(.*):(.*),(.*)");
+		Pattern patron = Pattern.compile("([0-9]+):(.*),(.*)");
 
 		try (BufferedReader txt = new BufferedReader(new FileReader(".\\.\\BaseDatos\\contrasenas.txt"))) {
 			String linea;
@@ -60,7 +60,7 @@ public class Datos {
 			while ((linea = txt.readLine()) != null) {
 				Matcher coincidencia = patron.matcher(linea);
 				if (coincidencia.find()) {
-					Usuario usuario = new Usuario(coincidencia.group(2), coincidencia.group(3), coincidencia.group(1));	
+					Usuario usuario = new Usuario(coincidencia.group(1), coincidencia.group(2), coincidencia.group(3));	
 					contrasenas.put(usuario.getUsuario(), usuario);
 				}
 			}
@@ -215,7 +215,8 @@ public class Datos {
 				".\\.\\BaseDatos\\conductores.txt",
 				".\\.\\BaseDatos\\omnibuses.txt",
 				".\\.\\BaseDatos\\viajes.txt",
-				".\\.\\BaseDatos\\reservas.txt"
+				".\\.\\BaseDatos\\reservas.txt",
+				".\\.\\BaseDatos\\contrasenas.txt"
 		};
 
 		escribirArchivo(t.getPasajeros(), rutas[0]);
@@ -223,10 +224,11 @@ public class Datos {
 		escribirArchivo(t.getOmnibuses(), rutas[2]);
 		escribirArchivo(t.getViajes(), rutas[3]);
 		escribirArchivo(t.getReservas(), rutas[4]);
+		escribirArchivo(t.getUsuarios(), rutas[5]);
 
 	}
 
-	private static <T extends mostrable> void escribirArchivo(ArrayList<T> lista, String ruta) throws IOException {
+	private static <T extends Mostrable> void escribirArchivo(ArrayList<T> lista, String ruta) throws IOException {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ruta))) {
 			for (T item : lista) {
 				writer.write(String.join(",", item.toTableList()) + "\n");
@@ -235,7 +237,7 @@ public class Datos {
 	}
 	
 	public static void actualizarPasajeros(DefaultTableModel modelPasajero, Terminal terminal) {
-	    modelPasajero.setRowCount(0); // Limpiar tabla antes de actualizar
+	    modelPasajero.setRowCount(0); 
 	    for(Pasajero p : terminal.getPasajeros()) {
 	        modelPasajero.addRow(p.toTableList());
 	    }

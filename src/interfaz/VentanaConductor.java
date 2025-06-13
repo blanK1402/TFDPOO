@@ -24,11 +24,9 @@ public class VentanaConductor extends JDialog {
 
     public VentanaConductor(JFrame parent) {
         super(parent, "Crear Nuevo Conductor", true);
-        setT(t);
+        setT();
         setSize(400, 300);
         setLayout(null);
-
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         
         Font etiquetaFont = new Font("Arial", Font.BOLD, 14);
         Font campoFont = new Font("Arial", Font.PLAIN, 14);
@@ -40,6 +38,7 @@ public class VentanaConductor extends JDialog {
         add(lblIdTitulo);
 
         lblId = new JLabel(String.valueOf(t.getConductoresId()));
+        t.decrementIdConductor();
         lblId.setBounds(desplazamientoDerecha, 20, 220, 25);
         lblId.setFont(campoFont);
         add(lblId);
@@ -109,29 +108,29 @@ public class VentanaConductor extends JDialog {
         });
     }
 
-    private void setT(Terminal t) {
-        this.t = t;
+    private void setT() {
+        this.t = Terminal.getTerminal();
     }
 
     private void confirmarConductor() {
         try {
             String nombre = txtNombre.getText();
-            String id = String.valueOf(t.getConductoresId());
             String experiencia = txtExperiencia.getText();
             String licencia = txtLicencia.getText();
             String categoria = (String) comboCategoria.getSelectedItem();
 
             if (categoria.equals("A")) {
-                conductor = new ConductorA(nombre, id, experiencia, licencia);
+                conductor = new ConductorA(nombre, String.valueOf(t.getConductoresId()), experiencia, licencia);
             } else if (categoria.equals("B")) {
-                conductor = new ConductorB(nombre, id, experiencia, licencia);
+                conductor = new ConductorB(nombre, String.valueOf(t.getConductoresId()), experiencia, licencia);
             } else {
-                conductor = new ConductorC(nombre, id, experiencia, licencia);
+                conductor = new ConductorC(nombre, String.valueOf(t.getConductoresId()), experiencia, licencia);
             }
 
             confirmado = true;
             dispose();
         } catch (Exception ex) {
+        	t.decrementIdConductor();;
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

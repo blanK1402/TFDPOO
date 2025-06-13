@@ -30,11 +30,12 @@ import java.util.ArrayList;
 public class Login extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtAsda;
-	private JTextField textField;
+	private JTextField txtId;
+	private JTextField textUsuario;
+	private Terminal terminal;
 
-	public Login(final Terminal terminal) {
-
+	public Login() {
+		setT();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 220, 250);
 		contentPane = new JPanel();
@@ -47,42 +48,41 @@ public class Login extends JFrame {
 		lblContrasea.setBounds(10, 97, 110, 37);
 		contentPane.add(lblContrasea);
 
-		txtAsda = new JTextField();
-		txtAsda.setFocusCycleRoot(true);
-		txtAsda.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtAsda.setBounds(10, 145, 185, 27);
-		contentPane.add(txtAsda);
-		txtAsda.setColumns(10);
+		txtId = new JTextField();
+		txtId.setFocusCycleRoot(true);
+		txtId.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtId.setBounds(10, 145, 185, 27);
+		contentPane.add(txtId);
+		txtId.setColumns(10);
 
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblUsuario.setBounds(10, 11, 110, 37);
 		contentPane.add(lblUsuario);
 
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField.setFocusCycleRoot(true);
-		textField.setColumns(10);
-		textField.setBounds(10, 59, 185, 27);
-		contentPane.add(textField);
+		textUsuario = new JTextField();
+		textUsuario.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textUsuario.setFocusCycleRoot(true);
+		textUsuario.setColumns(10);
+		textUsuario.setBounds(10, 59, 185, 27);
+		contentPane.add(textUsuario);
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					ArrayList<String> usuarioContrasena = new ArrayList<String>();
-					usuarioContrasena.add(textField.getText());
-					usuarioContrasena.add(txtAsda.getText());
+					usuarioContrasena.add(textUsuario.getText());
+					usuarioContrasena.add(txtId.getText());
 					
 					Usuario usuario = Utilidades.login(usuarioContrasena);
-
+					
 					if(usuario.getRol().equals("Admin")){
 						Interfaz frame = new Interfaz();
 						frame.setVisible(true);
 						dispose();
 					}
 					else if(usuario.getRol().equals("User")){
-						Datos.importarDatos();
 						Pasajero pasajero = terminal.getPasajero(usuario.getUsuario());
 						Runner.lanzarInterfazUsuario(pasajero, terminal);
 					}
@@ -95,7 +95,16 @@ public class Login extends JFrame {
 		contentPane.add(btnAceptar);
 
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		btnSalir.setBounds(109, 183, 86, 23);
 		contentPane.add(btnSalir);
+	}
+
+	private void setT() {
+		terminal = Terminal.getTerminal();
 	}
 }

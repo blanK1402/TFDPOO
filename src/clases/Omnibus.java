@@ -1,13 +1,13 @@
 package clases;
 
-import Interfaces.mostrable;
+import Interfaces.Mostrable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import utilidades.Utilidades;
 
-public class Omnibus implements mostrable{
+public class Omnibus implements Mostrable{
 	private String matricula;
 	private int asientos;
 	private ArrayList<String> comodidades;
@@ -21,7 +21,21 @@ public class Omnibus implements mostrable{
 		setDisponibilidad(disponibilidad);
 		setComodidades(comodidades);
 		conductores = new ArrayList<Conductor>();
+		viajes = new HashMap<>();
 	}
+
+	public void addViaje(Viaje v){
+		LocalDate fecha = v.getFechaHoraPartida().toLocalDate();
+		if (viajes.containsKey(fecha)) {
+			viajes.get(fecha).add(v);
+		} 
+		else {
+			ArrayList<Viaje> nuevaLista = new ArrayList<>();
+			nuevaLista.add(v);
+			viajes.put(fecha, nuevaLista);
+		}
+	}
+
 
 	public String getMatricula() {
 		return matricula;
@@ -89,10 +103,10 @@ public class Omnibus implements mostrable{
 				matricula,
 				String.valueOf(asientos),
 				comodidades.contains("Aire acondicionado") ? "Si" : "No",
-				comodidades.contains("TV") ? "Si" : "No",
-				comodidades.contains("Baño") ? "Si" : "No",
-				disponibilidad,
-				conductores.isEmpty() ? "Sin conductores" : conductores.toString()};
+						comodidades.contains("TV") ? "Si" : "No",
+								comodidades.contains("Baño") ? "Si" : "No",
+										disponibilidad,
+										conductores.isEmpty() ? "Sin conductores" : conductores.toString()};
 		return res;
 	}
 }

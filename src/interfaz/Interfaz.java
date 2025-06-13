@@ -185,9 +185,7 @@ public class Interfaz extends JFrame {
 				return false;
 			}
 		};
-		for(String columna : columnasViaje){
-			modelViaje.addColumn(columna);
-		}
+		
 		final JTable tablaViaje = new JTable(modelViaje);
 		tablaViaje.setRowHeight(30);
 		tablaViaje.setFont(new Font("SansSerif", Font.PLAIN, 14));

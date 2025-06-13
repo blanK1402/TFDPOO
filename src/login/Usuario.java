@@ -1,8 +1,8 @@
 package login;
 
-import java.util.ArrayList;
+import Interfaces.Mostrable;
 
-public class Usuario {
+public class Usuario implements Mostrable{
 	private String usuario;
 	private String contrasena;
     private String rol;
@@ -36,6 +36,11 @@ public class Usuario {
 	
     public String getUsuario() {
 		return usuario;
+	}
+    
+	public String[] toTableList() {
+		String[] res = {usuario+":" + "0000," + rol};
+		return res;
 	}
 
 }

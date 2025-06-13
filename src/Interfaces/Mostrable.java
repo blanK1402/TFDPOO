@@ -1,5 +1,5 @@
 package Interfaces;
 
-public interface mostrable {
+public interface Mostrable {
 	String[] toTableList();
 }

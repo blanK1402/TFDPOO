@@ -27,24 +27,19 @@ public class InterfazUsuario extends JFrame {
     public InterfazUsuario(Pasajero pasajero) {
         this.pasajero = pasajero;
         
-        // Configuración básica de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 500);
         setTitle("Interfaz de Usuario - " + pasajero.getNombre());
         
-        // Panel principal
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
         
-        // Configuración de la tabla de reservas
         configurarTablaReservas();
         
-        // Panel de botones
         JPanel panelBotones = crearPanelBotones();
         
-        // Agregar componentes al contentPane
         contentPane.add(panelBotones, BorderLayout.NORTH);
         contentPane.add(new JScrollPane(tableReserva), BorderLayout.CENTER);
     }
@@ -74,7 +69,6 @@ public class InterfazUsuario extends JFrame {
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelBotones.setBackground(Color.WHITE);
         
-        // Botón para nueva reserva (con clase anónima)
         JButton btnNuevaReserva = new JButton("Nueva Reserva");
         btnNuevaReserva.setBackground(new Color(0, 120, 215));
         btnNuevaReserva.setForeground(Color.WHITE);
@@ -85,7 +79,6 @@ public class InterfazUsuario extends JFrame {
             }
         });
         
-        // Botón para actualizar (con clase anónima)
         JButton btnActualizar = new JButton("Actualizar");
         btnActualizar.addActionListener(new ActionListener() {
             @Override
@@ -101,7 +94,7 @@ public class InterfazUsuario extends JFrame {
     }
 
     private void abrirNuevaReserva() {
-        // Implementar lógica para abrir ventana de nueva reserva
+        
     }
 
     private void actualizarTabla() {

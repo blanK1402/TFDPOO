@@ -1,11 +1,11 @@
 package clases;
 
-import Interfaces.mostrable;
+import Interfaces.Mostrable;
 import java.util.ArrayList;
 
 import utilidades.Utilidades;
 
-public abstract class Conductor implements mostrable {
+public abstract class Conductor implements Mostrable {
     protected String nombre;
     protected int id;
     protected int experiencia;
@@ -69,15 +69,7 @@ public abstract class Conductor implements mostrable {
         return String.format("id:%d, %s", id, nombre);
     }
     
-    public String[] toTableList() {
-        String[] res = {
-        		String.valueOf(nombre),
-        		String.valueOf(id),
-        		String.valueOf(experiencia),
-        		String.valueOf(licencia),
-        };        
-		return res;
-    }
+    public abstract String[] toTableList();
     
     public abstract double calcularSalario();
 }

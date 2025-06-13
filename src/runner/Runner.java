@@ -16,7 +16,8 @@ public class Runner {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login(Terminal.getTerminal());
+					Datos.importarDatos();
+					Login frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -30,11 +30,9 @@ public class VentanaViaje extends JDialog {
 
 	public VentanaViaje(JFrame parent) {
 		super(parent, "Crear Nuevo Viaje", true);
-		setT(t);
+		setT();
 		setSize(600, 380);
 		setLayout(null);
-		
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		fecha = t.getFecha();
 		destinosDistancias = new HashMap<>(Terminal.getDestinosDistancias());
@@ -43,8 +41,8 @@ public class VentanaViaje extends JDialog {
 		int desplazamientoDerecha = 140;
 		
 		lblId = new JLabel("");
-		
 		lblId.setText(String.valueOf(t.getIdViaje()));
+		t.decrementIdViaje();
 		lblId.setBounds(desplazamientoDerecha + 100, 20, 250, 30);
 		add(lblId);
 
@@ -124,22 +122,22 @@ public class VentanaViaje extends JDialog {
         });
 	}
 
-	private void setT(Terminal t) {
-		this.t = t;
+	private void setT() {
+		this.t = Terminal.getTerminal();
 	}
 	
 	private void confirmarViaje() {
 		try{
-			String id = lblId.getText();
 		    String destino = (String) comboDestinos.getSelectedItem();
 		    String fechaSalida = txtFechaPartida.getText();
 		    String horaSalida = txtHoraPartida.getText();
 		    Omnibus omnibus = (Omnibus) comboOmnibus.getSelectedItem();
 		    Conductor conductor = (Conductor) comboConductor.getSelectedItem();
-		    viaje = new Viaje(id, fechaSalida, horaSalida, destino, omnibus, conductor);
+		    viaje = new Viaje(String.valueOf(t.getIdViaje()), fechaSalida, horaSalida, destino, omnibus, conductor);
 		    confirmado = true;
 		    dispose();   
 		}catch(Exception ex){
+			t.decrementIdViaje();
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 

@@ -1,12 +1,10 @@
 package clases;
 import java.time.*;
-import Interfaces.mostrable;
+import Interfaces.Mostrable;
 import java.time.format.DateTimeFormatter;
-
-import Interfaces.mostrable;
 import utilidades.Utilidades;
 
-public class Reserva implements mostrable{
+public class Reserva implements Mostrable{
 	private Pasajero pasajero;
 	private int numReserva;
 	private String destino;

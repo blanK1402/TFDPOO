@@ -24,7 +24,7 @@ public class VentanaOmnibus extends JDialog {
 
     public VentanaOmnibus(JFrame parent) {
         super(parent, "Crear Nuevo Ómnibus", true);
-        setT(t);
+        setT();
         setSize(400, 400);
         setLayout(null);
 
@@ -126,8 +126,8 @@ public class VentanaOmnibus extends JDialog {
         });
     }
 
-    private void setT(Terminal t) {
-		this.t = t;
+    private void setT() {
+		this.t = Terminal.getTerminal();
 	}
 
 	private void confirmarOmnibus() {
