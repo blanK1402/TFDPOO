@@ -26,7 +26,6 @@ public class VentanaReserva extends JDialog {
 	private JLabel lblIdReserva;
 	private boolean confirmado = false;
 	private Reserva reserva;
-	private HashMap<String, ArrayList<Viaje>> destinosViajes;
 	private Terminal t;
 
 	public VentanaReserva(JFrame parent) {
@@ -34,8 +33,6 @@ public class VentanaReserva extends JDialog {
 		setT();
 		setSize(400, 300);  
 		setLayout(null);
-
-		this.destinosViajes = destinosViajes;
 
 		Font etiquetaFont = new Font("Arial", Font.BOLD, 14);
 		Font campoFont = new Font("Arial", Font.PLAIN, 14);
@@ -120,7 +117,7 @@ public class VentanaReserva extends JDialog {
 		    LocalDate fechaActual = fechaAct.toLocalDate();
 		    LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-		    Viaje viaje = Utilidades.buscarViaje(destinosViajes.get(destinoSeleccionado), fechaDeseada);
+		    Viaje viaje = Utilidades.buscarViaje(destinoSeleccionado, fechaDeseada);
 
 		    if (viaje == null) {
 		        manejarReservaListaEspera(pasajeroSeleccionado, String.valueOf(t.getIdReserva()), destinoSeleccionado, fechaActual, fechaDeseada);
@@ -128,7 +125,6 @@ public class VentanaReserva extends JDialog {
 		    	reserva = new Reserva(pasajeroSeleccionado, String.valueOf(t.getIdReserva()), destinoSeleccionado, fechaActual, fechaDeseada, viaje.getAsiento());
 		        reserva.setViaje(viaje);
 			    confirmado = true;
-			    viaje.addReservas(reserva);
 		    }
 		    
 		    dispose();
@@ -150,7 +146,7 @@ public class VentanaReserva extends JDialog {
 	    }
 	}
 
-	public boolean isConfirmado() {
+	public boolean Confirmada() {
 		return confirmado;
 	}
 

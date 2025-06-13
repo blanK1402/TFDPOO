@@ -71,6 +71,7 @@ public class Datos {
 	}
 
 	public static void cargarReservasUsuario(ArrayList<Reserva> reservas, DefaultTableModel modelReserva) {
+		modelReserva.setRowCount(0);
 		for(Reserva r : reservas){
 			modelReserva.addRow(r.toTableList());
 		}

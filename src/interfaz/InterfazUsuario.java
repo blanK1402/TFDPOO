@@ -17,15 +17,23 @@ import javax.swing.table.DefaultTableModel;
 
 import utilidades.Datos;
 import clases.Pasajero;
+import clases.Terminal;
+
+import java.awt.SystemColor;
+
+import interfaz.VentanaReserva;
 
 public class InterfazUsuario extends JFrame {
 
     private Pasajero pasajero;
     private JPanel contentPane;
     private JTable tableReserva;
+    private DefaultTableModel modelReserva;
+    private Terminal terminal;
 
     public InterfazUsuario(Pasajero pasajero) {
-        this.pasajero = pasajero;
+        setPasajero(pasajero);
+        setTerminal();
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 500);
@@ -44,19 +52,27 @@ public class InterfazUsuario extends JFrame {
         contentPane.add(new JScrollPane(tableReserva), BorderLayout.CENTER);
     }
 
-    private void configurarTablaReservas() {
-    	String[] columnNames = {"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
+    private void setTerminal() {
+		terminal = Terminal.getTerminal();
+	}
+
+	private void setPasajero(Pasajero pasajero) {
+		this.pasajero = pasajero;
+	}
+
+	private void configurarTablaReservas() {
+        String[] columnNames = {"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
         
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+        modelReserva = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
         
-        Datos.cargarReservasUsuario(pasajero.getReservas(), model);
+        Datos.cargarReservasUsuario(pasajero.getReservas(), modelReserva);
         
-        tableReserva = new JTable(model);
+        tableReserva = new JTable(modelReserva);
         tableReserva.setRowHeight(30);
         tableReserva.setFont(new Font("SansSerif", Font.PLAIN, 14));
         tableReserva.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -64,6 +80,7 @@ public class InterfazUsuario extends JFrame {
         tableReserva.getTableHeader().setForeground(Color.WHITE);
         tableReserva.setAutoCreateRowSorter(true);
     }
+
 
     private JPanel crearPanelBotones() {
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -79,28 +96,28 @@ public class InterfazUsuario extends JFrame {
             }
         });
         
-        JButton btnActualizar = new JButton("Actualizar");
-        btnActualizar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarTabla();
-            }
-        });
-        
         panelBotones.add(btnNuevaReserva);
-        panelBotones.add(btnActualizar);
+        
+        JButton btnEditarReserva = new JButton("Editar Reserva");
+        btnEditarReserva.setForeground(Color.WHITE);
+        btnEditarReserva.setBackground(SystemColor.textHighlight);
+        panelBotones.add(btnEditarReserva);
+        
+        JButton btnEliminarReserva = new JButton("Eliminar Reserva");
+        btnEliminarReserva.setForeground(Color.WHITE);
+        btnEliminarReserva.setBackground(SystemColor.textHighlight);
+        panelBotones.add(btnEliminarReserva);
         
         return panelBotones;
     }
 
     private void abrirNuevaReserva() {
-        
-    }
-
-    private void actualizarTabla() {
-        DefaultTableModel model = (DefaultTableModel) tableReserva.getModel();
-        model.setRowCount(0);
-        Datos.cargarReservasUsuario(pasajero.getReservas(), model);
+		VentanaReserva ventana = new VentanaReserva(InterfazUsuario.this);
+		ventana.setVisible(true);
+		if(ventana.Confirmada()){
+			terminal.addReserva(ventana.getReserva());
+			modelReserva.addRow(ventana.getReserva().toTableList());
+		}
     }
 
     public Pasajero getPasajero() {

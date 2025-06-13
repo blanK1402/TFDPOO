@@ -191,6 +191,9 @@ public class Terminal {
 
 	public void addReserva(Reserva r) {
 		r.getPasajero().addReserva(r);
+		if(r.getViaje() != null){
+			r.getViaje().addReservas(r);
+		}
 		reservas.put(String.valueOf(r.getNumReserva()), r);
 	}
 

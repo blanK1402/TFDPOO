@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import login.Usuario;
+import clases.Terminal;
 import clases.Viaje;
 
 public class Utilidades {
@@ -47,8 +48,9 @@ public class Utilidades {
 		}
 	}
 
-	public static Viaje buscarViaje(ArrayList<Viaje> viajes, LocalDate fechaDeseada){
+	public static Viaje buscarViaje(String destino, LocalDate fechaDeseada){
 		Viaje elViaje = null;
+		ArrayList<Viaje> viajes = Terminal.getTerminal().getDestinosViajes().get(destino);
 		int i = 0;
 		while(i < viajes.size() && elViaje == null){
 			Viaje v = viajes.get(i);

@@ -243,26 +243,6 @@ public class Interfaz extends JFrame {
 
 		JPanel panelReserva = new JPanel(new BorderLayout());
 		JPanel botonesReserva = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JButton btnCrearReserva = new JButton("Crear Reserva");
-		btnCrearReserva.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				crearReserva(modelReserva);
-			}
-		});
-		btnCrearReserva.setBackground(COLOR);
-		btnCrearReserva.setForeground(Color.WHITE);
-		btnCrearReserva.setFont(new Font("SansSerif", Font.BOLD, 14));
-		JButton btnEditarReserva = new JButton("Editar");
-		btnEditarReserva.setBackground(COLOR);
-		btnEditarReserva.setForeground(Color.WHITE);
-		btnEditarReserva.setFont(new Font("SansSerif", Font.BOLD, 14));
-		JButton btnEliminarReserva = new JButton("Eliminar");
-		btnEliminarReserva.setBackground(COLOR);
-		btnEliminarReserva.setForeground(Color.WHITE);
-		btnEliminarReserva.setFont(new Font("SansSerif", Font.BOLD, 14));
-		botonesReserva.add(btnCrearReserva);
-		botonesReserva.add(btnEditarReserva);
-		botonesReserva.add(btnEliminarReserva);
 		panelReserva.add(botonesReserva, BorderLayout.NORTH);
 		panelReserva.add(scrollReserva, BorderLayout.CENTER);
 
@@ -573,25 +553,4 @@ public class Interfaz extends JFrame {
 			}
 		}
 	}
-
-	public void crearReserva(DefaultTableModel modelReserva) {
-		//(JFrame parent, HashMap<String, ArrayList<Viaje>> destinosViajes, ArrayList<Pasajero> listaPasajeros, final LocalDateTime fechaA) {
-		VentanaReserva ventanaReserva = new VentanaReserva(Interfaz.this);
-		ventanaReserva.setVisible(true);
-
-		if (ventanaReserva.isConfirmado()) {
-			try {
-				Reserva nuevaReserva = ventanaReserva.getReserva();
-				Terminal.getTerminal().addReserva(nuevaReserva);
-				modelReserva.addRow(nuevaReserva.toTableList());
-				JOptionPane.showMessageDialog(null, "Reserva creada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				crearReserva(modelReserva);
-			}
-		}
-	}
-
-
-
 }
