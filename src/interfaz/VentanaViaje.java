@@ -28,8 +28,8 @@ public class VentanaViaje extends JDialog {
 	private Viaje viaje;
 	Terminal t;
 
-	public VentanaViaje(JFrame parent) {
-		super(parent, "Crear Nuevo Viaje", true);
+	public VentanaViaje(Interfaz interfaz) {
+		super(interfaz, "Crear Nuevo Viaje", true);
 		setT();
 		setSize(600, 380);
 		setLayout(null);
@@ -104,7 +104,7 @@ public class VentanaViaje extends JDialog {
 		btnCancelar.setBounds(300, 280, 140, 35);
 		add(btnCancelar);
 
-		setLocationRelativeTo(parent);
+		setLocationRelativeTo(interfaz);
 		
         btnConfirmar.addActionListener(new ActionListener() {
             @Override

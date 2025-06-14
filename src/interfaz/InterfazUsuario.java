@@ -10,6 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,7 +28,7 @@ import java.io.IOException;
 
 import interfaz.VentanaReserva;
 
-public class InterfazUsuario extends JFrame {
+public class InterfazUsuario extends JDialog {
 
     private Pasajero pasajero;
     private JPanel contentPane;

@@ -22,8 +22,8 @@ public class VentanaConductor extends JDialog {
     private Conductor conductor;
     private Terminal t;
 
-    public VentanaConductor(JFrame parent) {
-        super(parent, "Crear Nuevo Conductor", true);
+    public VentanaConductor(Interfaz interfaz) {
+        super(interfaz, "Crear Nuevo Conductor", true);
         setT();
         setSize(400, 300);
         setLayout(null);
@@ -90,7 +90,7 @@ public class VentanaConductor extends JDialog {
         btnCancelar.setBounds(210, 220, 120, 30);
         add(btnCancelar);
 
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(interfaz);
 
         btnConfirmar.addActionListener(new ActionListener() {
             @Override
@@ -107,7 +107,7 @@ public class VentanaConductor extends JDialog {
             }
         });
     }
-
+    
     private void setT() {
         this.t = Terminal.getTerminal();
     }

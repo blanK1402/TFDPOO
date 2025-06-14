@@ -29,7 +29,7 @@ public class VentanaReserva extends JDialog {
 	private Terminal t;
 	private Pasajero pasajero;
 
-	public VentanaReserva(JFrame parent, Pasajero pasajero) {
+	public VentanaReserva(JDialog parent, Pasajero pasajero) {
 		super(parent, "Crear Nueva Reserva", true);
 		setTerminal();
 		setPasajero(pasajero);

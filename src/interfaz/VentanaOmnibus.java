@@ -22,8 +22,8 @@ public class VentanaOmnibus extends JDialog {
     private Omnibus omnibus;
     Terminal t;
 
-    public VentanaOmnibus(JFrame parent) {
-        super(parent, "Crear Nuevo Ómnibus", true);
+    public VentanaOmnibus(Interfaz interfaz) {
+        super(interfaz, "Crear Nuevo Ómnibus", true);
         setT();
         setSize(400, 400);
         setLayout(null);
@@ -109,7 +109,7 @@ public class VentanaOmnibus extends JDialog {
         btnCancelar.setBounds(210, 330, 120, 30);
         add(btnCancelar);
 
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(interfaz);
 
         btnConfirmar.addActionListener(new ActionListener() {
             @Override

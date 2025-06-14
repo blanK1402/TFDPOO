@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Interfaz extends JFrame {
-	
+
 	private static final Color COLOR = new Color(0, 120, 215);
 
 	public Interfaz() throws FileNotFoundException, IOException {
@@ -70,6 +70,21 @@ public class Interfaz extends JFrame {
 		btnCrearPasajero.setForeground(Color.WHITE);
 		btnCrearPasajero.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JButton btnEditarPasajero = new JButton("Editar");
+		btnEditarPasajero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int fila = tablePasajero.getSelectedRow();
+				if(fila != -1){
+					String id = String.valueOf(tablePasajero.getValueAt(fila, 1));
+					VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, Terminal.getTerminal().getPasajeros(), Terminal.getFecha().toLocalDate(), id);
+					ventanaPasajero.setVisible(true);
+					
+					if(ventanaPasajero.confirmado()){
+						actualizarPasajeros(modelPasajero);
+					}
+				}
+				
+			}
+		});
 		btnEditarPasajero.setBackground(COLOR);
 		btnEditarPasajero.setForeground(Color.WHITE);
 		btnEditarPasajero.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -185,7 +200,7 @@ public class Interfaz extends JFrame {
 				return false;
 			}
 		};
-		
+
 		final JTable tablaViaje = new JTable(modelViaje);
 		tablaViaje.setRowHeight(30);
 		tablaViaje.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -428,7 +443,7 @@ public class Interfaz extends JFrame {
 		btnAdelantarHora.setForeground(Color.WHITE);
 		btnAdelantarHora.setFont(new Font("SansSerif", Font.BOLD, 14));
 		panelFecha.add(btnAdelantarHora);
-		
+
 		Datos.importarDatos();
 		actualizar(modelPasajero, modelConductor, modelReserva, modelViaje, modelOmnibus);
 	}
@@ -442,40 +457,61 @@ public class Interfaz extends JFrame {
 			}
 			i--;
 		}
-		
+
 	}
 
-	protected void actualizar(DefaultTableModel modelPasajero,DefaultTableModel modelConductor, DefaultTableModel modelReserva, DefaultTableModel modelViaje, DefaultTableModel modelOmnibus) {
-		modelPasajero.setRowCount(0);
-		modelConductor.setRowCount(0);
-		modelOmnibus.setRowCount(0);
-		modelViaje.setRowCount(0);
-		modelReserva.setRowCount(0);
-		for(Pasajero p : Terminal.getTerminal().getPasajeros()){
+	protected void actualizar(DefaultTableModel modelPasajero, DefaultTableModel modelConductor, DefaultTableModel modelReserva, DefaultTableModel modelViaje, DefaultTableModel modelOmnibus) {
+		actualizarPasajeros(modelPasajero);
+		actualizarConductores(modelConductor);
+		actualizarOmnibuses(modelOmnibus);
+		actualizarViajes(modelViaje);
+		actualizarReservas(modelReserva);
+	}
+
+	public void actualizarPasajeros(DefaultTableModel modelPasajero) {
+		modelPasajero.setRowCount(0); 
+		for (Pasajero p : Terminal.getTerminal().getPasajeros()) {
 			modelPasajero.addRow(p.toTableList());
 		}
-		for(Conductor c : Terminal.getTerminal().getConductores()){
+	}
+
+	public void actualizarConductores(DefaultTableModel modelConductor) {
+		modelConductor.setRowCount(0);
+		for (Conductor c : Terminal.getTerminal().getConductores()) {
 			modelConductor.addRow(c.toTableList());
 		}
-		for(Omnibus o : Terminal.getTerminal().getOmnibuses()){
+	}
+
+	public void actualizarOmnibuses(DefaultTableModel modelOmnibus) {
+		modelOmnibus.setRowCount(0);
+		for (Omnibus o : Terminal.getTerminal().getOmnibuses()) {
 			modelOmnibus.addRow(o.toTableList());
 		}
-		for(Viaje v : Terminal.getTerminal().getViajes()){
+	}
+
+	public void actualizarViajes(DefaultTableModel modelViaje) {
+		modelViaje.setRowCount(0);
+		for (Viaje v : Terminal.getTerminal().getViajes()) {
 			modelViaje.addRow(v.toTableList());
 		}
-		for(Reserva r : Terminal.getTerminal().getReservas()){
+	}
+
+	public void actualizarReservas(DefaultTableModel modelReserva) {
+		modelReserva.setRowCount(0);
+		for (Reserva r : Terminal.getTerminal().getReservas()) {
 			modelReserva.addRow(r.toTableList());
 		}
-		for(Reserva r : Terminal.getTerminal().getReservasEspera()){
+		for (Reserva r : Terminal.getTerminal().getReservasEspera()) {
 			modelReserva.addRow(r.toTableList());
 		}
 	}
-	
+
+
 	public void crearPasajero(DefaultTableModel modelPasajero) {
 		VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, Terminal.getTerminal().getPasajeros(), Terminal.getFecha().toLocalDate());
 		ventanaPasajero.setVisible(true);
 
-		if (ventanaPasajero.isConfirmado()) {
+		if (ventanaPasajero.confirmado()) {
 			try {
 				Pasajero nuevoPasajero = ventanaPasajero.getPasajero();
 				Terminal.getTerminal().addPasajero(nuevoPasajero);
