@@ -7,10 +7,12 @@ import clases.ConductorA;
 import clases.ConductorB;
 import clases.ConductorC;
 import clases.Terminal;
+import clases.Viaje;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class VentanaConductor extends JDialog {
 
@@ -73,7 +75,7 @@ public class VentanaConductor extends JDialog {
         txtLicencia.setFont(campoFont);
         add(txtLicencia);
 
-        JLabel lblCategoria = new JLabel("Categoría:");
+        JLabel lblCategoria = new JLabel("Categorï¿½a:");
         lblCategoria.setBounds(20, 180, 120, 25);
         lblCategoria.setFont(etiquetaFont);
         add(lblCategoria);
@@ -108,7 +110,129 @@ public class VentanaConductor extends JDialog {
         });
     }
     
-    private void setT() {
+    public VentanaConductor(Interfaz interfaz, final String id) {
+        super(interfaz, "Crear Nuevo Conductor", true);
+        setT();
+        setSize(400, 300);
+        setLayout(null);
+        setConductor(id);
+        
+        Font etiquetaFont = new Font("Arial", Font.BOLD, 14);
+        Font campoFont = new Font("Arial", Font.PLAIN, 14);
+        int desplazamientoDerecha = 150;
+
+        JLabel lblIdTitulo = new JLabel("ID Conductor:");
+        lblIdTitulo.setBounds(20, 20, 120, 25);
+        lblIdTitulo.setFont(etiquetaFont);
+        add(lblIdTitulo);
+
+        lblId = new JLabel(id);
+        t.decrementIdConductor();
+        lblId.setBounds(desplazamientoDerecha, 20, 220, 25);
+        lblId.setFont(campoFont);
+        add(lblId);
+
+        JLabel lblNombre = new JLabel("Nombre:");
+        lblNombre.setBounds(20, 60, 120, 25);
+        lblNombre.setFont(etiquetaFont);
+        add(lblNombre);
+
+        txtNombre = new JTextField(conductor.getNombre());
+        txtNombre.setBounds(desplazamientoDerecha, 60, 220, 25);
+        txtNombre.setFont(campoFont);
+        add(txtNombre);
+
+        JLabel lblExperiencia = new JLabel("Experiencia:");
+        lblExperiencia.setBounds(20, 100, 120, 25);
+        lblExperiencia.setFont(etiquetaFont);
+        add(lblExperiencia);
+
+        txtExperiencia = new JTextField(String.valueOf(conductor.getExperiencia()));
+        txtExperiencia.setBounds(desplazamientoDerecha, 100, 220, 25);
+        txtExperiencia.setFont(campoFont);
+        add(txtExperiencia);
+
+        JLabel lblLicencia = new JLabel("Licencia:");
+        lblLicencia.setBounds(20, 140, 120, 25);
+        lblLicencia.setFont(etiquetaFont);
+        add(lblLicencia);
+
+        txtLicencia = new JTextField(String.valueOf(conductor.getLicencia()));
+        txtLicencia.setBounds(desplazamientoDerecha, 140, 220, 25);
+        txtLicencia.setFont(campoFont);
+        add(txtLicencia);
+
+        JLabel lblCategoria = new JLabel("Categorï¿½a:");
+        lblCategoria.setBounds(20, 180, 120, 25);
+        lblCategoria.setFont(etiquetaFont);
+        add(lblCategoria);
+
+        comboCategoria = new JComboBox<>(new String[]{"A", "B", "C"});
+        comboCategoria.setSelectedIndex(conductor instanceof ConductorA ? 0 : conductor instanceof ConductorB ? 1 : 2);
+        comboCategoria.setBounds(desplazamientoDerecha, 180, 220, 25);
+        add(comboCategoria);
+
+        btnConfirmar = new JButton("Guardar");
+        btnConfirmar.setBounds(70, 220, 120, 30);
+        add(btnConfirmar);
+
+        btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBounds(210, 220, 120, 30);
+        add(btnCancelar);
+
+        setLocationRelativeTo(interfaz);
+
+        btnConfirmar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editarConductor();
+            }
+        });
+
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	t.decrementIdConductor();
+                dispose();
+            }
+        });
+    }
+    
+    protected void editarConductor() {
+		String nombre = txtNombre.getText();
+		String id = String.valueOf(conductor.getId());
+		String experiencia = txtExperiencia.getText();
+		String licencia = txtLicencia.getText();
+		String categoria = (String) comboCategoria.getSelectedItem();
+		ArrayList<Viaje> viajes = conductor.getViajes();
+		
+		if(categoria.equals("A")){
+			Conductor nc = new ConductorA(nombre, id, experiencia, licencia);
+			for(Viaje v : viajes){
+				nc.addViaje(v);
+			}
+			t.addConductor(nc);
+		}
+		else if(categoria.equals("A")){
+			Conductor nc = new ConductorB(nombre, id, experiencia, licencia);
+			t.addConductor(nc);
+			
+		}
+		else{
+			Conductor nc = new ConductorC(nombre, id, experiencia, licencia);
+			t.addConductor(nc);
+		}
+		
+		confirmado = true;
+		dispose();
+	}
+
+	private void setConductor(String id) {
+		conductor = Terminal.getTerminal().getConductor(id); 
+		System.out.println(conductor);
+	}
+
+	private void setT() {
         this.t = Terminal.getTerminal();
     }
 
@@ -135,7 +259,7 @@ public class VentanaConductor extends JDialog {
         }
     }
 
-    public boolean isConfirmado() {
+    public boolean confirmado() {
         return confirmado;
     }
 

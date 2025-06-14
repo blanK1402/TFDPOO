@@ -109,7 +109,7 @@ public class Interfaz extends JFrame {
 				return false;
 			}
 		};
-		JTable tableConductor = new JTable(modelConductor);
+		final JTable tableConductor = new JTable(modelConductor);
 		tableConductor.setRowHeight(30);
 		tableConductor.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		tableConductor.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -130,6 +130,21 @@ public class Interfaz extends JFrame {
 		btnCrearConductor.setForeground(Color.WHITE);
 		btnCrearConductor.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JButton btnEditarConductor = new JButton("Editar");
+		btnEditarConductor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int fila = tableConductor.getSelectedRow();
+				if(fila != -1){
+					String id = String.valueOf(tableConductor.getValueAt(fila, 1));
+					System.out.println(id);
+					VentanaConductor ventanaConductor = new VentanaConductor(Interfaz.this, id);
+					ventanaConductor.setVisible(true);
+					
+					if(ventanaConductor.confirmado()){
+						actualizarConductores(modelConductor);
+					}
+				}
+			}
+		});
 		btnEditarConductor.setBackground(COLOR);
 		btnEditarConductor.setForeground(Color.WHITE);
 		btnEditarConductor.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -178,6 +193,10 @@ public class Interfaz extends JFrame {
 		btnCrearOmnibus.setForeground(Color.WHITE);
 		btnCrearOmnibus.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JButton btnEditarOmnibus = new JButton("Editar");
+		btnEditarOmnibus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnEditarOmnibus.setBackground(COLOR);
 		btnEditarOmnibus.setForeground(Color.WHITE);
 		btnEditarOmnibus.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -529,7 +548,7 @@ public class Interfaz extends JFrame {
 		VentanaConductor ventanaConductor = new VentanaConductor(Interfaz.this);
 		ventanaConductor.setVisible(true);
 
-		if (ventanaConductor.isConfirmado()) {
+		if (ventanaConductor.confirmado()) {
 			try {
 				Conductor nuevoConductor = ventanaConductor.getConductor();
 				Terminal.getTerminal().addConductor(nuevoConductor);
