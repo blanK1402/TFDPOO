@@ -6,9 +6,12 @@ import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,6 +23,7 @@ import clases.Pasajero;
 import clases.Terminal;
 
 import java.awt.SystemColor;
+import java.io.IOException;
 
 import interfaz.VentanaReserva;
 
@@ -35,7 +39,7 @@ public class InterfazUsuario extends JFrame {
         setPasajero(pasajero);
         setTerminal();
         
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setBounds(100, 100, 800, 500);
         setTitle("Interfaz de Usuario - " + pasajero.getNombre());
         
@@ -50,6 +54,13 @@ public class InterfazUsuario extends JFrame {
         
         contentPane.add(panelBotones, BorderLayout.NORTH);
         contentPane.add(new JScrollPane(tableReserva), BorderLayout.CENTER);
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                cerrarAplicacion();
+            }
+        });
     }
 
     private void setTerminal() {
@@ -60,6 +71,10 @@ public class InterfazUsuario extends JFrame {
 		this.pasajero = pasajero;
 	}
 
+	private void cerrarAplicacion() {
+        dispose();
+    }
+	
 	private void configurarTablaReservas() {
         String[] columnNames = {"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"};
         
@@ -108,11 +123,25 @@ public class InterfazUsuario extends JFrame {
         btnEliminarReserva.setBackground(SystemColor.textHighlight);
         panelBotones.add(btnEliminarReserva);
         
+        JButton btnGuardar = new JButton("Guardar");
+        btnGuardar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		try {
+					Datos.guardarDatos();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+        	}
+        });
+        btnGuardar.setForeground(Color.WHITE);
+        btnGuardar.setBackground(SystemColor.textHighlight);
+        panelBotones.add(btnGuardar);
+        
         return panelBotones;
     }
 
     private void abrirNuevaReserva() {
-		VentanaReserva ventana = new VentanaReserva(InterfazUsuario.this);
+		VentanaReserva ventana = new VentanaReserva(InterfazUsuario.this, pasajero);
 		ventana.setVisible(true);
 		if(ventana.Confirmada()){
 			terminal.addReserva(ventana.getReserva());

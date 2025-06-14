@@ -181,7 +181,7 @@ public class Datos {
 
 	//"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"
 	private static void importarReservas(Terminal t) throws FileNotFoundException, IOException {
-		Pattern patron = Pattern.compile("id: ([0-9]+),([0-9]+),([0-9]+),([0-9]+),(.*),([0-9/]+),([0-9/]+),(.*)");
+		Pattern patron = Pattern.compile("id: ([0-9]+),([0-9]+),([0-9]+|Sin viaje),([0-9]+|None),(.*),([0-9/]+),([0-9/]+),(.*)");
 
 		for(String linea : obtenerLineas(".\\.\\BaseDatos\\reservas.txt")){
 			Matcher matcher = patron.matcher(linea);

@@ -1,12 +1,14 @@
-id: 95063000004,1,1,4,Ciego de Ávila,01/06/2025,01/07/2025,Confirmada
-id: 98051500002,2,2,7,Villa Clara,03/06/2025,05/07/2025,Confirmada
-id: 97022800003,3,3,12,Matanzas,04/06/2025,08/07/2025,Confirmada
-id: 80020200016,4,4,3,Pinar del Río,06/06/2025,11/07/2025,Confirmada
-id: 78051500018,6,6,15,Camagüey,09/06/2025,18/07/2025,Confirmada
-id: 94010100005,7,7,21,Santiago de Cuba,11/06/2025,21/07/2025,Confirmada
-id: 86092300010,8,8,26,Guantánamo,13/06/2025,25/07/2025,Confirmada
-id: 92040500006,13,1,5,Ciego de Ávila,21/06/2025,01/07/2025,Confirmada
-id: 88032200008,15,3,13,Matanzas,25/06/2025,08/07/2025,Confirmada
-id: 85011200011,16,4,8,Pinar del Río,27/06/2025,11/07/2025,Confirmada
-id: 77080800019,18,6,16,Camagüey,30/06/2025,18/07/2025,Confirmada
-id: 76010100020,19,7,19,Santiago de Cuba,01/07/2025,21/07/2025,Confirmada
+Elena Gomez id: 92040500006,13,1,1,Ciego de Ávila,21/06/2025,01/07/2025,Confirmada
+Sofia Diaz id: 88032200008,15,3,1,Matanzas,25/06/2025,08/07/2025,Confirmada
+Ricardo Ruiz id: 85011200011,16,4,1,Pinar del Río,27/06/2025,11/07/2025,Confirmada
+Andres Castillo id: 77080800019,18,6,1,Camagüey,30/06/2025,18/07/2025,Confirmada
+Natalia Bravo id: 76010100020,19,7,1,Santiago de Cuba,01/07/2025,21/07/2025,Confirmada
+Ana Sanchez id: 95063000004,1,1,2,Ciego de Ávila,01/06/2025,01/07/2025,Confirmada
+Juan Perez id: 98051500002,2,2,1,Villa Clara,03/06/2025,05/07/2025,Confirmada
+Carlos Garcia id: 97022800003,3,3,2,Matanzas,04/06/2025,08/07/2025,Confirmada
+Camila Rojas id: 80020200016,4,4,2,Pinar del Río,06/06/2025,11/07/2025,Confirmada
+Gabriela Vargas id: 78051500018,6,6,2,Camagüey,09/06/2025,18/07/2025,Confirmada
+Luis Ramirez id: 94010100005,7,7,2,Santiago de Cuba,11/06/2025,21/07/2025,Confirmada
+Laura Fernandez id: 86092300010,8,8,1,Guantánamo,13/06/2025,25/07/2025,Confirmada
+Ana Sanchez id: 95063000004,9,1,3,Ciego de Ávila,14/06/2025,01/07/2025,Confirmada
+Ana Sanchez id: 95063000004,10,13,1,Pinar del Río,14/06/2025,11/11/2025,Confirmada

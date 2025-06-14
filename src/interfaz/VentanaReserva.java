@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class VentanaReserva extends JDialog {
 
-	private JComboBox<Pasajero> comboPasajeros;
+	private JLabel labelPasajero;
 	private JComboBox<String> comboDestinos;
 	private JTextField txtFechaDeseada;
 	private JButton btnConfirmar, btnCancelar;
@@ -27,10 +27,12 @@ public class VentanaReserva extends JDialog {
 	private boolean confirmado = false;
 	private Reserva reserva;
 	private Terminal t;
+	private Pasajero pasajero;
 
-	public VentanaReserva(JFrame parent) {
+	public VentanaReserva(JFrame parent, Pasajero pasajero) {
 		super(parent, "Crear Nueva Reserva", true);
-		setT();
+		setTerminal();
+		setPasajero(pasajero);
 		setSize(400, 300);  
 		setLayout(null);
 
@@ -49,14 +51,14 @@ public class VentanaReserva extends JDialog {
 		lblIdReserva.setFont(campoFont);
 		add(lblIdReserva);
 
-		JLabel lblPasajero = new JLabel("Seleccionar Pasajero:");
+		JLabel lblPasajero = new JLabel("Pasajero:");
 		lblPasajero.setBounds(20, 60, 120, 25);  
 		lblPasajero.setFont(etiquetaFont);
 		add(lblPasajero);
 
-		comboPasajeros = new JComboBox<>(t.getPasajeros().toArray(new Pasajero[0]));
-		comboPasajeros.setBounds(desplazamientoDerecha, 60, 220, 25);  
-		add(comboPasajeros);
+		labelPasajero = new JLabel(pasajero.toString());
+		labelPasajero.setBounds(desplazamientoDerecha, 60, 220, 25);  
+		add(labelPasajero);
 
 		JLabel lblViaje = new JLabel("Seleccionar Destino:");
 		lblViaje.setBounds(20, 100, 120, 25);  
@@ -106,13 +108,16 @@ public class VentanaReserva extends JDialog {
 		});
 	}
 
-	private void setT() {
+	private void setPasajero(Pasajero pasajero) {
+		this.pasajero = pasajero;
+	}
+
+	private void setTerminal() {
 		this.t = Terminal.getTerminal();
 	}
 
 	private void confirmarReserva(LocalDateTime fechaAct) {
 		try{
-		    Pasajero pasajeroSeleccionado = (Pasajero) comboPasajeros.getSelectedItem();
 		    String destinoSeleccionado = (String) comboDestinos.getSelectedItem();
 		    LocalDate fechaActual = fechaAct.toLocalDate();
 		    LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -120,9 +125,9 @@ public class VentanaReserva extends JDialog {
 		    Viaje viaje = Utilidades.buscarViaje(destinoSeleccionado, fechaDeseada);
 
 		    if (viaje == null) {
-		        manejarReservaListaEspera(pasajeroSeleccionado, String.valueOf(t.getIdReserva()), destinoSeleccionado, fechaActual, fechaDeseada);
+		        manejarReservaListaEspera(pasajero, String.valueOf(t.getIdReserva()), destinoSeleccionado, fechaActual, fechaDeseada);
 		    } else {
-		    	reserva = new Reserva(pasajeroSeleccionado, String.valueOf(t.getIdReserva()), destinoSeleccionado, fechaActual, fechaDeseada, viaje.getAsiento());
+		    	reserva = new Reserva(pasajero, String.valueOf(t.getIdReserva()), destinoSeleccionado, fechaActual, fechaDeseada, viaje.getAsiento());
 		        reserva.setViaje(viaje);
 			    confirmado = true;
 		    }

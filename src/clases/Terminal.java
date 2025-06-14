@@ -35,6 +35,8 @@ public class Terminal {
         omnibuses = new HashMap<>();
         viajes = new HashMap<>();
         reservas = new HashMap<>();
+        reservasEspera = new HashMap<>();
+        reservasCanceladas = new HashMap<>();
         setDestinosDistancias();
     }
 
@@ -184,17 +186,35 @@ public class Terminal {
 	}
 
 	public void addViaje(Viaje v) {
+		ArrayList<Reserva> porMover = new ArrayList<>();
 		viajes.put(String.valueOf(v.getId()), v);
 		v.getConductor().addViaje(v);
 		v.getOmnibus().addViaje(v);
+		
+		for(Reserva r : reservasEspera.values()){
+			if(r.getFechaDeseada().equals(v.getFechaHoraPartida().toLocalDate()) && r.getDestino().equals(v.getDestino())){
+				if(v.getAsientosLibres().size() > 0){
+					r.setViaje(v);
+					porMover.add(r);
+				}
+			}
+		}
+		
+		for(Reserva r : porMover){
+			reservasEspera.remove(String.valueOf(r.getNumReserva()));
+			reservas.put(String.valueOf(r.getNumReserva()), r);
+		}
 	}
 
 	public void addReserva(Reserva r) {
 		r.getPasajero().addReserva(r);
 		if(r.getViaje() != null){
 			r.getViaje().addReservas(r);
+			reservas.put(String.valueOf(r.getNumReserva()), r);
 		}
-		reservas.put(String.valueOf(r.getNumReserva()), r);
+		else{			
+			reservasEspera.put(String.valueOf(r.getNumReserva()), r);
+		}
 	}
 
 	public HashMap<String, ArrayList<Viaje>> getDestinosViajes() {
@@ -221,5 +241,9 @@ public class Terminal {
 
 	public ArrayList<Usuario> getUsuarios() {
 		return new ArrayList<Usuario>(usuarios.values());
+	}
+
+	public ArrayList<Reserva> getReservasEspera() {
+		return new ArrayList<>(reservasEspera.values());
 	}
 }

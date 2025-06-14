@@ -85,6 +85,7 @@ public class Login extends JFrame {
 					else if(usuario.getRol().equals("User")){
 						Pasajero pasajero = terminal.getPasajero(usuario.getUsuario());
 						Runner.lanzarInterfazUsuario(pasajero, terminal);
+						dispose();
 					}
 				} catch (IllegalArgumentException | IOException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

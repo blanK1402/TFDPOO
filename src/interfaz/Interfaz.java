@@ -29,7 +29,7 @@ public class Interfaz extends JFrame {
 	
 	private static final Color COLOR = new Color(0, 120, 215);
 
-	public Interfaz() {
+	public Interfaz() throws FileNotFoundException, IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1006, 600);
 		setTitle("Gestión de Transporte");
@@ -252,23 +252,6 @@ public class Interfaz extends JFrame {
 
 		JPanel panelTerminal = new JPanel(new BorderLayout());
 		JPanel panelImportar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JButton btnImportarDatos = new JButton("Importar Datos");
-
-		btnImportarDatos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					Datos.importarDatos();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				actualizar(modelPasajero, modelConductor, modelReserva, modelViaje, modelOmnibus);
-			}
-		});
-
-		btnImportarDatos.setBackground(COLOR);
-		btnImportarDatos.setForeground(Color.WHITE);
-		btnImportarDatos.setFont(new Font("SansSerif", Font.BOLD, 14));
-		panelImportar.add(btnImportarDatos);
 		panelTerminal.add(panelImportar, BorderLayout.NORTH);
 
 		JButton btnGuardarDatos = new JButton("Guardar Datos");
@@ -445,6 +428,9 @@ public class Interfaz extends JFrame {
 		btnAdelantarHora.setForeground(Color.WHITE);
 		btnAdelantarHora.setFont(new Font("SansSerif", Font.BOLD, 14));
 		panelFecha.add(btnAdelantarHora);
+		
+		Datos.importarDatos();
+		actualizar(modelPasajero, modelConductor, modelReserva, modelViaje, modelOmnibus);
 	}
 
 	protected void eliminarFilas(ArrayList<Integer> ids, DefaultTableModel modelReserva) {
@@ -478,6 +464,9 @@ public class Interfaz extends JFrame {
 			modelViaje.addRow(v.toTableList());
 		}
 		for(Reserva r : Terminal.getTerminal().getReservas()){
+			modelReserva.addRow(r.toTableList());
+		}
+		for(Reserva r : Terminal.getTerminal().getReservasEspera()){
 			modelReserva.addRow(r.toTableList());
 		}
 	}
