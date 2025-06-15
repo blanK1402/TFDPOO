@@ -135,7 +135,6 @@ public class Interfaz extends JFrame {
 				int fila = tableConductor.getSelectedRow();
 				if(fila != -1){
 					String id = String.valueOf(tableConductor.getValueAt(fila, 1));
-					System.out.println(id);
 					VentanaConductor ventanaConductor = new VentanaConductor(Interfaz.this, id);
 					ventanaConductor.setVisible(true);
 					
@@ -172,7 +171,7 @@ public class Interfaz extends JFrame {
 				return false;
 			}
 		};
-		JTable tableOmnibus = new JTable(modelOmnibus);
+		final JTable tableOmnibus = new JTable(modelOmnibus);
 		tableOmnibus.setRowHeight(30);
 		tableOmnibus.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		tableOmnibus.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -195,6 +194,16 @@ public class Interfaz extends JFrame {
 		JButton btnEditarOmnibus = new JButton("Editar");
 		btnEditarOmnibus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				int fila = tableOmnibus.getSelectedRow();
+				if(fila != -1){
+					String id = String.valueOf(tableOmnibus.getValueAt(fila, 0));
+					VentanaOmnibus ventanaOmnibus = new VentanaOmnibus(Interfaz.this, id);
+					ventanaOmnibus.setVisible(true);
+					
+					if(ventanaOmnibus.confirmado()){
+						actualizarOmnibuses(modelOmnibus);
+					}
+				}
 			}
 		});
 		btnEditarOmnibus.setBackground(COLOR);
@@ -206,6 +215,22 @@ public class Interfaz extends JFrame {
 		btnEliminarOmnibus.setFont(new Font("SansSerif", Font.BOLD, 14));
 		botonesOmnibus.add(btnCrearOmnibus);
 		botonesOmnibus.add(btnEditarOmnibus);
+		
+		JButton btnActualizar = new JButton("Actualizar");
+		btnActualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Datos.importarOmnibus(Terminal.getTerminal());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				actualizarOmnibuses(modelOmnibus);
+			}
+		});
+		btnActualizar.setForeground(Color.WHITE);
+		btnActualizar.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnActualizar.setBackground(SystemColor.textHighlight);
+		botonesOmnibus.add(btnActualizar);
 		botonesOmnibus.add(btnEliminarOmnibus);
 		panelOmnibus.add(botonesOmnibus, BorderLayout.NORTH);
 		tabbedPane.addTab("Omnibus", panelOmnibus);
@@ -568,7 +593,7 @@ public class Interfaz extends JFrame {
 		VentanaOmnibus ventanaOmnibus = new VentanaOmnibus(Interfaz.this);
 		ventanaOmnibus.setVisible(true);
 
-		if (ventanaOmnibus.isConfirmado()) {
+		if (ventanaOmnibus.confirmado()) {
 			try {
 				Omnibus nuevoOmnibus = ventanaOmnibus.getOmnibus();
 				Terminal.getTerminal().addOmnibus(nuevoOmnibus);

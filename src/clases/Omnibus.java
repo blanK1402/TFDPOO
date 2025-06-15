@@ -103,10 +103,10 @@ public class Omnibus implements Mostrable{
 				matricula,
 				String.valueOf(asientos),
 				comodidades.contains("Aire acondicionado") ? "Si" : "No",
-						comodidades.contains("TV") ? "Si" : "No",
-								comodidades.contains("Baño") ? "Si" : "No",
-										disponibilidad,
-										conductores.isEmpty() ? "Sin conductores" : conductores.toString()};
+				comodidades.contains("TV") ? "Si" : "No",
+				comodidades.contains("Baño") ? "Si" : "No",
+				disponibilidad,
+				conductores.isEmpty() ? "Sin conductores" : conductores.toString()};
 		return res;
 	}
 }

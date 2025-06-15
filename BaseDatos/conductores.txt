@@ -1,8 +1,8 @@
-Raul,11,C,9,45678,1
+RaulAlejandro,11,A,9,45678,1
 Eva,12,C,22,24680,1
 Martin,13,A,16,13579,1
 Clara,14,B,11,75391,0
-FelipeAAA,15,C,28,36912,0
+FelipeAlberto,15,A,28,36912,1
 Isabel,16,A,20,98431,1
 Oscar,17,B,13,56723,0
 Carla,18,C,35,14785,0

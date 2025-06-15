@@ -121,7 +121,7 @@ public class Datos {
 	//(String matricula, String asientos, String disponibilidad, ArrayList<String> comodidades)
 	//T976211,94,No,Si,No,Disponible,[id:2, Selene, id:6, Hugo]
 
-	private static void importarOmnibus(Terminal t) throws FileNotFoundException, IOException {
+	public static void importarOmnibus(Terminal t) throws FileNotFoundException, IOException {
 		Pattern patron = Pattern.compile("^([A-Z]{1}[0-9]{6}),([0-9]*),([Si]{2}|[No]{2}),([Si]{2}|[No]{2}),([Si]{2}|[No]{2}),([^,]+),(.*)$");
 		Pattern patronId = Pattern.compile("id:([0-9]+)");
 
@@ -160,7 +160,7 @@ public class Datos {
 
 	//2,Ciego de Ávila,V110538,id:5, Esmeralda,22/06/2025, 08:41:56,391.0
 	//(String id, String fechaPartida, String horaPartida, String destino, Omnibus omnibus, Conductor conductor){
-	private static void importarViajes(Terminal t) throws FileNotFoundException, IOException {
+	public static void importarViajes(Terminal t) throws FileNotFoundException, IOException {
 		Pattern patron = Pattern.compile("(.*),(.*),(.*),id:(.*), (.*),(.*), (.*),(.*)");
 
 		for(String linea : obtenerLineas(".\\.\\BaseDatos\\viajes.txt")){
@@ -180,7 +180,7 @@ public class Datos {
 	}
 
 	//"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"
-	private static void importarReservas(Terminal t) throws FileNotFoundException, IOException {
+	public static void importarReservas(Terminal t) throws FileNotFoundException, IOException {
 		Pattern patron = Pattern.compile("id: ([0-9]+),([0-9]+),([0-9]+|Sin viaje),([0-9]+|None),(.*),([0-9/]+),([0-9/]+),(.*)");
 
 		for(String linea : obtenerLineas(".\\.\\BaseDatos\\reservas.txt")){

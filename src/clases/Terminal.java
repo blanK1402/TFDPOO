@@ -216,6 +216,7 @@ public class Terminal {
 			reservasEspera.put(String.valueOf(r.getNumReserva()), r);
 		}
 	}
+	
 
 	public HashMap<String, ArrayList<Viaje>> getDestinosViajes() {
 		HashMap<String, ArrayList<Viaje>> destinosViajes = new HashMap<>();

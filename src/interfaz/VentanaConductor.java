@@ -229,7 +229,6 @@ public class VentanaConductor extends JDialog {
 
 	private void setConductor(String id) {
 		conductor = Terminal.getTerminal().getConductor(id); 
-		System.out.println(conductor);
 	}
 
 	private void setT() {
