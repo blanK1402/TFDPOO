@@ -195,8 +195,13 @@ public class Datos {
 				
 				if(matcher.group(3).matches("[0-9]")){
 					v = t.getViaje(matcher.group(3));
+					if(!(v.getDestino().equals(destino) && v.getFechaHoraPartida().toLocalDate().equals(fechaDeseada) && v.getAsientosLibres().size() > 0)){
+						v = null;
+					}
 				}
 
+				v = Utilidades.buscarViaje(destino, fechaDeseada);
+				
 				Reserva r = new Reserva(p, numReserva, destino, fechaActual, fechaDeseada, 0);
 				
 				if(v != null){

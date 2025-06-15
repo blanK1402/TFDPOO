@@ -1,13 +1,13 @@
-11,Mayabeque,T567012,id:15, FelipeAlberto,17/08/2025, 06:30:00,43.0
-12,Artemisa,T678123,id:16, Isabel,21/08/2025, 09:10:00,76.0
-13,Pinar del Río,T567012,id:11, RaulAlejandro,11/11/2025, 10:00:00,138.2
-1,Ciego de Ávila,T123456,id:1, Diana,01/07/2025, 08:30:00,386.0
+11,Mayabeque,T567012,id:15, FelipeAlberto,17/08/2025, 06:30:00,55.0
+12,Artemisa,T678123,id:16, Isabel,21/08/2025, 09:10:00,61.0
+13,Pinar del Río,T567012,id:11, RaulAlejandro,11/11/2025, 10:00:00,150.2
+1,Ciego de Ávila,T123456,id:1, Diana,09/07/2025, 08:30:00,371.0
 2,Villa Clara,T234567,id:2, Hugo,05/07/2025, 10:15:00,218.6
-3,Matanzas,T345678,id:3, Selene,08/07/2025, 06:45:00,103.2
+3,Matanzas,T345678,id:3, Selene,08/07/2025, 06:45:00,88.2
 4,Pinar del Río,T456789,id:4, Alberto,11/07/2025, 13:50:00,143.2
-5,Holguín,T567890,id:5, Esteban,15/07/2025, 09:20:00,566.2
+5,Holguín,T567890,id:5, Esteban,15/07/2025, 09:20:00,551.2
 6,Camagüey,T678901,id:6, Miriam,18/07/2025, 07:10:00,440.0
-7,Santiago de Cuba,T789012,id:7, Jorge,21/07/2025, 11:30:00,703.0
-8,Guantánamo,T890123,id:8, Sofia,25/07/2025, 15:45:00,747.0
-9,Sancti Spíritus,T234789,id:12, Eva,07/08/2025, 08:55:00,310.2
+7,Santiago de Cuba,T789012,id:7, Jorge,21/07/2025, 11:30:00,688.0
+8,Guantánamo,T890123,id:8, Sofia,25/07/2025, 15:45:00,724.0
+9,Sancti Spíritus,T234789,id:12, Eva,07/08/2025, 08:55:00,295.2
 10,Villa Clara,T345890,id:13, Martin,10/08/2025, 10:35:00,218.6
