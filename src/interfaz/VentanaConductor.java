@@ -207,7 +207,7 @@ public class VentanaConductor extends JDialog {
         String categoria = (String) comboCategoria.getSelectedItem();
         ArrayList<Viaje> viajes = conductor.getViajes();
 
-        t.removeConductor(id);
+        t.quitarConductor(id);
         
         Conductor nc = null;
 

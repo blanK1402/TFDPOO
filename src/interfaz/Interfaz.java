@@ -173,6 +173,25 @@ public class Interfaz extends JFrame {
 		btnEditarConductor.setForeground(Color.WHITE);
 		btnEditarConductor.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JButton btnEliminarConductor = new JButton("Eliminar");
+		btnEliminarConductor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int fila = tableConductor.getSelectedRow();
+				if(fila != -1){
+					String id = String.valueOf(tableConductor.getValueAt(fila, 1));
+					if(Terminal.getTerminal().getConductor(id).getViajes().size() > 0){
+						JOptionPane.showMessageDialog(null, "El conductor tiene viajes asociados, desea eliminar el conductor?", "Advertencia", JOptionPane.WARNING_MESSAGE);
+					}
+					Terminal.getTerminal().quitarConductor(id);
+					try {
+						Datos.guardarDatos();
+						Datos.importarDatos();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					Datos.actualizarConductores(modelConductor);
+				}
+			}
+		});
 		btnEliminarConductor.setBackground(COLOR);
 		btnEliminarConductor.setForeground(Color.WHITE);
 		btnEliminarConductor.setFont(new Font("SansSerif", Font.BOLD, 14));

@@ -260,9 +260,9 @@ public class Datos {
 		}
 	}
 
-	public static void actualizarConductores(DefaultTableModel modelConductor, Terminal terminal) {
+	public static void actualizarConductores(DefaultTableModel modelConductor) {
 		modelConductor.setRowCount(0);
-		for(Conductor c : terminal.getConductores()) {
+		for(Conductor c : Terminal.getTerminal().getConductores()) {
 			modelConductor.addRow(c.toTableList());
 		}
 	}

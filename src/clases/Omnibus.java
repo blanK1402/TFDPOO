@@ -150,6 +150,20 @@ public class Omnibus implements Mostrable{
 	    }
 	}
 
+	public void quitarConductor(Conductor conductorAEliminar) {
+	    int i = 0;
+	    boolean encontrado = false;
+	    
+	    while(i < conductores.size() && !encontrado) {
+	        if(conductores.get(i).getId() == conductorAEliminar.getId()) {
+	            conductores.remove(i);
+	            encontrado = true;
+	        } else {
+	            i++;
+	        }
+	    }
+	}
+
 
 
 }
