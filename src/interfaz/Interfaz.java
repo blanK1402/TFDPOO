@@ -100,7 +100,6 @@ public class Interfaz extends JFrame {
 					String id = String.valueOf(tablePasajero.getValueAt(fila, 1));
 					Terminal.getTerminal().removePasajero(id);
 					try {
-						System.out.println(Terminal.getTerminal().getReservas().size());
 						Datos.guardarDatos();
 						Datos.importarDatos();
 					} catch (Exception e) {
@@ -320,6 +319,10 @@ public class Interfaz extends JFrame {
 		btnEditarViaje.setForeground(Color.WHITE);
 		btnEditarViaje.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JButton btnEliminarViaje = new JButton("Eliminar");
+		btnEliminarViaje.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnEliminarViaje.setBackground(COLOR);
 		btnEliminarViaje.setForeground(Color.WHITE);
 		btnEliminarViaje.setFont(new Font("SansSerif", Font.BOLD, 14));

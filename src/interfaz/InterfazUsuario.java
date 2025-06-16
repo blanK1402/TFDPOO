@@ -114,7 +114,7 @@ public class InterfazUsuario extends JDialog {
         
         panelBotones.add(btnNuevaReserva);
         
-        JButton btnEliminarReserva = new JButton("Eliminar Reserva");
+        JButton btnEliminarReserva = new JButton("Cancelar Reserva");
         btnEliminarReserva.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		int fila = tableReserva.getSelectedRow();
