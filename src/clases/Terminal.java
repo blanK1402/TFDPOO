@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 import utilidades.Utilidades;
@@ -305,5 +304,9 @@ public class Terminal {
 				r.setViaje(null);
 			}
 		}
+	}
+
+	public void removeConductor(String id) {
+		conductores.remove(id);
 	}
 }

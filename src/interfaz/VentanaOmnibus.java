@@ -5,6 +5,7 @@ import javax.swing.*;
 import clases.Conductor;
 import clases.Omnibus;
 import clases.Terminal;
+import clases.Viaje;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -247,6 +248,7 @@ public class VentanaOmnibus extends JDialog {
             if (chkBaño.isSelected()) comodidades.add("Baño");
 
             ArrayList<Conductor> conductoresSeleccionados = new ArrayList<>();
+            
             if (comboConductor1.getSelectedItem() != null) {
                 conductoresSeleccionados.add((Conductor) comboConductor1.getSelectedItem());
             }
@@ -260,13 +262,28 @@ public class VentanaOmnibus extends JDialog {
             if (conductoresSeleccionados.isEmpty()) {
                 throw new Exception("Debe seleccionar al menos un conductor.");
             }
-
+            
+            ArrayList<Viaje> viejosViajes = omnibus.getViajes();
             omnibus = new Omnibus(omnibus.getMatricula(), asientos, disponibilidad, comodidades);
+            
             for (Conductor conductor : conductoresSeleccionados) {
                 omnibus.addConductor(conductor);
             }
 
+            for(Viaje v : viejosViajes){
+            	omnibus.addViaje(v);
+            }
+            
             Terminal.getTerminal().addOmnibus(omnibus);
+            
+            for(Viaje v : Terminal.getTerminal().getViajes()){
+            	if(v.getOmnibus().getMatricula().equals(omnibus.getMatricula())){
+            		if(!(omnibus.getConductores().contains(v.getConductor()))){
+            			v.reasignarConductor();
+            		}
+            	}
+            }
+            
             confirmado = true;
             dispose();
         } catch (Exception ex) {

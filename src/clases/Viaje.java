@@ -143,6 +143,10 @@ public class Viaje implements Mostrable{
 		return r;
 	}
 
+	public void reasignarConductor(){
+		conductor = omnibus.getConductores().get(0);
+	}
+	
 	@Override
 	public String toString(){
 		return destino + " " + fechaHoraPartida.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));

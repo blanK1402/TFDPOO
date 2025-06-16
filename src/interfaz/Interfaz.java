@@ -234,7 +234,8 @@ public class Interfaz extends JFrame {
 		btnActualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					actualizar();
+					Datos.importarDatos();
+					Datos.actualizarOmnibuses(modelOmnibus);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

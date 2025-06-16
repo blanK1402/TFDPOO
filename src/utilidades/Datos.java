@@ -263,9 +263,9 @@ public class Datos {
 		}
 	}
 
-	public static void actualizarOmnibuses(DefaultTableModel modelOmnibus, Terminal terminal) {
+	public static void actualizarOmnibuses(DefaultTableModel modelOmnibus) {
 		modelOmnibus.setRowCount(0);
-		for(Omnibus o : terminal.getOmnibuses()) {
+		for(Omnibus o : Terminal.getTerminal().getOmnibuses()) {
 			modelOmnibus.addRow(o.toTableList());
 		}
 	}

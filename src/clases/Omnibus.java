@@ -5,6 +5,7 @@ import Interfaces.Mostrable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import utilidades.Utilidades;
@@ -59,6 +60,14 @@ public class Omnibus implements Mostrable{
 		return conductores;
 	}
 
+	public ArrayList<Viaje> getViajes(){
+		ArrayList<Viaje> misViajes = new ArrayList<>();
+		for(ArrayList<Viaje> vs : viajes.values()){
+			misViajes.addAll(vs);
+		}
+		return misViajes;
+	}
+	
 	public void setMatricula(String matricula) throws IllegalArgumentException{
 		Utilidades.validarMatricula(matricula);
 		this.matricula = matricula;

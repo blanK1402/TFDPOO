@@ -158,11 +158,12 @@ public class VentanaConductor extends JDialog {
         add(lblLicencia);
 
         txtLicencia = new JTextField(String.valueOf(conductor.getLicencia()));
+        txtLicencia.setEditable(false);
         txtLicencia.setBounds(desplazamientoDerecha, 140, 220, 25);
         txtLicencia.setFont(campoFont);
         add(txtLicencia);
 
-        JLabel lblCategoria = new JLabel("Categor�a:");
+        JLabel lblCategoria = new JLabel("Categoría:");
         lblCategoria.setBounds(20, 180, 120, 25);
         lblCategoria.setFont(etiquetaFont);
         add(lblCategoria);
@@ -199,33 +200,34 @@ public class VentanaConductor extends JDialog {
     }
     
     protected void editarConductor() {
-		String nombre = txtNombre.getText();
-		String id = String.valueOf(conductor.getId());
-		String experiencia = txtExperiencia.getText();
-		String licencia = txtLicencia.getText();
-		String categoria = (String) comboCategoria.getSelectedItem();
-		ArrayList<Viaje> viajes = conductor.getViajes();
-		
-		if(categoria.equals("A")){
-			Conductor nc = new ConductorA(nombre, id, experiencia, licencia);
-			for(Viaje v : viajes){
-				nc.addViaje(v);
-			}
-			t.addConductor(nc);
-		}
-		else if(categoria.equals("A")){
-			Conductor nc = new ConductorB(nombre, id, experiencia, licencia);
-			t.addConductor(nc);
-			
-		}
-		else{
-			Conductor nc = new ConductorC(nombre, id, experiencia, licencia);
-			t.addConductor(nc);
-		}
-		
-		confirmado = true;
-		dispose();
-	}
+        String nombre = txtNombre.getText();
+        String id = String.valueOf(conductor.getId());
+        String experiencia = txtExperiencia.getText();
+        String licencia = txtLicencia.getText();
+        String categoria = (String) comboCategoria.getSelectedItem();
+        ArrayList<Viaje> viajes = conductor.getViajes();
+
+        t.removeConductor(id);
+        
+        Conductor nc = null;
+
+        if (categoria.equals("A")) {
+            nc = new ConductorA(nombre, id, experiencia, licencia);
+        } else if (categoria.equals("B")) {
+            nc = new ConductorB(nombre, id, experiencia, licencia);
+        } else {
+            nc = new ConductorC(nombre, id, experiencia, licencia);
+        }
+
+        for (Viaje v : viajes) {
+            nc.addViaje(v);
+        }
+
+        t.addConductor(nc);
+        confirmado = true;
+        dispose();
+    }
+
 
 	private void setConductor(String id) {
 		conductor = Terminal.getTerminal().getConductor(id); 
