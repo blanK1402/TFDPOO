@@ -346,6 +346,17 @@ public class Interfaz extends JFrame {
 		btnEliminarViaje.setForeground(Color.WHITE);
 		btnEliminarViaje.setFont(new Font("SansSerif", Font.BOLD, 14));
 		botonesViaje.add(btnCrearViaje);
+		
+		JButton button_1 = new JButton("Actualizar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Datos.actualizarViajes(modelViaje);
+			}
+		});
+		button_1.setForeground(Color.WHITE);
+		button_1.setFont(new Font("SansSerif", Font.BOLD, 14));
+		button_1.setBackground(SystemColor.textHighlight);
+		botonesViaje.add(button_1);
 		botonesViaje.add(btnEditarViaje);
 		botonesViaje.add(btnEliminarViaje);
 		panelViaje.add(botonesViaje, BorderLayout.NORTH);

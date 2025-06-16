@@ -1,5 +1,4 @@
-Raullllllll,22,A,11,11112,3
-Eva,12,C,22,24680,0
+Raullllllll,22,A,11,11112,0
 Martin,13,A,16,13579,0
 Clara,14,B,11,75391,0
 FelipeAlberto,15,A,28,36912,0

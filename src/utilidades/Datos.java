@@ -274,9 +274,9 @@ public class Datos {
 		}
 	}
 
-	public static void actualizarViajes(DefaultTableModel modelViaje, Terminal terminal) {
+	public static void actualizarViajes(DefaultTableModel modelViaje) {
 		modelViaje.setRowCount(0);
-		for(Viaje v : terminal.getViajes()) {
+		for(Viaje v : Terminal.getTerminal().getViajes()) {
 			modelViaje.addRow(v.toTableList());
 		}
 	}
