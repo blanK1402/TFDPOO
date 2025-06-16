@@ -81,6 +81,26 @@ public class Reserva implements Mostrable{
 	public LocalDate getFechaDeseada() {
 		return fechaDeseada;
 	}
+	public float cancelarReserva() {
+		float devolucion = 0;
+		
+		if(viaje != null){
+			LocalDateTime ahora = Terminal.getFecha();
+		    LocalDateTime salida = viaje.getFechaHoraPartida();
+
+		    long horasDiferencia = java.time.Duration.between(ahora, salida).toHours();
+
+		    float precio = viaje.precio();
+		    
+		    if (horasDiferencia >= 48) {
+		        devolucion = precio;
+		    } else if (horasDiferencia >= 24) {
+		        devolucion = precio * 0.5f;
+		    } 
+		}
+	    return devolucion;	    
+	}
+
 	public void setFechaDeseada(LocalDate fechaDeseada) {
 		this.fechaDeseada = fechaDeseada;
 		if(fechaDeseada.isBefore(Terminal.getFecha().toLocalDate())){
@@ -94,7 +114,7 @@ public class Reserva implements Mostrable{
 
 	public String[] toTableList() {
 		String[] res = {
-				String.valueOf(pasajero.toString()),
+				estado.equals("Cancelada") ? "null" : String.valueOf(pasajero.toString()),
 				String.valueOf(numReserva),
 				estado.equals("Confirmada") ? String.valueOf(viaje.getId()) : "Sin viaje",
 						estado.equals("Confirmada") ? String.valueOf(asiento) : "None",

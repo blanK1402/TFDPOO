@@ -199,7 +199,10 @@ public class Datos {
 		for(String linea : obtenerLineas(".\\.\\BaseDatos\\reservas.txt")){
 			Matcher matcher = patron.matcher(linea);
 			if(matcher.find()){
-				Pasajero p = t.getPasajero(matcher.group(1));
+				Pasajero p = null;
+				if(!(matcher.group(8).equals("Cancelada"))){
+					p = t.getPasajero(matcher.group(1));
+				}
 				String destino = matcher.group(5);
 				String numReserva = matcher.group(2);
 				LocalDate fechaActual = Utilidades.parsearFecha(matcher.group(6));
@@ -237,6 +240,7 @@ public class Datos {
 		ArrayList<Reserva> todas = new ArrayList<>();
 		todas.addAll(t.getReservas());
 		todas.addAll(t.getReservasEspera());
+		todas.addAll(t.getReservasCanceladas());
 		escribirArchivo(todas, rutas[4]);
 		escribirArchivo(t.getUsuarios(), rutas[5]);
 	}
@@ -249,9 +253,9 @@ public class Datos {
 		}
 	}
 
-	public static void actualizarPasajeros(DefaultTableModel modelPasajero, Terminal terminal) {
+	public static void actualizarPasajeros(DefaultTableModel modelPasajero) {
 		modelPasajero.setRowCount(0); 
-		for(Pasajero p : terminal.getPasajeros()) {
+		for(Pasajero p : Terminal.getTerminal().getPasajeros()) {
 			modelPasajero.addRow(p.toTableList());
 		}
 	}

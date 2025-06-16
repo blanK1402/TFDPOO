@@ -12,9 +12,9 @@ Diana,1,A,12,84719,0
 Hugo,2,B,8,59384,0
 Selene,3,C,20,12937,0
 Alberto,4,A,15,56483,0
-Esteban,5,B,10,84321,2
+Esteban,5,B,10,84321,1
 Miriam,6,C,25,45219,0
-Jorge,7,A,18,34894,0
+Jorge,7,A,18,34894,1
 Sofia,8,B,12,72139,0
 Emilio,9,C,30,98765,0
 Beatriz,20,B,14,67941,0

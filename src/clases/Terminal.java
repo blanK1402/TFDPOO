@@ -3,6 +3,7 @@ package clases;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -290,23 +291,59 @@ public class Terminal {
 		}
 	}
 
-	public void resetearReservas() {
-		for(Reserva r : reservasEspera.values()){
-			Viaje v = Utilidades.buscarViaje(r.getDestino(), r.getFechaDeseada());
-			if(v != null){
-				r.setViaje(v);
-				v.addReservas(r);
-			}
-		}
-		for(Reserva r : reservas.values()){
-			Viaje v = r.getViaje();
-			if(!(v.getDestino().equals(r.getDestino()) && v.getFechaHoraPartida().toLocalDate().equals(r.getFechaDeseada()))){
-				r.setViaje(null);
-			}
-		}
-	}
-
 	public void removeConductor(String id) {
 		conductores.remove(id);
+	}
+
+	public void removePasajero(String id) {
+		Pasajero p = getPasajero(id);
+		for(Reserva r : p.getReservas()){
+			for(Viaje v : viajes.values()){
+				if(v.getReservas().contains(r)){
+					v.cancelarReserva(r);
+				}
+			}
+
+			if(reservas.containsKey(String.valueOf(r.getNumReserva()))){
+				reservas.remove(String.valueOf(r.getNumReserva()));
+			}
+			
+			if(reservasEspera.containsKey(String.valueOf(r.getNumReserva()))){
+				reservasEspera.remove(String.valueOf(r.getNumReserva()));
+			}
+			
+			r.setEstado("Cancelada");
+			reservasCanceladas.put(String.valueOf(r.getNumReserva()), r);
+		}
+		pasajeros.remove(p.getId());
+	}
+
+	public ArrayList<Reserva> getReservasCanceladas() {
+		return new ArrayList<Reserva>(reservasCanceladas.values());
+	}
+
+	public void cancelarReserva(String id) {
+		Reserva r = getReserva(id);
+		
+		for(Viaje v : viajes.values()){
+			if(v.getReservas().contains(r)){
+				v.cancelarReserva(r);
+			}
+		}
+		
+		if(reservas.containsKey(String.valueOf(r.getNumReserva()))){
+			reservas.remove(String.valueOf(r.getNumReserva()));
+		}
+		
+		if(reservasEspera.containsKey(String.valueOf(r.getNumReserva()))){
+			reservasEspera.remove(String.valueOf(r.getNumReserva()));
+		}
+		
+		r.setEstado("Cancelada");
+		reservasCanceladas.put(String.valueOf(r.getNumReserva()), r);
+	}
+
+	private Reserva getReserva(String id) {
+		return reservas.containsKey(id) ? reservas.get(id) : reservasEspera.containsKey(id) ? reservasEspera.get(id) : reservasCanceladas.get(id);
 	}
 }

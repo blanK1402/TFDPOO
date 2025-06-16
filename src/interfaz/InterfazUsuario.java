@@ -114,12 +114,24 @@ public class InterfazUsuario extends JDialog {
         
         panelBotones.add(btnNuevaReserva);
         
-        JButton btnEditarReserva = new JButton("Editar Reserva");
-        btnEditarReserva.setForeground(Color.WHITE);
-        btnEditarReserva.setBackground(SystemColor.textHighlight);
-        panelBotones.add(btnEditarReserva);
-        
         JButton btnEliminarReserva = new JButton("Eliminar Reserva");
+        btnEliminarReserva.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		int fila = tableReserva.getSelectedRow();
+				if(fila != -1){
+					String id = String.valueOf(tableReserva.getValueAt(fila, 1));
+					terminal.cancelarReserva(id);
+					try {
+						Datos.guardarDatos();
+						Datos.importarDatos();
+						Datos.cargarReservasUsuario(pasajero.getReservas(), modelReserva);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+				}
+        	}
+        });
         btnEliminarReserva.setForeground(Color.WHITE);
         btnEliminarReserva.setBackground(SystemColor.textHighlight);
         panelBotones.add(btnEliminarReserva);
@@ -127,7 +139,7 @@ public class InterfazUsuario extends JDialog {
         return panelBotones;
     }
 
-    private void abrirNuevaReserva() {
+	private void abrirNuevaReserva() {
 		VentanaReserva ventana = new VentanaReserva(InterfazUsuario.this, pasajero);
 		ventana.setVisible(true);
 		if(ventana.Confirmada()){

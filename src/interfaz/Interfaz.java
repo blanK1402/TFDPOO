@@ -87,13 +87,29 @@ public class Interfaz extends JFrame {
 						}
 					}
 				}
-
 			}
 		});
 		btnEditarPasajero.setBackground(COLOR);
 		btnEditarPasajero.setForeground(Color.WHITE);
 		btnEditarPasajero.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JButton btnEliminarPasajero = new JButton("Eliminar");
+		btnEliminarPasajero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int fila = tablePasajero.getSelectedRow();
+				if(fila != -1){
+					String id = String.valueOf(tablePasajero.getValueAt(fila, 1));
+					Terminal.getTerminal().removePasajero(id);
+					try {
+						System.out.println(Terminal.getTerminal().getReservas().size());
+						Datos.guardarDatos();
+						Datos.importarDatos();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					Datos.actualizarPasajeros(modelPasajero);
+				}
+			}
+		});
 		btnEliminarPasajero.setBackground(COLOR);
 		btnEliminarPasajero.setForeground(Color.WHITE);
 		btnEliminarPasajero.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -293,7 +309,6 @@ public class Interfaz extends JFrame {
 						try {
 							Datos.guardarDatos();
 							actualizarViajes(modelViaje);
-							Terminal.getTerminal().resetearReservas();
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -582,6 +597,9 @@ public class Interfaz extends JFrame {
 			modelReserva.addRow(r.toTableList());
 		}
 		for (Reserva r : Terminal.getTerminal().getReservasEspera()) {
+			modelReserva.addRow(r.toTableList());
+		}
+		for (Reserva r : Terminal.getTerminal().getReservasCanceladas()) {
 			modelReserva.addRow(r.toTableList());
 		}
 	}
