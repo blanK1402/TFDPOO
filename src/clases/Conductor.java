@@ -60,7 +60,7 @@ public abstract class Conductor implements Mostrable {
     }
     
     public void setLicencia(String licencia) {
-    	Utilidades.validarNumeroPositivo(licencia, "La licencia");
+    	Utilidades.validarLicencia(licencia, Terminal.getTerminal().getConductores());
         this.licencia = Integer.valueOf(licencia);
     }
     

@@ -124,20 +124,6 @@ public class InterfazUsuario extends JDialog {
         btnEliminarReserva.setBackground(SystemColor.textHighlight);
         panelBotones.add(btnEliminarReserva);
         
-        JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		try {
-					Datos.guardarDatos();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-        	}
-        });
-        btnGuardar.setForeground(Color.WHITE);
-        btnGuardar.setBackground(SystemColor.textHighlight);
-        panelBotones.add(btnGuardar);
-        
         return panelBotones;
     }
 
@@ -145,8 +131,12 @@ public class InterfazUsuario extends JDialog {
 		VentanaReserva ventana = new VentanaReserva(InterfazUsuario.this, pasajero);
 		ventana.setVisible(true);
 		if(ventana.Confirmada()){
-			terminal.addReserva(ventana.getReserva());
 			modelReserva.addRow(ventana.getReserva().toTableList());
+			try {
+				Datos.guardarDatos();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
     }
 

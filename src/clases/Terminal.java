@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
+
+import utilidades.Utilidades;
 import login.Usuario;
 
 public class Terminal {
@@ -176,11 +179,17 @@ public class Terminal {
 		omnibuses.put(o.getMatricula(), o);
 	}
 
-	public void addConductor(Conductor c) {
+	public void addConductor(Conductor c) throws IllegalArgumentException{
 		conductores.put(String.valueOf(c.getId()), c);
 	}
-
-	public void addPasajero(Pasajero p) {
+	
+	public void containsPasajeroId(String id){
+		if(pasajeros.containsKey(id)){
+			throw new IllegalArgumentException("Ya existe un pasajero con ese ID");
+		}
+	}
+	
+	public void addPasajero(Pasajero p) throws IllegalArgumentException{
 		pasajeros.put(p.getId(), p);
 		usuarios.put(p.getId(), new Usuario(p.getId(), "0000", "User"));
 	}
@@ -246,5 +255,55 @@ public class Terminal {
 
 	public ArrayList<Reserva> getReservasEspera() {
 		return new ArrayList<>(reservasEspera.values());
+	}
+
+	public void containsOmnibusId(String matricula) {
+		if(omnibuses.containsKey(matricula)){
+			throw new IllegalArgumentException("Ya existe un ómnibus con esa matrícula");
+		}
+	}
+
+	public ArrayList<Omnibus> getOmnibusesDisponibles() {
+		ArrayList<Omnibus> disponibles = new ArrayList<>();
+		
+		for(Omnibus o : omnibuses.values()){
+			if(!(o.getDisponibilidad().equals("En reparación"))){
+				disponibles.add(o);
+			}
+		}
+		
+		return disponibles;
+	}
+
+	public void clear() {
+		viajes.clear();
+		pasajeros.clear();
+		conductores.clear();
+		omnibuses.clear();
+		reservas.clear();
+	}
+
+	public void eliminarDuplicados() {
+		for(Reserva r : reservas.values()){
+			if(reservasEspera.containsKey(String.valueOf(r.getNumReserva()))){
+				reservasEspera.remove(String.valueOf(r.getNumReserva()));
+			}
+		}
+	}
+
+	public void resetearReservas() {
+		for(Reserva r : reservasEspera.values()){
+			Viaje v = Utilidades.buscarViaje(r.getDestino(), r.getFechaDeseada());
+			if(v != null){
+				r.setViaje(v);
+				v.addReservas(r);
+			}
+		}
+		for(Reserva r : reservas.values()){
+			Viaje v = r.getViaje();
+			if(!(v.getDestino().equals(r.getDestino()) && v.getFechaHoraPartida().toLocalDate().equals(r.getFechaDeseada()))){
+				r.setViaje(null);
+			}
+		}
 	}
 }

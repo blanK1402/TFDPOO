@@ -36,6 +36,9 @@ public class Viaje implements Mostrable{
 
 	public void setFechaHoraPartida(String fecha, String hora) throws IllegalArgumentException {
 		this.fechaHoraPartida = LocalDateTime.of(Utilidades.parsearFecha(fecha), Utilidades.parsearHora(hora));
+		if(fechaHoraPartida.isBefore(Terminal.getFecha())){
+			throw new IllegalArgumentException("Debe ser una fecha mayor a la fecha actual");
+		}
 	}
 	
 	public LocalDateTime getFechaHoraPartida() {
@@ -76,6 +79,14 @@ public class Viaje implements Mostrable{
 	private LocalDateTime calcularLlegada(String fechaSalida, String horaSalida, int distancia) throws IllegalArgumentException{
 		try{
 			return Utilidades.parsearFecha(fechaSalida).atTime(Utilidades.parsearHora(horaSalida)).plusHours(distancia/55);
+		}catch(Exception e){
+			throw new IllegalArgumentException("Formato de fecha invalido");
+		}
+	}
+	
+	public int calcularTiempo(int distancia) throws IllegalArgumentException{
+		try{
+			return (distancia/55);
 		}catch(Exception e){
 			throw new IllegalArgumentException("Formato de fecha invalido");
 		}
@@ -151,5 +162,11 @@ public class Viaje implements Mostrable{
 
 	public int getAsiento() {
 		return asientosLibres.iterator().next();
+	}
+
+	public void removeReserva(Reserva r) {
+		if(reservas.contains(r)){
+			reservas.remove(r);
+		}
 	}
 }

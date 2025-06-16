@@ -1,7 +1,10 @@
 package clases;
 import java.time.*;
+
 import Interfaces.Mostrable;
+
 import java.time.format.DateTimeFormatter;
+
 import utilidades.Utilidades;
 
 public class Reserva implements Mostrable{
@@ -13,7 +16,7 @@ public class Reserva implements Mostrable{
 	private int asiento;
 	private String estado;
 	private Viaje viaje;
-	
+
 	public Reserva(Pasajero pasajero, String numReserva, String destino, LocalDate fecha, LocalDate fechaDeseada, int asiento){
 		setPasajero(pasajero);
 		setNumReserva(numReserva);
@@ -25,11 +28,11 @@ public class Reserva implements Mostrable{
 		estado = "En espera";
 		viaje = null;
 	}
-	
+
 	public void setViaje(Viaje viaje) {
 		this.viaje = viaje;
-		estado = "Confirmada";
-		asiento = viaje.getAsiento();
+		estado = viaje != null ? "Confirmada" : "En espera";
+		asiento = viaje != null ? viaje.getAsiento() : 0;
 	}
 	public Viaje getViaje(){
 		return viaje;
@@ -80,6 +83,9 @@ public class Reserva implements Mostrable{
 	}
 	public void setFechaDeseada(LocalDate fechaDeseada) {
 		this.fechaDeseada = fechaDeseada;
+		if(fechaDeseada.isBefore(Terminal.getFecha().toLocalDate())){
+			throw new IllegalArgumentException("Debe ser una fecha mayor a la fecha actual");
+		}
 	}
 	@Override
 	public String toString(){
@@ -87,16 +93,16 @@ public class Reserva implements Mostrable{
 	}
 
 	public String[] toTableList() {
-        String[] res = {
-        		String.valueOf(pasajero.toString()),
-        		String.valueOf(numReserva),
-        		estado.equals("Confirmada") ? String.valueOf(viaje.getId()) : "Sin viaje",
-        		estado.equals("Confirmada") ? String.valueOf(asiento) : "None",
-        		destino,
-        		fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-        		fechaDeseada.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-        		estado
-        };
+		String[] res = {
+				String.valueOf(pasajero.toString()),
+				String.valueOf(numReserva),
+				estado.equals("Confirmada") ? String.valueOf(viaje.getId()) : "Sin viaje",
+						estado.equals("Confirmada") ? String.valueOf(asiento) : "None",
+								destino,
+								fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+								fechaDeseada.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+								estado
+		};
 		return res;
-    }
+	}
 }

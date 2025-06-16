@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -31,11 +32,13 @@ public class Datos {
 
 	public static void importarDatos() throws FileNotFoundException, IOException{
 		Terminal t = Terminal.getTerminal();
+		t.clear();
 		importarPasajeros(t);
 		importarConductores(t);
 		importarOmnibus(t);
 		importarViajes(t);
 		importarReservas(t);
+		t.eliminarDuplicados();
 	}
 
 	public static ArrayList<String> obtenerLineas(String rutaArchivo) throws IOException {
@@ -56,7 +59,7 @@ public class Datos {
 
 		try (BufferedReader txt = new BufferedReader(new FileReader(".\\.\\BaseDatos\\contrasenas.txt"))) {
 			String linea;
-			
+
 			while ((linea = txt.readLine()) != null) {
 				Matcher coincidencia = patron.matcher(linea);
 				if (coincidencia.find()) {
@@ -179,7 +182,17 @@ public class Datos {
 		}
 	}
 
-	//"Pasajero", "Nro Reservación", "Viaje", "Asiento", "Destino", "Fecha Reservación", "Fecha Viaje", "Estado"
+	//2,Artemisa,T567012,id:11, RaulAlejandro,11/11/2025, 18:30:00,76.0
+	/*
+	            String.valueOf(pasajero.toString()),
+				String.valueOf(numReserva),
+				estado.equals("Confirmada") ? String.valueOf(viaje.getId()) : "Sin viaje",
+				estado.equals("Confirmada") ? String.valueOf(asiento) : "None",
+				destino,
+				fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+				fechaDeseada.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+				estado
+	 */
 	public static void importarReservas(Terminal t) throws FileNotFoundException, IOException {
 		Pattern patron = Pattern.compile("id: ([0-9]+),([0-9]+),([0-9]+|Sin viaje),([0-9]+|None),(.*),([0-9/]+),([0-9/]+),(.*)");
 
@@ -191,19 +204,11 @@ public class Datos {
 				String numReserva = matcher.group(2);
 				LocalDate fechaActual = Utilidades.parsearFecha(matcher.group(6));
 				LocalDate fechaDeseada = Utilidades.parsearFecha(matcher.group(7));
-				Viaje v = null;
 				
-				if(matcher.group(3).matches("[0-9]")){
-					v = t.getViaje(matcher.group(3));
-					if(!(v.getDestino().equals(destino) && v.getFechaHoraPartida().toLocalDate().equals(fechaDeseada) && v.getAsientosLibres().size() > 0)){
-						v = null;
-					}
-				}
+				Viaje v = Utilidades.buscarViaje(destino, fechaDeseada);
 
-				v = Utilidades.buscarViaje(destino, fechaDeseada);
-				
 				Reserva r = new Reserva(p, numReserva, destino, fechaActual, fechaDeseada, 0);
-				
+
 				if(v != null){
 					r.setViaje(v);
 					v.addReservas(r);
@@ -229,9 +234,11 @@ public class Datos {
 		escribirArchivo(t.getConductores(), rutas[1]);
 		escribirArchivo(t.getOmnibuses(), rutas[2]);
 		escribirArchivo(t.getViajes(), rutas[3]);
-		escribirArchivo(t.getReservas(), rutas[4]);
+		ArrayList<Reserva> todas = new ArrayList<>();
+		todas.addAll(t.getReservas());
+		todas.addAll(t.getReservasEspera());
+		escribirArchivo(todas, rutas[4]);
 		escribirArchivo(t.getUsuarios(), rutas[5]);
-
 	}
 
 	private static <T extends Mostrable> void escribirArchivo(ArrayList<T> lista, String ruta) throws IOException {
@@ -241,40 +248,44 @@ public class Datos {
 			}
 		}
 	}
-	
+
 	public static void actualizarPasajeros(DefaultTableModel modelPasajero, Terminal terminal) {
-	    modelPasajero.setRowCount(0); 
-	    for(Pasajero p : terminal.getPasajeros()) {
-	        modelPasajero.addRow(p.toTableList());
-	    }
+		modelPasajero.setRowCount(0); 
+		for(Pasajero p : terminal.getPasajeros()) {
+			modelPasajero.addRow(p.toTableList());
+		}
 	}
 
 	public static void actualizarConductores(DefaultTableModel modelConductor, Terminal terminal) {
-	    modelConductor.setRowCount(0);
-	    for(Conductor c : terminal.getConductores()) {
-	        modelConductor.addRow(c.toTableList());
-	    }
+		modelConductor.setRowCount(0);
+		for(Conductor c : terminal.getConductores()) {
+			modelConductor.addRow(c.toTableList());
+		}
 	}
 
 	public static void actualizarOmnibuses(DefaultTableModel modelOmnibus, Terminal terminal) {
-	    modelOmnibus.setRowCount(0);
-	    for(Omnibus o : terminal.getOmnibuses()) {
-	        modelOmnibus.addRow(o.toTableList());
-	    }
+		modelOmnibus.setRowCount(0);
+		for(Omnibus o : terminal.getOmnibuses()) {
+			modelOmnibus.addRow(o.toTableList());
+		}
 	}
 
 	public static void actualizarViajes(DefaultTableModel modelViaje, Terminal terminal) {
-	    modelViaje.setRowCount(0);
-	    for(Viaje v : terminal.getViajes()) {
-	        modelViaje.addRow(v.toTableList());
-	    }
+		modelViaje.setRowCount(0);
+		for(Viaje v : terminal.getViajes()) {
+			modelViaje.addRow(v.toTableList());
+		}
 	}
 
-	public static void actualizarReservas(DefaultTableModel modelReserva, Terminal terminal) {
-	    modelReserva.setRowCount(0);
-	    for(Reserva r : terminal.getReservas()) {
-	        modelReserva.addRow(r.toTableList());
-	    }
+	public static void actualizarReservas(DefaultTableModel modelReserva) {
+		modelReserva.setRowCount(0);
+		Terminal terminal = Terminal.getTerminal();
+		for(Reserva r : terminal.getReservas()) {
+			modelReserva.addRow(r.toTableList());
+		}
+		for(Reserva r : terminal.getReservasEspera()) {
+			modelReserva.addRow(r.toTableList());
+		}
 	}
 
 }

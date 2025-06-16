@@ -30,7 +30,6 @@ public class Runner {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Datos.importarDatos();
 					InterfazUsuario frame = new InterfazUsuario(pasajero);
 					frame.setVisible(true);
 				} catch (Exception e) {

@@ -5,9 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import login.Usuario;
+import clases.Conductor;
 import clases.Terminal;
 import clases.Viaje;
 
@@ -64,6 +66,7 @@ public class Utilidades {
 
 	public static void validarMatricula(String matricula) throws IllegalArgumentException{
 		matricula = matricula.trim();
+		Terminal.getTerminal().containsOmnibusId(matricula);
 		if (matricula.isEmpty()) {
 			throw new IllegalArgumentException("La matrícula no puede estar vacía.");
 		}
@@ -83,8 +86,8 @@ public class Utilidades {
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException("Los asientos deben ser un número entero válido.");
 		}
-		if (num <= 10 || num > 100) {
-			throw new IllegalArgumentException("Los asientos deben ser un número entre 10 y 100.");
+		if (num < 10 || num > 160) {
+			throw new IllegalArgumentException("Los asientos deben ser un número entre 10 y 160.");
 		}
 		return num;
 	}
@@ -132,6 +135,8 @@ public class Utilidades {
 		int terceroCuarto = Integer.valueOf(carnet.substring(2, 4));
 		int quintoSexto = Integer.valueOf(carnet.substring(4, 6));
 
+		Terminal.getTerminal().containsPasajeroId(carnet);
+		
 		if (terceroCuarto < 1 || terceroCuarto > 12) {
 			throw new IllegalArgumentException("El mes debe estar entre 1 y 12");
 		}
@@ -178,4 +183,22 @@ public class Utilidades {
 		}
 
 	}
+
+	public static void validarLicencia(String licencia, ArrayList<Conductor> conductores) {
+	    if (!licencia.matches("^[0-9]{5}$")) {
+	        throw new IllegalArgumentException("La licencia debe ser un número entero positivo válido de 5 dígitos");
+	    }
+	    for (Conductor c : conductores) {
+	        if (String.valueOf(c.getLicencia()).equals(licencia)) {
+	            throw new IllegalArgumentException("Ya existe un conductor con esa licencia");
+	        }
+	    }
+	}
+
+	public static void validarFecha(LocalDate fechaDeseada) {
+		if(fechaDeseada.isBefore(Terminal.getFecha().toLocalDate())){
+			throw new IllegalArgumentException("La fecha debe ser mayor a la fecha actual");
+		}
+	}
+
 }

@@ -1,7 +1,9 @@
 package clases;
 
 import Interfaces.Mostrable;
+
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -109,4 +111,36 @@ public class Omnibus implements Mostrable{
 				conductores.isEmpty() ? "Sin conductores" : conductores.toString()};
 		return res;
 	}
+
+	public LocalTime getHoraSalida(String fechaSalida) {
+	    LocalTime hora = Utilidades.parsearHora("01:00:00");
+	    ArrayList<Viaje> viajesDia = viajes.get(fechaSalida);
+
+	    if (viajesDia != null && !viajesDia.isEmpty()) {
+	        Viaje v = viajesDia.get(viajesDia.size() - 1);
+	        if (v.getFechaHoraLlegada() != null && v.getFechaHoraPartida() != null) {
+	            hora = v.getFechaHoraLlegada().toLocalTime().plusMinutes(
+	                (long) ((v.calcularTiempo(v.getDistancia()) + 1.5) * 60)
+	            );
+
+	            if (hora.isBefore(v.getFechaHoraPartida().toLocalTime())) {
+	                hora = null;
+	            }
+	        } else {
+	            hora = null;
+	        }
+	    }
+
+	    return hora;
+	}
+
+	public void removeViaje(String fechaSalida) {
+	    ArrayList<Viaje> lista = viajes.get(fechaSalida);
+	    if (lista != null && !lista.isEmpty()) {
+	        lista.remove(lista.size() - 1);
+	    }
+	}
+
+
+
 }

@@ -119,8 +119,10 @@ public class VentanaReserva extends JDialog {
 	private void confirmarReserva(LocalDateTime fechaAct) {
 		try{
 		    String destinoSeleccionado = (String) comboDestinos.getSelectedItem();
-		    LocalDate fechaActual = fechaAct.toLocalDate();
+		    LocalDate fechaActual = Terminal.getFecha().toLocalDate();
 		    LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+		    Utilidades.validarFecha(fechaDeseada);
 
 		    Viaje viaje = Utilidades.buscarViaje(destinoSeleccionado, fechaDeseada);
 
@@ -129,9 +131,10 @@ public class VentanaReserva extends JDialog {
 		    } else {
 		    	reserva = new Reserva(pasajero, String.valueOf(t.getIdReserva()), destinoSeleccionado, fechaActual, fechaDeseada, viaje.getAsiento());
 		        reserva.setViaje(viaje);
-			    confirmado = true;
 		    }
-		    
+
+		    Terminal.getTerminal().addReserva(reserva);
+		    confirmado = true;
 		    dispose();
 		}catch(Exception ex){
 			t.decrementIdReserva();
