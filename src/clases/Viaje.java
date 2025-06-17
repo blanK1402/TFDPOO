@@ -40,7 +40,7 @@ public class Viaje implements Mostrable{
 			throw new IllegalArgumentException("Debe ser una fecha mayor a la fecha actual");
 		}
 	}
-	
+
 	public LocalDateTime getFechaHoraPartida() {
 		return fechaHoraPartida;
 	}
@@ -58,19 +58,22 @@ public class Viaje implements Mostrable{
 	}
 
 	public float precio(){
-		float importeTotal = (float) (distancia * 0.8);
-    	
-		if(omnibus.getComodidades().contains("Aire acondicionado")){
-			importeTotal += 15;
-		}
-		if(omnibus.getComodidades().contains("TV")){
-			importeTotal += 5;
-		}
-		if(omnibus.getComodidades().contains("Baño")){
-			importeTotal += 3;
-		}
-		if(fechaHoraPartida.toLocalTime().isAfter(LocalTime.of(18, 0))){
-			importeTotal += 20;
+		float importeTotal = 0;
+
+		if(omnibus != null){
+			importeTotal = (float) (distancia * 0.8);
+			if(omnibus.getComodidades().contains("Aire acondicionado")){
+				importeTotal += 15;
+			}
+			if(omnibus.getComodidades().contains("TV")){
+				importeTotal += 5;
+			}
+			if(omnibus.getComodidades().contains("Baño")){
+				importeTotal += 3;
+			}
+			if(fechaHoraPartida.toLocalTime().isAfter(LocalTime.of(18, 0))){
+				importeTotal += 20;
+			}
 		}
 
 		return importeTotal;
@@ -83,7 +86,7 @@ public class Viaje implements Mostrable{
 			throw new IllegalArgumentException("Formato de fecha invalido");
 		}
 	}
-	
+
 	public int calcularTiempo(int distancia) throws IllegalArgumentException{
 		try{
 			return (distancia/55);
@@ -91,11 +94,11 @@ public class Viaje implements Mostrable{
 			throw new IllegalArgumentException("Formato de fecha invalido");
 		}
 	}
-	
+
 	public void setFechaHoraLlegada(String fecha, String hora, int distancia) throws IllegalArgumentException {
 		this.fechaHoraLlegada = calcularLlegada(fecha, hora, distancia);
 	}
-	
+
 	public HashSet<Integer> getAsientosLibres(){
 		return asientosLibres;
 	}
@@ -144,9 +147,11 @@ public class Viaje implements Mostrable{
 	}
 
 	public void reasignarConductor(){
-		conductor = omnibus.getConductores().get(0);
+		if(omnibus.getConductores().size() > 0){
+			conductor = omnibus.getConductores().get(0);			
+		}
 	}
-	
+
 	@Override
 	public String toString(){
 		return destino + " " + fechaHoraPartida.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -155,11 +160,12 @@ public class Viaje implements Mostrable{
 	public String[] toTableList() {
 		String[] res = {
 				String.valueOf(id),
-				destino,
-				omnibus.toString(),
-				conductor.toString(),
-				fechaHoraPartida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss")),
-				String.valueOf(precio())
+				destino != null ? destino : "null",
+						omnibus != null ? omnibus.toString() : "null",
+								conductor != null ? conductor.toString() : "null, null",
+										fechaHoraPartida != null ? 
+												fechaHoraPartida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss")) : "null",
+												String.valueOf(precio())
 		};
 		return res;
 	}

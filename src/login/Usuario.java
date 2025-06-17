@@ -38,9 +38,15 @@ public class Usuario implements Mostrable{
 		return usuario;
 	}
     
-	public String[] toTableList() {
-		String[] res = {usuario+":" + "0000," + rol};
-		return res;
-	}
+    public String[] toTableList() {
+        String usuarioLimpio = (usuario != null) ? usuario.trim() : "null";
+        String rolLimpio = (rol != null) ? rol.trim() : "null";
+
+        return new String[] {
+            usuarioLimpio,
+            "0000",
+            rolLimpio
+        };
+    }
 
 }

@@ -55,7 +55,7 @@ public class Datos {
 	}
 
 	public static void cargarContrasenas(HashMap<String, Usuario> contrasenas) throws IllegalArgumentException, IOException {
-		Pattern patron = Pattern.compile("([0-9]+):(.*),(.*)");
+		Pattern patron = Pattern.compile("([0-9]+),(.*),(.*)");
 
 		try (BufferedReader txt = new BufferedReader(new FileReader(".\\.\\BaseDatos\\contrasenas.txt"))) {
 			String linea;
@@ -162,21 +162,30 @@ public class Datos {
 	}
 
 	//2,Ciego de Ávila,V110538,id:5, Esmeralda,22/06/2025, 08:41:56,391.0
+	//2,Ciego de Ávila,T567012,null,11/11/2025, 01:00:00,368.0
 	//(String id, String fechaPartida, String horaPartida, String destino, Omnibus omnibus, Conductor conductor){
 	public static void importarViajes(Terminal t) throws FileNotFoundException, IOException {
-		Pattern patron = Pattern.compile("(.*),(.*),(.*),id:(.*), (.*),(.*), (.*),(.*)");
-
+		Pattern patron = Pattern.compile("(.*),(.*),(.*),(.*), (.*),(.*), (.*),(.*)");
+        Pattern patronId = Pattern.compile("id:([0-9]+)");
+		
 		for(String linea : obtenerLineas(".\\.\\BaseDatos\\viajes.txt")){
 			Matcher matcher = patron.matcher(linea);
 			if(matcher.find()){
 				String id = matcher.group(1);
 				String destino = matcher.group(2);
 				String matricula = matcher.group(3);
-				String idConductor = matcher.group(4);
+				Matcher matcherId = patronId.matcher(matcher.group(4));
 				String fecha = matcher.group(6);
 				String hora = matcher.group(7);
-
-				Viaje v = new Viaje(id, fecha, hora, destino, t.getOmnibus(matricula), t.getConductor(idConductor));
+				String idConductor = null;
+				Conductor p = null;
+				if(matcherId.find()){					
+					idConductor = matcherId.group(1);
+					p = t.getConductor(idConductor);
+				}
+				Omnibus o = t.getOmnibus(matricula);
+				
+				Viaje v = new Viaje(id, fecha, hora, destino, o, p);
 				t.addViaje(v);
 			}
 		}

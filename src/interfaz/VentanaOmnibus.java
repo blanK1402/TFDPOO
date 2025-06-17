@@ -264,6 +264,7 @@ public class VentanaOmnibus extends JDialog {
             }
             
             ArrayList<Viaje> viejosViajes = omnibus.getViajes();
+            t.removeOmnibus(omnibus);
             omnibus = new Omnibus(omnibus.getMatricula(), asientos, disponibilidad, comodidades);
             
             for (Conductor conductor : conductoresSeleccionados) {

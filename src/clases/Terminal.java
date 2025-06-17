@@ -195,24 +195,34 @@ public class Terminal {
 	}
 
 	public void addViaje(Viaje v) {
-		ArrayList<Reserva> porMover = new ArrayList<>();
-		viajes.put(String.valueOf(v.getId()), v);
-		v.getConductor().addViaje(v);
-		v.getOmnibus().addViaje(v);
+	    
+	    ArrayList<Reserva> porMover = new ArrayList<>();
+	    viajes.put(String.valueOf(v.getId()), v);
+	    
+	    if (v.getConductor() != null) {
+	        v.getConductor().addViaje(v);
+	    }
+	    
+	    if (v.getOmnibus() != null) {
+	        v.getOmnibus().addViaje(v);
+	    }
 
-		for(Reserva r : reservasEspera.values()){
-			if(r.getFechaDeseada().equals(v.getFechaHoraPartida().toLocalDate()) && r.getDestino().equals(v.getDestino())){
-				if(v.getAsientosLibres().size() > 0){
-					r.setViaje(v);
-					porMover.add(r);
-				}
-			}
-		}
-
-		for(Reserva r : porMover){
-			reservasEspera.remove(String.valueOf(r.getNumReserva()));
-			reservas.put(String.valueOf(r.getNumReserva()), r);
-		}
+	    if (reservasEspera != null) {
+	        for (Reserva r : reservasEspera.values()) {
+	            if (r != null && r.getFechaDeseada() != null && v.getFechaHoraPartida() != null 
+	                && r.getDestino() != null && v.getDestino() != null) {
+	                
+	                if (r.getFechaDeseada().equals(v.getFechaHoraPartida().toLocalDate()) 
+	                    && r.getDestino().equals(v.getDestino())) {
+	                    
+	                    if (v.getAsientosLibres() != null && v.getAsientosLibres().size() > 0) {
+	                        r.setViaje(v);
+	                        porMover.add(r);
+	                    }
+	                }
+	            }
+	        }
+	    }
 	}
 
 	public void addReserva(Reserva r) {
@@ -379,5 +389,9 @@ public class Terminal {
 
 	private Reserva getReserva(String id) {
 		return reservas.containsKey(id) ? reservas.get(id) : reservasEspera.containsKey(id) ? reservasEspera.get(id) : reservasCanceladas.get(id);
+	}
+
+	public void removeOmnibus(Omnibus omnibus) {
+		omnibuses.remove(omnibus.getMatricula());
 	}
 }
