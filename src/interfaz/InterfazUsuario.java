@@ -12,7 +12,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import utilidades.Datos;
+import utilidades.PasajeroUtil;
 import clases.Pasajero;
 import clases.Terminal;
 
@@ -86,7 +86,7 @@ public class InterfazUsuario extends JDialog {
             }
         };
         
-        Datos.cargarReservasUsuario(pasajero.getReservas(), modelReserva);
+        PasajeroUtil.cargarReservasUsuario(pasajero.getReservas(), modelReserva);
         
         tableReserva = new JTable(modelReserva);
         tableReserva.setRowHeight(30);
@@ -124,7 +124,7 @@ public class InterfazUsuario extends JDialog {
 					try {
 						Datos.guardarDatos();
 						Datos.importarDatos();
-						Datos.cargarReservasUsuario(pasajero.getReservas(), modelReserva);
+						PasajeroUtil.cargarReservasUsuario(pasajero.getReservas(), modelReserva);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

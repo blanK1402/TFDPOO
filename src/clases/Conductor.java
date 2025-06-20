@@ -1,9 +1,9 @@
 package clases;
 
 import Interfaces.Mostrable;
-import java.util.ArrayList;
 
-import utilidades.Utilidades;
+import java.util.ArrayList;
+import utilidades.ValidacionUtils;
 
 public abstract class Conductor implements Mostrable {
     protected String nombre;
@@ -33,7 +33,7 @@ public abstract class Conductor implements Mostrable {
     }
     
     public void setNombre(String nombre) {
-		Utilidades.validarNombre(nombre);
+    	ValidacionUtils.validarNombre(nombre);
 		this.nombre = nombre;
     }
     
@@ -42,7 +42,7 @@ public abstract class Conductor implements Mostrable {
     }
     
     public void setId(String id) {
-		Utilidades.validarNumeroPositivo(id, "El id");
+    	ValidacionUtils.validarNumeroPositivo(id, "El id");
 		this.id = Integer.valueOf(id);
     }
     
@@ -51,7 +51,7 @@ public abstract class Conductor implements Mostrable {
     }
     
     public void setExperiencia(String experiencia) {
-    	Utilidades.validarNumeroNoNegativo(experiencia, "La experiencia");
+    	ValidacionUtils.validarNumeroNoNegativo(experiencia, "La experiencia");
         this.experiencia = Integer.valueOf(experiencia);
     }
     
@@ -60,7 +60,7 @@ public abstract class Conductor implements Mostrable {
     }
     
     public void setLicencia(String licencia) {
-    	Utilidades.validarLicencia(licencia, Terminal.getTerminal().getConductores());
+    	ValidacionUtils.validarLicencia(licencia, Terminal.getTerminal().getConductores());
         this.licencia = Integer.valueOf(licencia);
     }
     

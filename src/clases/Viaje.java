@@ -1,13 +1,15 @@
 package clases;
 
 import Interfaces.Mostrable;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import utilidades.Utilidades;
+import utilidades.FechaUtils;
+import utilidades.ValidacionUtils;
 
 public class Viaje implements Mostrable{
 	private int id;
@@ -23,7 +25,7 @@ public class Viaje implements Mostrable{
 
 	public Viaje(String id, String fechaPartida, String horaPartida, String destino, Omnibus omnibus, Conductor conductor){
 		setId(id);
-		setDistancia(Terminal.getDestinosDistancias().get(destino));
+		setDistancia(Terminal.getTerminal().getDestinosDistancias().get(destino));
 		setFechaHoraPartida(fechaPartida, horaPartida);
 		setFechaHoraLlegada(fechaPartida, horaPartida, distancia);
 		setDestino(destino);
@@ -35,8 +37,8 @@ public class Viaje implements Mostrable{
 	}
 
 	public void setFechaHoraPartida(String fecha, String hora) throws IllegalArgumentException {
-		this.fechaHoraPartida = LocalDateTime.of(Utilidades.parsearFecha(fecha), Utilidades.parsearHora(hora));
-		if(fechaHoraPartida.isBefore(Terminal.getFecha())){
+		this.fechaHoraPartida = LocalDateTime.of(FechaUtils.parsearFecha(fecha), FechaUtils.parsearHora(hora));
+		if(fechaHoraPartida.isBefore(Terminal.getTerminal().getFecha())){
 			throw new IllegalArgumentException("Debe ser una fecha mayor a la fecha actual");
 		}
 	}
@@ -81,7 +83,7 @@ public class Viaje implements Mostrable{
 
 	private LocalDateTime calcularLlegada(String fechaSalida, String horaSalida, int distancia) throws IllegalArgumentException{
 		try{
-			return Utilidades.parsearFecha(fechaSalida).atTime(Utilidades.parsearHora(horaSalida)).plusHours(distancia/55);
+			return FechaUtils.parsearFecha(fechaSalida).atTime(FechaUtils.parsearHora(horaSalida)).plusHours(distancia/55);
 		}catch(Exception e){
 			throw new IllegalArgumentException("Formato de fecha invalido");
 		}
@@ -107,7 +109,7 @@ public class Viaje implements Mostrable{
 	}
 
 	public void setId(String id) throws IllegalArgumentException{
-		Utilidades.validarNumeroPositivo(id, "El id");
+		ValidacionUtils.validarNumeroPositivo(id, "El id");
 		this.id = Integer.parseInt(id); 
 	}
 	public int getId(){

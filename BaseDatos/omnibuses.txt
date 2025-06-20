@@ -1,1 +1,2 @@
 T567012,12,Si,Si,Si,Disponible,[id:1, Aaaaa]
+A123123,10,Si,Si,No,Disponible,[id:1, Aaaaa]

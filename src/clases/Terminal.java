@@ -37,15 +37,15 @@ public class Terminal {
         return terminal;
     }
 
-    public static String getRandomDestino() {
+    public String getRandomDestino() {
         return gestorViajes.getRandomDestino();
     }
 
-    public static HashMap<String, Integer> getDestinosDistancias() {
+    public HashMap<String, Integer> getDestinosDistancias() {
         return gestorViajes.getDestinosDistancias();
     }
 
-    public static void setFechaHora(LocalDateTime nuevaFechaHora) {
+    public void setFechaHora(LocalDateTime nuevaFechaHora) {
         fechaHora = nuevaFechaHora;
     }
 
@@ -57,7 +57,7 @@ public class Terminal {
         this.nombre = nombre;
     }
 
-    public static LocalDateTime getFecha() {
+    public LocalDateTime getFecha() {
         return fechaHora;
     }
 
@@ -144,6 +144,7 @@ public class Terminal {
 
     public void removePasajero(String id) {
         gestorPasajeros.removePasajero(id);
+        usuarios.remove(id);
     }
 
     public ArrayList<Reserva> getReservasCanceladas() {

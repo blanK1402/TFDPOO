@@ -2,13 +2,13 @@ package clases;
 
 import Interfaces.Mostrable;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import utilidades.Utilidades;
+import utilidades.FechaUtils;
+import utilidades.ValidacionUtils;
 
 public class Omnibus implements Mostrable{
 	private String matricula;
@@ -69,12 +69,12 @@ public class Omnibus implements Mostrable{
 	}
 	
 	public void setMatricula(String matricula) throws IllegalArgumentException{
-		Utilidades.validarMatricula(matricula);
+		ValidacionUtils.validarMatricula(matricula);
 		this.matricula = matricula;
 	}
 
 	public void setAsientos(String asientos) throws IllegalArgumentException{
-		this.asientos = Utilidades.validarAsientos(asientos);
+		this.asientos = ValidacionUtils.validarAsientos(asientos);
 	}
 
 	public void setComodidades(ArrayList<String> comodidades) throws IllegalArgumentException{
@@ -122,7 +122,7 @@ public class Omnibus implements Mostrable{
 	}
 
 	public LocalTime getHoraSalida(String fechaSalida) {
-	    LocalTime hora = Utilidades.parsearHora("01:00:00");
+	    LocalTime hora = FechaUtils.parsearHora("01:00:00");
 	    ArrayList<Viaje> viajesDia = viajes.get(fechaSalida);
 
 	    if (viajesDia != null && !viajesDia.isEmpty()) {

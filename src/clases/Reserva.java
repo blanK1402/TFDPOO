@@ -5,8 +5,6 @@ import Interfaces.Mostrable;
 
 import java.time.format.DateTimeFormatter;
 
-import utilidades.Utilidades;
-
 public class Reserva implements Mostrable{
 	private Pasajero pasajero;
 	private int numReserva;
@@ -83,7 +81,7 @@ public class Reserva implements Mostrable{
 		float devolucion = 0;
 		
 		if(viaje != null){
-			LocalDateTime ahora = Terminal.getFecha();
+			LocalDateTime ahora = Terminal.getTerminal().getFecha();
 		    LocalDateTime salida = viaje.getFechaHoraPartida();
 
 		    long horasDiferencia = java.time.Duration.between(ahora, salida).toHours();
@@ -101,7 +99,7 @@ public class Reserva implements Mostrable{
 
 	public void setFechaDeseada(LocalDate fechaDeseada) {
 		this.fechaDeseada = fechaDeseada;
-		if(fechaDeseada.isBefore(Terminal.getFecha().toLocalDate())){
+		if(fechaDeseada.isBefore(Terminal.getTerminal().getFecha().toLocalDate())){
 			throw new IllegalArgumentException("Debe ser una fecha mayor a la fecha actual");
 		}
 	}

@@ -1,9 +1,12 @@
 package clases;
 
 import Interfaces.Mostrable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import utilidades.Utilidades;
+
+import utilidades.FechaUtils;
+import utilidades.ValidacionUtils;
 
 public class Pasajero implements Mostrable{
 	private String nombre;
@@ -28,14 +31,14 @@ public class Pasajero implements Mostrable{
 		return nombre;
 	}
 	public void setNombre(String nombre) throws IllegalArgumentException{
-		Utilidades.validarNombre(nombre);
+		ValidacionUtils.validarNombre(nombre);
 		this.nombre = nombre;
 	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id, LocalDate fecha) throws IllegalArgumentException{
-		Utilidades.validarCarnet(id, fecha);
+		FechaUtils.validarCarnet(id, fecha);
 		this.id = id;	
 	}
 	public void removeReserva(Reserva r){

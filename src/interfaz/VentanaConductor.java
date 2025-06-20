@@ -8,7 +8,6 @@ import clases.ConductorB;
 import clases.ConductorC;
 import clases.Terminal;
 import clases.Viaje;
-import gestion.GestorConductores;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

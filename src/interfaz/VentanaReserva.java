@@ -2,7 +2,9 @@ package interfaz;
 
 import javax.swing.*;
 
+import utilidades.FechaUtils;
 import utilidades.Utilidades;
+import utilidades.ValidacionUtils;
 import clases.Pasajero;
 import clases.Reserva;
 import clases.Terminal;
@@ -120,10 +122,10 @@ public class VentanaReserva extends JDialog {
             String numeroReserva = String.valueOf(t.getNextIdReservas());
             
             String destinoSeleccionado = (String) comboDestinos.getSelectedItem();
-            LocalDate fechaActual = Terminal.getFecha().toLocalDate();
+            LocalDate fechaActual = Terminal.getTerminal().getFecha().toLocalDate();
             LocalDate fechaDeseada = LocalDate.parse(txtFechaDeseada.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-            Utilidades.validarFecha(fechaDeseada);
+            ValidacionUtils.validarFecha(fechaDeseada);
 
             Viaje viaje = Utilidades.buscarViaje(destinoSeleccionado, fechaDeseada);
 

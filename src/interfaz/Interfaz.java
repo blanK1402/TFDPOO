@@ -75,7 +75,7 @@ public class Interfaz extends JFrame {
 				int fila = tablePasajero.getSelectedRow();
 				if(fila != -1){
 					String id = String.valueOf(tablePasajero.getValueAt(fila, 1));
-					VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, Terminal.getTerminal().getPasajeros(), Terminal.getFecha().toLocalDate(), id);
+					VentanaPasajero ventanaPasajero = new VentanaPasajero(Interfaz.this, Terminal.getTerminal().getPasajeros(), Terminal.getTerminal().getFecha().toLocalDate(), id);
 					ventanaPasajero.setVisible(true);
 
 					if(ventanaPasajero.confirmado()){
@@ -105,7 +105,7 @@ public class Interfaz extends JFrame {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					Datos.actualizarPasajeros(modelPasajero);
+					Datos.actualizarTablaPasajeros(modelPasajero);
 				}
 			}
 		});
@@ -188,7 +188,7 @@ public class Interfaz extends JFrame {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					Datos.actualizarConductores(modelConductor);
+					Datos.actualizarTablaConductores(modelConductor);
 				}
 			}
 		});
@@ -269,7 +269,7 @@ public class Interfaz extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					Datos.importarDatos();
-					Datos.actualizarOmnibuses(modelOmnibus);
+					Datos.actualizarTablaOmnibuses(modelOmnibus);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -350,7 +350,7 @@ public class Interfaz extends JFrame {
 		JButton button_1 = new JButton("Actualizar");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Datos.actualizarViajes(modelViaje);
+				Datos.actualizarTablaViajes(modelViaje);
 			}
 		});
 		button_1.setForeground(Color.WHITE);
@@ -534,12 +534,12 @@ public class Interfaz extends JFrame {
 		lblHora.setBounds(157, 26, 46, 14);
 		panelFecha.add(lblHora);
 
-		final JLabel label = new JLabel(Terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		final JLabel label = new JLabel(Terminal.getTerminal().getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		label.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		label.setBounds(58, 28, 90, 14);
 		panelFecha.add(label);
 
-		final JLabel labelHora = new JLabel(Terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+		final JLabel labelHora = new JLabel(Terminal.getTerminal().getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 		labelHora.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		labelHora.setBounds(195, 26, 90, 14);
 		panelFecha.add(labelHora);
@@ -615,7 +615,7 @@ public class Interfaz extends JFrame {
 	    VentanaPasajero ventanaPasajero = new VentanaPasajero(
 	        Interfaz.this,
 	        Terminal.getTerminal().getPasajeros(),
-	        Terminal.getFecha().toLocalDate()
+	        Terminal.getTerminal().getFecha().toLocalDate()
 	    );
 	    
 	    ventanaPasajero.setVisible(true);
