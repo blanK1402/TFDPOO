@@ -181,7 +181,7 @@ public class Interfaz extends JFrame {
 					if(Terminal.getTerminal().getConductor(id).getViajes().size() > 0){
 						JOptionPane.showMessageDialog(null, "El conductor tiene viajes asociados, desea eliminar el conductor?", "Advertencia", JOptionPane.WARNING_MESSAGE);
 					}
-					Terminal.getTerminal().quitarConductor(id);
+					Terminal.getTerminal().removeConductor(id);
 					try {
 						Datos.guardarDatos();
 						Datos.importarDatos();
@@ -545,33 +545,6 @@ public class Interfaz extends JFrame {
 		panelFecha.add(labelHora);
 		panelTerminal.add(panelCentroTerminal, BorderLayout.CENTER);
 		tabbedPane.addTab("Terminal", panelTerminal);
-
-		JButton btnAdelantarDia = new JButton("Adelantar Día");
-		btnAdelantarDia.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				eliminarFilas(Terminal.getTerminal().adelantarDia(), modelReserva);
-				label.setText(Terminal.getFecha().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-			}
-		});
-		btnAdelantarDia.setBounds(11, 55, 137, 27);
-		btnAdelantarDia.setBackground(COLOR);
-		btnAdelantarDia.setForeground(Color.WHITE);
-		btnAdelantarDia.setFont(new Font("SansSerif", Font.BOLD, 14));
-		panelFecha.add(btnAdelantarDia);
-
-		final JButton btnAdelantarHora = new JButton("Adelantar Hora");
-		btnAdelantarHora.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Terminal.getTerminal().adelantarHora();
-				labelHora.setText(Terminal.getFecha().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-			}
-		});
-
-		btnAdelantarHora.setBounds(157, 55, 149, 27);
-		btnAdelantarHora.setBackground(COLOR);
-		btnAdelantarHora.setForeground(Color.WHITE);
-		btnAdelantarHora.setFont(new Font("SansSerif", Font.BOLD, 14));
-		panelFecha.add(btnAdelantarHora);
 
 		actualizar(modelPasajero, modelConductor, modelReserva, modelViaje, modelOmnibus);
 	}

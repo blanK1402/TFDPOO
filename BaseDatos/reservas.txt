@@ -1,2 +1,0 @@
-David id: 8110103920,1,Sin viaje,None,Ciego de Ávila,17/06/2025,11/11/2025,En espera
-David id: 8110103920,2,Sin viaje,None,Santiago de Cuba,17/06/2025,11/11/2025,En espera

@@ -38,7 +38,6 @@ public class Datos {
 		importarOmnibus(t);
 		importarViajes(t);
 		importarReservas(t);
-		t.eliminarDuplicados();
 	}
 
 	public static ArrayList<String> obtenerLineas(String rutaArchivo) throws IOException {

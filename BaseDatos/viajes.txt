@@ -1,3 +1,1 @@
-2,Ciego de Ávila,T567012,null, null,11/11/2025, 01:00:00,368.0
-3,Ciego de Ávila,T567012,id:1, Aaaaa,11/11/2026, 01:00:00,391.0
-13,Villa Clara,T567012,id:1, Aaaaa,11/11/2026, 01:00:00,391.0
+1,Ciego de Ávila,T567012,id:1, Aaaaa,11/11/2025, 01:00:00,391.0

@@ -23,9 +23,7 @@ public class Reserva implements Mostrable{
 		setDestino(destino);
 		setFechaActual(fecha);
 		setFechaDeseada(fechaDeseada);
-		setAsiento(asiento);
 		setEstado(asiento);
-		estado = "En espera";
 		viaje = null;
 	}
 

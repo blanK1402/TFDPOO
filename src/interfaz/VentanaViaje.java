@@ -13,6 +13,7 @@ import clases.Conductor;
 import clases.Omnibus;
 import clases.Terminal;
 import clases.Viaje;
+import gestion.GestorViajes;
 
 public class VentanaViaje extends JDialog {
 
@@ -33,12 +34,12 @@ public class VentanaViaje extends JDialog {
         setSize(600, 380);
         setLayout(null);
 
-        destinosDistancias = new HashMap<>(Terminal.getDestinosDistancias());
+        destinosDistancias = new HashMap<>(t.getDestinosDistancias());
 
         Font etiquetaFont = new Font("Arial", Font.BOLD, 16);
         int desplazamientoDerecha = 140;
 
-        lblId = new JLabel(String.valueOf(t.getIdViaje()));
+        lblId = new JLabel("Nuevo ID será generado");
         lblId.setBounds(desplazamientoDerecha + 100, 20, 250, 30);
         add(lblId);
 
@@ -102,19 +103,18 @@ public class VentanaViaje extends JDialog {
         setLocationRelativeTo(interfaz);
 
         btnConfirmar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				confirmarViaje();
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                confirmarViaje();
+            }
+        });
 
-		btnCancelar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				t.decrementIdViaje();
-				dispose();
-			}
-		});
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     public VentanaViaje(Interfaz interfaz, String id) {
@@ -124,7 +124,7 @@ public class VentanaViaje extends JDialog {
         setSize(600, 380);
         setLayout(null);
 
-        destinosDistancias = new HashMap<>(Terminal.getDestinosDistancias());
+        destinosDistancias = new HashMap<>(t.getDestinosDistancias());
 
         Font etiquetaFont = new Font("Arial", Font.BOLD, 16);
         int desplazamientoDerecha = 140;
@@ -197,19 +197,18 @@ public class VentanaViaje extends JDialog {
         actualizarComboConductor((Omnibus) comboOmnibus.getSelectedItem());
 
         btnConfirmar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				editarViaje();
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editarViaje();
+            }
+        });
 
-		btnCancelar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				t.decrementIdViaje();
-				dispose();
-			}
-		});
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     private void setViaje(String id) {
@@ -222,6 +221,9 @@ public class VentanaViaje extends JDialog {
 
     private void confirmarViaje() {
         try {
+            long nextId = t.getNextIdViaje();
+            String nuevoId = String.valueOf(nextId);
+            
             String destino = (String) comboDestinos.getSelectedItem();
             String fechaSalida = txtFechaPartida.getText();
             Omnibus omnibus = (Omnibus) comboOmnibus.getSelectedItem();
@@ -237,7 +239,8 @@ public class VentanaViaje extends JDialog {
                 throw new IllegalArgumentException("El ómnibus seleccionado no está disponible en esa fecha");
             }
 
-            viaje = new Viaje(String.valueOf(t.getIdViaje()), fechaSalida, horaSalida.format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, omnibus, conductor);
+            viaje = new Viaje(nuevoId, fechaSalida, horaSalida.format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, omnibus, conductor);
+            t.addViaje(viaje);
             confirmado = true;
             dispose();
         } catch (Exception ex) {
@@ -268,9 +271,11 @@ public class VentanaViaje extends JDialog {
                 throw new IllegalArgumentException("El ómnibus seleccionado no está disponible en esa fecha");
             }
 
-            t.getViajes().remove(viaje);
-            viaje = new Viaje(String.valueOf(viaje.getId()), fechaSalida, horaSalida.format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, omnibusSeleccionado, conductor);
-            t.addViaje(viaje);
+            t.removeViaje(viaje.getId());
+            
+            Viaje viajeEditado = new Viaje(String.valueOf(viaje.getId()), fechaSalida, horaSalida.format(DateTimeFormatter.ofPattern("HH:mm:ss")), destino, omnibusSeleccionado, conductor);
+            t.addViaje(viajeEditado);
+            
             confirmado = true;
             dispose();
         } catch (Exception ex) {
@@ -278,7 +283,6 @@ public class VentanaViaje extends JDialog {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     private void actualizarComboConductor(Omnibus omnibus) {
         comboConductor.removeAllItems();

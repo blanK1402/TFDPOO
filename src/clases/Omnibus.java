@@ -4,6 +4,7 @@ import Interfaces.Mostrable;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,7 +16,7 @@ public class Omnibus implements Mostrable{
 	private ArrayList<String> comodidades;
 	private String disponibilidad;
 	private ArrayList<Conductor> conductores;
-	private HashMap<LocalDate, ArrayList<Viaje>> viajes;
+	private HashMap<String, ArrayList<Viaje>> viajes;
 
 	public Omnibus(String matricula, String asientos, String disponibilidad, ArrayList<String> comodidades) {
 		setMatricula(matricula);
@@ -27,7 +28,7 @@ public class Omnibus implements Mostrable{
 	}
 
 	public void addViaje(Viaje v){
-		LocalDate fecha = v.getFechaHoraPartida().toLocalDate();
+		String fecha = v.getFechaHoraPartida().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		if (viajes.containsKey(fecha)) {
 			viajes.get(fecha).add(v);
 		} 

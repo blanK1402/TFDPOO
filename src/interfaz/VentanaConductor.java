@@ -8,6 +8,7 @@ import clases.ConductorB;
 import clases.ConductorC;
 import clases.Terminal;
 import clases.Viaje;
+import gestion.GestorConductores;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -39,8 +40,7 @@ public class VentanaConductor extends JDialog {
         lblIdTitulo.setFont(etiquetaFont);
         add(lblIdTitulo);
 
-        lblId = new JLabel(String.valueOf(t.getConductoresId()));
-        t.decrementIdConductor();
+        lblId = new JLabel("Nuevo ID será generado");
         lblId.setBounds(desplazamientoDerecha, 20, 220, 25);
         lblId.setFont(campoFont);
         add(lblId);
@@ -75,7 +75,7 @@ public class VentanaConductor extends JDialog {
         txtLicencia.setFont(campoFont);
         add(txtLicencia);
 
-        JLabel lblCategoria = new JLabel("Categor�a:");
+        JLabel lblCategoria = new JLabel("Categoría:");
         lblCategoria.setBounds(20, 180, 120, 25);
         lblCategoria.setFont(etiquetaFont);
         add(lblCategoria);
@@ -104,14 +104,13 @@ public class VentanaConductor extends JDialog {
         btnCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	t.decrementIdConductor();
                 dispose();
             }
         });
     }
     
     public VentanaConductor(Interfaz interfaz, final String id) {
-        super(interfaz, "Crear Nuevo Conductor", true);
+        super(interfaz, "Editar Conductor", true); // Cambiado a "Editar Conductor"
         setT();
         setSize(400, 300);
         setLayout(null);
@@ -127,7 +126,6 @@ public class VentanaConductor extends JDialog {
         add(lblIdTitulo);
 
         lblId = new JLabel(id);
-        t.decrementIdConductor();
         lblId.setBounds(desplazamientoDerecha, 20, 220, 25);
         lblId.setFont(campoFont);
         add(lblId);
@@ -193,7 +191,6 @@ public class VentanaConductor extends JDialog {
         btnCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	t.decrementIdConductor();
                 dispose();
             }
         });
@@ -201,13 +198,13 @@ public class VentanaConductor extends JDialog {
     
     protected void editarConductor() {
         String nombre = txtNombre.getText();
-        String id = String.valueOf(conductor.getId());
+        String id = lblId.getText();
         String experiencia = txtExperiencia.getText();
         String licencia = txtLicencia.getText();
         String categoria = (String) comboCategoria.getSelectedItem();
         ArrayList<Viaje> viajes = conductor.getViajes();
 
-        t.quitarConductor(id);
+        t.removeConductor(id);
         
         Conductor nc = null;
 
@@ -228,12 +225,11 @@ public class VentanaConductor extends JDialog {
         dispose();
     }
 
+    private void setConductor(String id) {
+        conductor = Terminal.getTerminal().getConductor(id); 
+    }
 
-	private void setConductor(String id) {
-		conductor = Terminal.getTerminal().getConductor(id); 
-	}
-
-	private void setT() {
+    private void setT() {
         this.t = Terminal.getTerminal();
     }
 
@@ -244,18 +240,19 @@ public class VentanaConductor extends JDialog {
             String licencia = txtLicencia.getText();
             String categoria = (String) comboCategoria.getSelectedItem();
 
+            String nuevoId = String.valueOf(t.getNextIdConductores());
+
             if (categoria.equals("A")) {
-                conductor = new ConductorA(nombre, String.valueOf(t.getConductoresId()), experiencia, licencia);
+                conductor = new ConductorA(nombre, nuevoId, experiencia, licencia);
             } else if (categoria.equals("B")) {
-                conductor = new ConductorB(nombre, String.valueOf(t.getConductoresId()), experiencia, licencia);
+                conductor = new ConductorB(nombre, nuevoId, experiencia, licencia);
             } else {
-                conductor = new ConductorC(nombre, String.valueOf(t.getConductoresId()), experiencia, licencia);
+                conductor = new ConductorC(nombre, nuevoId, experiencia, licencia);
             }
 
             confirmado = true;
             dispose();
         } catch (Exception ex) {
-        	t.decrementIdConductor();;
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
